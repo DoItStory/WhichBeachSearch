@@ -1,0 +1,23 @@
+// .eslintrc.js
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "@react-native-community",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "es2021": true
+  },
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}
