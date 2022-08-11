@@ -1,0 +1,110 @@
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.main-header {
+  height: 9.375rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-top: 4.375rem;
+}
+
+.login-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-screen {
+  height: 25rem;
+  width: 18.125rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--main-color);
+  border-radius: 0.625rem;
+}
+
+.login-guest {
+  height: 7.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.login-guest button {
+  background-color: transparent;
+  border-style: none;
+  font-size: 1.1rem;
+}
+
+.login-form {
+  height: 16.25rem;
+  width: 14.375rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.login-user {
+  height: 4.5rem;
+  width: 12rem;
+}
+
+.login-user label {
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+#user-id,
+#user-pw {
+  width: 100%;
+  font-size: 1.15rem;
+  padding: 0.3rem 0 0.3rem 0.2rem;
+  border-style: none;
+  background-color: transparent;
+  margin-top: 0.5rem;
+  border-radius: 0.4rem;
+}
+
+.login-user input:focus {
+  outline: none;
+}
+
+.login__submit {
+  height: 1.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.login__submit input {
+  font-size: 1.25rem;
+  border-style: none;
+  background-color: transparent;
+}
+
+.join__find-info {
+  height: 2.75rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.join__find-info div > button {
+  background-color: transparent;
+  border-style: none;
+  font-size: 0.9rem;
+}
+
+.join__find-info div > button:first-child {
+  padding-left: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.join__find-info div > button:last-child {
+  padding-right: 1.5rem;
+  padding-bottom: 0.5rem;
+}
