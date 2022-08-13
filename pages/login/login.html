@@ -14,7 +14,7 @@
     <div class="login-area">
       <div class="login-screen">
         <div class="login-guest">
-          <button>비회원 이용하기</button>
+          <button onclick="">비회원으로 이용하기</button>
         </div>
         <form action="" method="get" class="login-form">
           <div class="login-user">
@@ -26,7 +26,7 @@
           <div class="login-user">
             <label for="user-pw"><i class="fa-solid fa-key fa-lg"></i></label>
             <input
-              type="text"
+              type="password"
               placeholder="Password"
               id="user-pw"
               required
@@ -34,11 +34,15 @@
             />
           </div>
           <div class="login__submit">
-            <input type="submit" value="로그인" />
+            <input type="submit" value="log-in" />
           </div>
         </form>
         <div class="join__find-info">
-          <div><button>회원가입</button></div>
+          <div>
+            <button onclick="location.href='../join/join.html'">
+              회원가입
+            </button>
+          </div>
           <div><button>내 정보 찾기</button></div>
         </div>
       </div>
