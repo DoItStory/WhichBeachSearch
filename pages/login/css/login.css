@@ -29,7 +29,7 @@ body {
 }
 
 .login-guest {
-  height: 7.5rem;
+  height: 7rem;
   display: flex;
   align-items: center;
 }
@@ -80,7 +80,7 @@ body {
 }
 
 .login__submit input {
-  font-size: 1.25rem;
+  font-size: 1.6rem;
   border-style: none;
   background-color: transparent;
 }
@@ -96,7 +96,7 @@ body {
 .join__find-info div > button {
   background-color: transparent;
   border-style: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .join__find-info div > button:first-child {
