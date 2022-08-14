@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>WhichBeachSearch</title>
+  </head>
+  <body>
+    <div class="map-screen">
+      <div class="search__window">
+        <form class="location__filter">
+          <select name="filters" id="filter">
+            <option value="book-mark">필터 설정</option>
+            <option value="book-mark">즐겨찾기</option>
+            <option value="kang-won-do">강원도</option>
+            <option value="kang-won-do">경상도</option>
+            <option value="kang-won-do">제주도</option>
+          </select>
+        </form>
+        <form class="beach-search">
+          <input
+            id="beach-search__input"
+            type="text"
+            placeholder="해수욕장 검색"
+          />
+          <button id="beach-search__submit" type="submit">
+            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    <nav class="nav-bar">
+      <ul class="nav__list">
+        <li class="nav__btn">
+          <a class="nav__link" href=""><i class="fa-solid fa-house"></i></a>
+        </li>
+        <li class="nav__btn">
+          <a class="nav__link" href=""><i class="fa-solid fa-bookmark"></i></a>
+        </li>
+        <li class="nav__btn">
+          <a class="nav__link" href=""><i class="fa-solid fa-map"></i></a>
+        </li>
+        <li class="nav__btn">
+          <a class="nav__link" href=""><i class="fa-solid fa-ellipsis"></i></a>
+        </li>
+      </ul>
+    </nav>
+    <script
+      src="https://kit.fontawesome.com/ef84290deb.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
