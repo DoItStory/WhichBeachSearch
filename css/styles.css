@@ -1,9 +1,16 @@
+/* main css */
 @import 'minireset.css';
-@import '/pages/login/css/login.css';
 @import '/css/color.css';
-@import '/components/mainfooter.css';
+
+/* Page css */
+@import '/pages/login/css/login.css';
 @import '/pages/join/css/join.css';
-@import '/components/header-style.css';
 @import '/pages/main/css/main.css';
 @import '/pages/map/css/map.css';
 @import '/pages/bookmark/css/bookmark.css';
+
+/* Components */
+@import '/components/mainfooter.css';
+@import '/components/header-style.css';
+@import '/components/bottom-nav.css';
+@import '/components/search-window.css';
