@@ -25,8 +25,15 @@ body {
 }
 
 .beach-name {
+  height: 100%;
+  width: 12rem;
   font-size: 1.125rem;
-  text-align: center;
+  align-items: center;
+}
+
+.beach-name button {
+  font-size: 1.125rem;
+  padding-left: 0;
 }
 
 .beach-address {
@@ -34,6 +41,11 @@ body {
   font-size: 0.825rem;
   height: 2rem;
   width: 10rem;
+}
+
+.beach-name button {
+  background-color: transparent;
+  border-style: none;
 }
 
 .weader-area {
