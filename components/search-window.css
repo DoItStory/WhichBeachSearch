@@ -1,0 +1,26 @@
+.search__window {
+  display: flex;
+  height: 1.5rem;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.beach-search {
+  display: flex;
+  height: 100%;
+  background-color: white;
+  border-radius: 0.3rem;
+}
+
+#beach-search__input {
+  width: 8.125rem;
+  border-style: none;
+  background-color: transparent;
+  text-align: center;
+}
+#beach-search__submit {
+  border-style: none;
+  background-color: transparent;
+}
