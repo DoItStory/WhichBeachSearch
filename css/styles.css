@@ -1,5 +1,6 @@
 /* main css */
 @import 'minireset.css';
+@import 'common.css';
 @import '/css/color.css';
 
 /* Page css */
