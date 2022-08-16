@@ -27,3 +27,13 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.align-right {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn__withdrawal {
+  width: fit-content;
+}
