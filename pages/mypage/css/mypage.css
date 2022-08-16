@@ -34,6 +34,23 @@ body {
   justify-content: flex-end;
 }
 
+.btn__menu {
+  background-color: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0.1rem solid black;
+  text-align: left;
+  margin-bottom: 3rem;
+  padding: 2.8rem 0rem;
+}
+.btn__menu:hover {
+  background-color: #d60000;
+}
+.btn__menu:active {
+  background-color: #d6bb59;
+}
+
 .btn__withdrawal {
   width: fit-content;
 }
