@@ -1,13 +1,4 @@
 body {
-  width: 100%;
-  height: 100vh;
-  left: 0;
-  right: 0;
-  top: 0;
-  position: fixed;
-}
-
-.mypage-body {
   width: 36rem;
   height: 100vh;
   margin: 0 auto;
