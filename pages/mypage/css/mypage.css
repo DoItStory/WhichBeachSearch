@@ -10,3 +10,8 @@
   justify-content: center;
   align-items: center;
 }
+
+.mypage-content {
+  height: calc(100vh - 5rem);
+  overflow: auto;
+}
