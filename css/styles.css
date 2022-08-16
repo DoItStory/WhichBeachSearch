@@ -12,5 +12,5 @@
 /* Components */
 @import '/components/mainfooter.css';
 @import '/components/header-style.css';
-@import '/components/bottom-nav.css';
+@import '/components/nav.css';
 @import '/components/search-window.css';
