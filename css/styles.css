@@ -3,13 +3,6 @@
 @import 'common.css';
 @import '/css/color.css';
 
-/* Page css */
-@import '/pages/login/css/login.css';
-@import '/pages/join/css/join.css';
-@import '/pages/main/css/main.css';
-@import '/pages/map/css/map.css';
-@import '/pages/bookmark/css/bookmark.css';
-
 /* Components */
 @import '/components/mainfooter.css';
 @import '/components/header-style.css';
