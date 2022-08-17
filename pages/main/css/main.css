@@ -42,13 +42,13 @@
   border-style: none;
 }
 
-.sunset__sunrise__area {
+.sun-time {
   height: 12rem;
   width: 100%;
   padding: 1.2rem 4.8rem 1.2rem 4.8rem;
 }
 
-.sun__info__box {
+.sun-time__area {
   height: 100%;
   width: 100%;
   background-color: #e5d4ab;
@@ -56,7 +56,7 @@
   display: flex;
 }
 
-.sun__time__info {
+.sun-time__info {
   height: 100%;
   width: 50%;
   display: flex;
@@ -64,7 +64,7 @@
   align-items: center;
 }
 
-.sun__board {
+.sun-time__board {
   margin-top: 0.8rem;
   text-align: center;
   height: 4rem;
@@ -72,7 +72,7 @@
   font-size: 1.6rem;
 }
 
-.sun__icon {
+.sun-time__icon {
   padding-top: 1.6rem;
   height: 100%;
   width: 100%;
@@ -81,11 +81,11 @@
   overflow: hidden;
   color: tomato;
 }
-.sun__set__icon {
+.sun-time__icon--color-purple {
   color: #89748b;
 }
 
-.more-area {
+.more-info {
   height: 11.2rem;
   width: 100%;
   padding: 0 1.6rem 1.2rem 1.6rem;
@@ -93,7 +93,7 @@
   justify-content: space-between;
 }
 
-.more__info__box {
+.more-info__btn {
   height: 6.4rem;
   width: 6.4rem;
   display: block;
