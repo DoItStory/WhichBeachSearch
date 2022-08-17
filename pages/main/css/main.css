@@ -51,7 +51,7 @@
 .sun-time__area {
   height: 100%;
   width: 100%;
-  background-color: #e5d4ab;
+  background-color: var(--sun-time-bg-color);
   border-radius: 1.6rem;
   display: flex;
 }

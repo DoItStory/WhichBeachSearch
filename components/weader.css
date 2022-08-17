@@ -16,7 +16,7 @@
   height: 100%;
   width: 100%;
   padding: 0.4rem 0.1rem 0.4rem 0.1rem;
-  background-color: #59abe6;
+  background-color: var(--weader-bg-color);
   display: flex;
   justify-content: space-between;
 }
