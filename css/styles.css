@@ -4,7 +4,6 @@
 @import '/css/color.css';
 
 /* Components */
-@import '/components/mainfooter.css';
 @import '/components/header-style.css';
 @import '/components/nav.css';
 @import '/components/search.css';
