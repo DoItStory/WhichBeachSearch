@@ -1,10 +1,10 @@
 .join-header {
-  height: 6.375rem;
+  height: 10.2rem;
   width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  padding-top: 2.375rem;
+  padding-top: 3.8rem;
 }
 
 .join-area {
@@ -14,37 +14,37 @@
 }
 
 .join-screen {
-  height: 30.5rem;
-  width: 18.525rem;
+  height: 48.8rem;
+  width: 29.6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: var(--background-color);
-  border-radius: 0.625rem;
+  border-radius: 1rem;
 }
 
 .join-title {
   display: block;
-  height: 3.75rem;
-  padding-top: 0.8rem;
-  font-size: 1.1rem;
+  height: 6rem;
+  padding-top: 1.2rem;
+  font-size: 1.6rem;
 }
 
 .join-form {
   height: 100%;
-  width: 16rem;
+  width: 25.6rem;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 0.4rem;
+  margin-top: 0.6rem;
 }
 
 .join-user {
-  height: 3.5rem;
+  height: 5.6rem;
   width: 100%;
 }
 
 .join-user label {
-  font-size: 0.95rem;
+  font-size: 1.5rem;
   font-style: italic;
 }
 
@@ -53,12 +53,12 @@
 #join-pw__check,
 #join__nick-name {
   width: 100%;
-  font-size: 1.05rem;
-  padding: 0.2rem 0 0.2rem 0.5rem;
+  font-size: 1.6rem;
+  padding: 0.3rem 0 0.3rem 0.8rem;
   border-style: none;
   background-color: transparent;
-  margin-top: 0.3rem;
-  border-radius: 0.4rem;
+  margin-top: 0.5rem;
+  border-radius: 0.6rem;
   outline: none;
 }
 
@@ -66,7 +66,7 @@
 #join-pw:focus,
 #join-pw__check:focus,
 #join__nick-name:focus {
-  border: 0.1rem solid rgba(0, 0, 0, 0.5);
+  border: 0.2rem solid rgba(0, 0, 0, 0.5);
   color: black;
   background-color: white;
 }
@@ -76,27 +76,27 @@
 }
 
 .image-container {
-  height: 6.75rem;
+  height: 10.8rem;
   display: flex;
 }
 #preview-image {
   display: block;
-  width: 7.5rem;
+  width: 12rem;
   height: 100%;
   background-color: white;
 }
 #input-image {
   display: block;
-  width: 4.8rem;
-  margin-left: 0.5rem;
+  width: 7.6rem;
+  margin-left: 0.8rem;
   align-self: flex-start;
-  font-size: 1rem;
+  font-size: 1.6rem;
 }
 
 .join__action {
   display: flex;
   width: 100%;
-  height: 1.5rem;
+  height: 2.4rem;
   justify-content: space-between;
   text-align: center;
   align-items: center;
@@ -105,14 +105,14 @@
 .join__action button {
   display: block;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.6rem;
   background-color: transparent;
   border-style: none;
 }
 
 .join__action input {
   display: block;
-  font-size: 1.1rem;
+  font-size: 1.7rem;
   border-style: none;
   background-color: transparent;
 }

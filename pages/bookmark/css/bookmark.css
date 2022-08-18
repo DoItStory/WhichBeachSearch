@@ -1,32 +1,32 @@
 .bookmark-header {
-  height: 2.5rem;
+  height: 4rem;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 1.6rem;
 }
 
 .bookmark-list {
   width: 100%;
   height: 100%;
-  padding: 1rem 1rem 0 1.25rem;
+  padding: 1.6rem 1.6rem 0 2rem;
 }
 
 .bookmark-list h2 {
-  margin-bottom: 0.875rem;
-  font-size: 0.875rem;
+  margin-bottom: 1.4rem;
+  font-size: 1.4rem;
 }
 
 .bookmark {
   width: 100%;
-  height: 3.75rem;
+  height: 6rem;
   background-color: var(--background-color);
-  margin-bottom: 1.875rem;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
+  margin-bottom: 3rem;
+  box-shadow: 0px 6.4px 6.4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
   display: flex;
-  padding: 0.75rem;
+  padding: 1.2rem;
   align-items: center;
 }
 
@@ -36,8 +36,8 @@
 }
 
 .bookmark__info address {
-  margin-top: 0.2rem;
-  font-size: 0.875rem;
+  margin-top: 0.3rem;
+  font-size: 1.4rem;
 }
 
 .bookmark__icon {
@@ -46,6 +46,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.375rem;
+  font-size: 2.2rem;
   color: yellow;
 }

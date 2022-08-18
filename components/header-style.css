@@ -1,6 +1,6 @@
 .header-style--color-main {
-  font-size: 1.75rem;
+  font-size: 2.8rem;
   font-weight: bold;
   color: var(--main-header-color);
-  text-shadow: 0.2rem 0 rgba(118, 115, 250, 0.5), 0 0.13rem rgba(0, 0, 0, 0.3);
+  text-shadow: 0.3rem 0 rgba(118, 115, 250, 0.5), 0 0.2rem rgba(0, 0, 0, 0.3);
 }
