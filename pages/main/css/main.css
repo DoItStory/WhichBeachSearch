@@ -44,51 +44,6 @@
   overflow: auto;
 }
 
-.sun-time {
-  height: 12rem;
-  width: 100%;
-  margin: 3rem 0rem 3rem 0rem;
-  padding: 2rem 4rem 1.2rem 4rem;
-  background-color: var(--sun-time-bg-color);
-  border-radius: 1.6rem;
-  display: flex;
-}
-
-.sun-time__info {
-  height: 100%;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.sun-time__board {
-  text-align: center;
-  height: 4rem;
-  flex-wrap: wrap;
-  font-size: 1.5rem;
-}
-
-.sun-time__icon {
-  padding-top: 1.6rem;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  font-size: 7rem;
-  overflow: hidden;
-  color: tomato;
-}
-.sun-time__icon--color-purple {
-  color: #89748b;
-}
-
-.more-info {
-  width: 100%;
-  padding: 0 1.6rem 1.2rem 1.6rem;
-  display: flex;
-  justify-content: space-between;
-}
-
 .more-info__btn {
   height: 6.4rem;
   width: 6.4rem;
