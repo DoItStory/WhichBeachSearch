@@ -1,20 +1,22 @@
+
 .login-header {
-  height: 15rem;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  padding-top: 7rem;
+  align-items: center;
 }
 
 .login-contents {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .login-screen {
-  height: 40rem;
+  height: 42rem;
   width: 29rem;
   display: flex;
   flex-direction: column;
@@ -102,4 +104,8 @@
 .join-find div > button:last-child {
   padding-right: 2.4rem;
   padding-bottom: 0.8rem;
+}
+
+.bottom-empty {
+  height:100%;
 }
