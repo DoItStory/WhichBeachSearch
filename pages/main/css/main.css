@@ -1,4 +1,4 @@
-.main {
+.main-header {
   height: 28rem;
   width: 100%;
   display: flex;
@@ -28,6 +28,8 @@
 .beach-name button {
   font-size: 1.8rem;
   padding-left: 0;
+  background-color: transparent;
+  border-style: none;
 }
 
 .beach-address {
@@ -37,9 +39,9 @@
   width: 16rem;
 }
 
-.beach-name button {
-  background-color: transparent;
-  border-style: none;
+.main-contents {
+  height: 100%;
+  overflow: auto;
 }
 
 .sun-time {
