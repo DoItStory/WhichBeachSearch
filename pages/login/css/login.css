@@ -1,4 +1,4 @@
-.main-header {
+.login-header {
   height: 9.375rem;
   width: 100%;
   display: flex;
@@ -7,7 +7,7 @@
   padding-top: 4.375rem;
 }
 
-.login-area {
+.login-contents {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,12 +43,12 @@
   flex-wrap: wrap;
 }
 
-.login-user {
+.login-form__user {
   height: 4.5rem;
   width: 12rem;
 }
 
-.login-user label {
+.login-form__user label {
   font-size: 1.1rem;
   font-style: italic;
 }
@@ -64,23 +64,23 @@
   border-radius: 0.4rem;
 }
 
-.login-user input:focus {
+.login-form__user input:focus {
   outline: none;
 }
 
-.login__submit {
+.login-form__submit {
   height: 1.5rem;
   width: 100%;
   text-align: center;
 }
 
-.login__submit input {
+.login-form__submit input {
   font-size: 1.6rem;
   border-style: none;
   background-color: transparent;
 }
 
-.join__find-info {
+.join-find {
   height: 2.75rem;
   width: 100%;
   display: flex;
@@ -88,18 +88,18 @@
   align-items: center;
 }
 
-.join__find-info div > button {
+.join-find div > button {
   background-color: transparent;
   border-style: none;
   font-size: 1rem;
 }
 
-.join__find-info div > button:first-child {
+.join-find div > button:first-child {
   padding-left: 1.5rem;
   padding-bottom: 0.5rem;
 }
 
-.join__find-info div > button:last-child {
+.join-find div > button:last-child {
   padding-right: 1.5rem;
   padding-bottom: 0.5rem;
 }

@@ -9,10 +9,11 @@
     <title>WhichBeachSearch</title>
   </head>
   <body>
-    <div class="main-header">
+    <div class="login-header">
       <header class="header-style--color-main">WhichBeachSearch</header>
     </div>
-    <div class="login-area">
+
+    <div class="login-contents">
       <div class="login-screen">
         <div class="login-guest">
           <button onclick="location.href='../main/main.html'">
@@ -20,13 +21,13 @@
           </button>
         </div>
         <form action="" method="get" class="login-form">
-          <div class="login-user">
+          <div class="login-form__user">
             <label for="user-id"
               ><i class="fa-regular fa-circle-user fa-lg"></i
             ></label>
             <input type="email" placeholder="E-mail" id="user-id" required />
           </div>
-          <div class="login-user">
+          <div class="login-form__user">
             <label for="user-pw"><i class="fa-solid fa-key fa-lg"></i></label>
             <input
               type="password"
@@ -36,11 +37,12 @@
               maxlength
             />
           </div>
-          <div class="login__submit">
+          <div class="login-form__submit">
             <input type="submit" value="log-in" />
           </div>
         </form>
-        <div class="join__find-info">
+
+        <div class="join-find">
           <div>
             <button onclick="location.href='../join/join.html'">
               회원가입
@@ -50,7 +52,6 @@
         </div>
       </div>
     </div>
-
     <script
       src="https://kit.fontawesome.com/ef84290deb.js"
       crossorigin="anonymous"
