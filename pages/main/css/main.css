@@ -23,6 +23,7 @@
   width: 19.2rem;
   font-size: 1.8rem;
   align-items: center;
+  text-decoration-line: none;
 }
 
 .beach-name button {
