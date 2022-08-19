@@ -1,19 +1,20 @@
 .join-header {
-  height: 10.2rem;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  padding-top: 3.8rem;
+  align-items: center;
 }
 
-.join-area {
+.join-contents {
+  height:100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.join-screen {
+.join__screen {
   height: 48.8rem;
   width: 29.6rem;
   display: flex;
@@ -23,96 +24,13 @@
   border-radius: 1rem;
 }
 
-.join-title {
+.join__title {
   display: block;
   height: 6rem;
   padding-top: 1.2rem;
   font-size: 1.6rem;
 }
 
-.join-form {
-  height: 100%;
-  width: 25.6rem;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 0.6rem;
-}
-
-.join-user {
-  height: 5.6rem;
-  width: 100%;
-}
-
-.join-user label {
-  font-size: 1.5rem;
-  font-style: italic;
-}
-
-#join-id,
-#join-pw,
-#join-pw__check,
-#join__nick-name {
-  width: 100%;
-  font-size: 1.6rem;
-  padding: 0.3rem 0 0.3rem 0.8rem;
-  border-style: none;
-  background-color: transparent;
-  margin-top: 0.5rem;
-  border-radius: 0.6rem;
-  outline: none;
-}
-
-#join-id:focus,
-#join-pw:focus,
-#join-pw__check:focus,
-#join__nick-name:focus {
-  border: 0.2rem solid rgba(0, 0, 0, 0.5);
-  color: black;
-  background-color: white;
-}
-
-.join-user div > input:focus {
-  background-color: white;
-}
-
-.image-container {
-  height: 10.8rem;
-  display: flex;
-}
-#preview-image {
-  display: block;
-  width: 12rem;
-  height: 100%;
-  background-color: white;
-}
-#input-image {
-  display: block;
-  width: 7.6rem;
-  margin-left: 0.8rem;
-  align-self: flex-start;
-  font-size: 1.6rem;
-}
-
-.join__action {
-  display: flex;
-  width: 100%;
-  height: 2.4rem;
-  justify-content: space-between;
-  text-align: center;
-  align-items: center;
-}
-
-.join__action button {
-  display: block;
-  text-decoration: none;
-  font-size: 1.6rem;
-  background-color: transparent;
-  border-style: none;
-}
-
-.join__action input {
-  display: block;
-  font-size: 1.7rem;
-  border-style: none;
-  background-color: transparent;
+.bottom-empty {
+  height:100%;
 }
