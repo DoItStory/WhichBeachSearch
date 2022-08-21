@@ -67,7 +67,20 @@
     <script type="module">
       import { signUpWithEmailPassword } from '../../js/signUp.js';
       function signUp() {
-        signUpWithEmailPassword('test@test.com', 'testtest');
+        const result = signUpWithEmailPassword('test@test.com', 'testtest')
+          .then(() => {
+            alert('회원가입 성공');
+            // 화면이동
+          })
+          .catch(error => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            switch (errorCode) {
+              case 'auth/email-already-in-use':
+                alert(`이미 가입된 이메일입니다. 다른 이메일을 이용해주세요.`);
+                break;
+            }
+          });
       }
 
       window.signUp = signUp;
