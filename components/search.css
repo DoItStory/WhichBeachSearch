@@ -1,26 +1,27 @@
-.search__window {
+.search {
   display: flex;
-  height: 1.5rem;
+  height: 2.4rem;
   width: 100%;
   justify-content: space-between;
-  margin-top: 0.5rem;
+  margin-top: 0.8rem;
   align-items: center;
 }
 
-.beach-search {
+.search-form {
   display: flex;
   height: 100%;
   background-color: white;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 }
 
-#beach-search__input {
-  width: 8.125rem;
+.search-form__input {
+  width: 13rem;
   border-style: none;
   background-color: transparent;
   text-align: center;
 }
-#beach-search__submit {
+
+.search-form__submit {
   border-style: none;
   background-color: transparent;
 }

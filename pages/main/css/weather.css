@@ -1,0 +1,52 @@
+.weather {
+  height: 12rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.weather__title {
+  height: 1.4rem;
+  width: auto;
+  margin: 0.5rem 0 0.6rem 0.6rem;
+  font-size: 1.4rem;
+}
+
+.weather__area {
+  height: 100%;
+  width: 100%;
+  padding: 0.8rem 0.1rem 0.4rem 0.1rem;
+  background-color: var(--weather-bg-color);
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather__info {
+  height: 100%;
+  width: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather__date,
+.weather__temp,
+.weather__tide {
+  font-size: 1.3rem;
+  color: white;
+}
+
+.weather__icon {
+  font-size: 2.4rem;
+}
+
+.weather__every-hour {
+  height: 100%;
+  width: 6.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}

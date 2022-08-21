@@ -5,62 +5,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="./css/join.css" />
+    <link rel="stylesheet" href="./css/form.css" />
+    <script
+      defer
+      src="https://kit.fontawesome.com/ef84290deb.js"
+      crossorigin="anonymous"
+    ></script>
     <title>WhichBeachSearch</title>
   </head>
   <body>
     <div class="join-header">
-      <header class="main-header-style">WhichBeachSearch</header>
+      <header class="header__main">WhichBeachSearch</header>
     </div>
-    <div class="join-area">
-      <div class="join-screen">
-        <h1 class="join-title">회원이 되어주셔서 감사합니다!</h1>
+    <div class="join-contents">
+      <div class="join__screen">
+        <h1 class="join__title">회원이 되어주셔서 감사합니다!</h1>
         <form action="" method="get" class="join-form">
-          <div class="join-user">
-            <label for="join-id">ID로 사용 할 E-mail을 입력해주세요.</label>
+          <div class="join-form__user">
+            <label for="join-form__id"
+              >ID로 사용 할 E-mail을 입력해주세요.</label
+            >
             <input
               type="email"
               placeholder="E-mail"
-              id="join-id"
+              id="join-form__id"
+              class="join-form__id"
               required
               autocomplete="off"
             />
           </div>
-          <div class="join-user">
-            <label for="join-pw">비밀번호 설정</label>
+          <div class="join-form__user">
+            <label for="join-form__pw">비밀번호 설정</label>
             <input
               type="password"
               placeholder="password"
-              id="join-pw"
+              id="join-form__pw"
+              class="join-form__pw"
               required
               autocomplete="off"
             />
           </div>
-          <div class="join-user">
-            <label for="join-pw">비밀번호 확인</label>
+          <div class="join-form__user">
+            <label for="join-form__pw">비밀번호 확인</label>
             <input
               type="password"
               placeholder="password"
-              id="join-pw__check"
+              id="join-form__pw-check"
+              class="join-form__pw-check"
               required
-              pattern="join-pw"
+              pattern="join-form__pw"
               autocomplete="off"
             />
           </div>
-          <div class="join-user">
+          <div class="join-form__user">
             <label for="join__nick-name">닉네임 설정</label>
             <input
               type="text"
               placeholder="닉네임 입력"
               id="join__nick-name"
+              class="join__nick-name"
               required
               maxlength="8"
             />
           </div>
-          <div class="image-container">
-            <img id="preview-image" src="" />
-            <input type="file" id="input-image" />
+          <div class="join-form__image-container">
+            <img
+              id="join-form__preview-image"
+              class="join-form__preview-image"
+              src=""
+            />
+            <input
+              type="file"
+              id="join-form__input-image"
+              class="join-form__input-image"
+            />
           </div>
-          <div class="join__action">
+          <div class="join-form__action">
             <button onclick="location.href='../login/login.html'">
               뒤로 가기
             </button>
@@ -69,14 +90,6 @@
         </form>
       </div>
     </div>
-    <div class="main-footer">
-      <div><footer>Made by DotiStory</footer></div>
-      <div><footer>v1.0.0</footer></div>
-    </div>
-
-    <script
-      src="https://kit.fontawesome.com/ef84290deb.js"
-      crossorigin="anonymous"
-    ></script>
+    <div class="bottom-empty"></div>
   </body>
 </html>
