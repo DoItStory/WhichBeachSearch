@@ -4,6 +4,6 @@
 @import '/css/color.css';
 
 /* Components */
-@import '/components/header-style.css';
+@import '/components/header.css';
 @import '/components/nav.css';
 @import '/components/search.css';
