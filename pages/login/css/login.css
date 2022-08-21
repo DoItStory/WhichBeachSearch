@@ -1,4 +1,3 @@
-
 .login-header {
   height: 100%;
   width: 100%;
@@ -55,8 +54,8 @@
   font-style: italic;
 }
 
-#user-id,
-#user-pw {
+.user-id,
+.user-pw {
   width: 100%;
   font-size: 1.8rem;
   padding: 0.4rem 0 0.4rem 0.3rem;
@@ -107,5 +106,5 @@
 }
 
 .bottom-empty {
-  height:100%;
+  height: 100%;
 }

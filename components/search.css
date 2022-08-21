@@ -14,14 +14,14 @@
   border-radius: 0.4rem;
 }
 
-#search-form__input {
+.search-form__input {
   width: 13rem;
   border-style: none;
   background-color: transparent;
   text-align: center;
 }
 
-#search-form__submit {
+.search-form__submit {
   border-style: none;
   background-color: transparent;
 }

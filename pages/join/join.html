@@ -30,6 +30,7 @@
               type="email"
               placeholder="E-mail"
               id="join-form__id"
+              class="join-form__id"
               required
               autocomplete="off"
             />
@@ -40,6 +41,7 @@
               type="password"
               placeholder="password"
               id="join-form__pw"
+              class="join-form__pw"
               required
               autocomplete="off"
             />
@@ -62,13 +64,22 @@
               type="text"
               placeholder="닉네임 입력"
               id="join__nick-name"
+              class="join__nick-name"
               required
               maxlength="8"
             />
           </div>
           <div class="join-form__image-container">
-            <img id="join-form__preview-image" src="" />
-            <input type="file" id="join-form__input-image" />
+            <img
+              id="join-form__preview-image"
+              class="join-form__preview-image"
+              src=""
+            />
+            <input
+              type="file"
+              id="join-form__input-image"
+              class="join-form__input-image"
+            />
           </div>
           <div class="join-form__action">
             <button onclick="location.href='../login/login.html'">
