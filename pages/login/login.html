@@ -56,14 +56,21 @@
 
         <div class="join-find">
           <div>
-            <button onclick="location.href='../join/join.html'">
-              회원가입
-            </button>
+            <button onclick="signUp()">회원가입</button>
           </div>
           <div><button>내 정보 찾기</button></div>
         </div>
       </div>
     </div>
     <div class="bottom-empty"></div>
+
+    <script type="module">
+      import { signUpWithEmailPassword } from '../../js/signUp.js';
+      function signUp() {
+        signUpWithEmailPassword('test@test.com', 'testtest');
+      }
+
+      window.signUp = signUp;
+    </script>
   </body>
 </html>
