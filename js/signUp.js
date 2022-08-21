@@ -1,4 +1,4 @@
-import { app, analytics } from './initialize.js';
+import { initializeFirebase } from './initialize.js';
 import {
   getAuth,
   createUserWithEmailAndPassword,
