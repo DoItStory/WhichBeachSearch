@@ -35,6 +35,17 @@ signUpButton.addEventListener('click', handleSignUpSubmit);
 function handleSignUpSubmit(event) {
   event.preventDefault();
   const signUpEmail = document.getElementById('signUpEmail').value;
-  const signUpPassword = document.getElementById('signUpPassword').value;
+  const signUpPassword = signUpPasswordCheck();
   signUp(signUpEmail, signUpPassword);
+}
+
+function signUpPasswordCheck() {
+  const password = document.getElementById('signUpPassword').value;
+  const passwordCheck = document.getElementById('signUpPasswordCheck').value;
+  if (password != passwordCheck) {
+    document.getElementById('signUpPasswordCheck').focus();
+    alert(`비밀번호가 서로 다릅니다. 다시 확인해주세요.`);
+  } else {
+    return password;
+  }
 }
