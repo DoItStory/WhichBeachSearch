@@ -9,11 +9,13 @@ export async function signUpWithEmailPassword(email, password) {
   return await createUserWithEmailAndPassword(auth, email, password);
 }
 
-function signUp() {
-  const result = signUpWithEmailPassword('test@test.com', 'testtest')
-    .then(() => {
-      alert('회원가입 성공');
+function signUp(getUserEmail, getUserPassword) {
+  const result = signUpWithEmailPassword(getUserEmail, getUserPassword)
+    .then(userCredential => {
+      const user = userCredential.user;
+      alert('회원가입에 성공하였습니다. 다시 로그인하고 이용해주세요.');
       // 화면이동
+      window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
     })
     .catch(error => {
       const errorCode = error.code;
