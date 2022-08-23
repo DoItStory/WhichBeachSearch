@@ -12,6 +12,7 @@
       src="https://kit.fontawesome.com/ef84290deb.js"
       crossorigin="anonymous"
     ></script>
+    <script defer type="module" src="/js/signUp.js"></script>
     <title>WhichBeachSearch</title>
   </head>
   <body>
@@ -29,7 +30,7 @@
             <input
               type="email"
               placeholder="E-mail"
-              id="join-form__id"
+              id="signUpEmail"
               class="join-form__id"
               required
               autocomplete="off"
@@ -40,7 +41,7 @@
             <input
               type="password"
               placeholder="password"
-              id="join-form__pw"
+              id="signUpPassword"
               class="join-form__pw"
               required
               autocomplete="off"
@@ -50,11 +51,10 @@
             <label for="join-form__pw">비밀번호 확인</label>
             <input
               type="password"
-              placeholder="password"
-              id="join-form__pw-check"
+              placeholder="password check"
+              id="signUpPasswordCheck"
               class="join-form__pw-check"
               required
-              pattern="join-form__pw"
               autocomplete="off"
             />
           </div>
@@ -63,21 +63,17 @@
             <input
               type="text"
               placeholder="닉네임 입력"
-              id="join__nick-name"
+              id="signUpName"
               class="join__nick-name"
               required
               maxlength="8"
             />
           </div>
           <div class="join-form__image-container">
-            <img
-              id="join-form__preview-image"
-              class="join-form__preview-image"
-              src=""
-            />
+            <img id="profilImage" class="join-form__preview-image" src="" />
             <input
               type="file"
-              id="join-form__input-image"
+              id="upLoadProfilImage"
               class="join-form__input-image"
             />
           </div>
@@ -85,7 +81,7 @@
             <button onclick="location.href='../login/login.html'">
               뒤로 가기
             </button>
-            <input type="submit" value="시작하기" />
+            <button id="signUpbtn" type="submit">시작 하기</button>
           </div>
         </form>
       </div>
