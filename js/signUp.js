@@ -38,13 +38,12 @@ function signUp(getUserEmail, getUserPassword) {
           document.getElementById('signUpEmail').focus();
           alert(`메일 형식에 맞지 않습니다. 메일 정보를 다시 확인해주세요.`);
           break;
-        // 동작하지가 않슴다..
-        /*         case 'auth/invalid-password': 
+        case 'auth/weak-password':
           document.getElementById('signUpPassword').focus();
           alert(
             `비밀번호가 6자 이상이어야 합니다. 비밀번호를 다시 입력해주세요.`,
           );
-          break; */
+          break;
         default:
           alert(`알 수 없는 오류가 발생하였습니다. 관리자에게 문의하십시오.`);
       }
@@ -58,28 +57,39 @@ signUpButton.addEventListener('click', handleSignUpSubmit);
 function handleSignUpSubmit(event) {
   event.preventDefault();
   const signUpEmail = document.getElementById('signUpEmail').value;
-  if (!signUpEmail) {
-    printNoneValue();
-  } else {
-    const signUpPassword = signUpPasswordCheck();
-    signUp(signUpEmail, signUpPassword);
-  }
-}
-
-function signUpPasswordCheck() {
   const password = document.getElementById('signUpPassword').value;
   const passwordCheck = document.getElementById('signUpPasswordCheck').value;
 
-  if (password != passwordCheck) {
-    document.getElementById('signUpPasswordCheck').focus();
-    alert('비밀번호가 서로 다릅니다. 다시 확인해주세요.');
-    throw new Error('different-password');
-  } else if (!password) {
-    printNoneValue();
-  } else return password;
+  const result = signUpCheck(signUpEmail, password, passwordCheck);
+  if (result) signUp(signUpEmail, password);
 }
 
-function printNoneValue() {
-  alert('입력되지 않은 정보가 있습니다.');
-  throw new Error('none-value-in-input');
+// 회원 가입 정보 값이 비어있는지 확인
+function signUpCheck(writtenEmail, writtenPassword, writtenPasswordCheck) {
+  try {
+    signUpEmailCheck(writtenEmail);
+    signUpPasswordCheck(writtenPassword, writtenPasswordCheck);
+    return true;
+  } catch (e) {
+    alert(`${e.message}`);
+    return false;
+  }
+}
+
+function signUpEmailCheck(inputEmail) {
+  if (!inputEmail) {
+    throw new Error(
+      '비어있는 정보가 있습니다. 양식을 다시 한 번 확인해주세요.',
+    );
+  } else return true;
+}
+
+function signUpPasswordCheck(inputPassword, inputPasswordCheck) {
+  if (!inputPassword || !inputPasswordCheck) {
+    throw new Error(
+      '비어있는 정보가 있습니다. 양식을 다시 한 번 확인해주세요.',
+    );
+  } else if (inputPassword !== inputPasswordCheck) {
+    throw new Error('비밀번호가 서로 다릅니다. 다시 입력해주세요.');
+  } else return true;
 }
