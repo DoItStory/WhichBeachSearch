@@ -50,10 +50,6 @@ function signUp(getUserEmail, getUserPassword) {
     });
 }
 
-const signUpButton = document.getElementById('signUpbtn');
-
-signUpButton.addEventListener('click', handleSignUpSubmit);
-
 function handleSignUpSubmit(event) {
   event.preventDefault();
   const signUpEmail = document.getElementById('signUpEmail').value;
@@ -93,3 +89,6 @@ function signUpPasswordCheck(inputPassword, inputPasswordCheck) {
     throw new Error('비밀번호가 서로 다릅니다. 다시 입력해주세요.');
   } else return true;
 }
+
+const signUpButton = document.getElementById('signUpbtn');
+signUpButton.addEventListener('click', handleSignUpSubmit);
