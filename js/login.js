@@ -29,7 +29,7 @@ logInBtn.addEventListener('click', handleLogInBtn);
 
 function handleLogInBtn(event) {
   event.preventDefault();
-  const getLogInId = document.getElementById('user-id').value;
-  const getLogInPassword = document.getElementById('user-pw').value;
+  const getLogInId = document.getElementById('login-id').value;
+  const getLogInPassword = document.getElementById('login-pw').value;
   logIn(getLogInId, getLogInPassword);
 }
