@@ -87,3 +87,8 @@ function signUpPasswordCheck(inputPassword, inputPasswordCheck) {
 
 const signUpButton = document.getElementById('signUpbtn');
 signUpButton.addEventListener('click', handleSignUpSubmit);
+
+const cancelBtn = document.getElementById('signUpCancelBtn');
+cancelBtn.addEventListener('click', () => {
+  window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
+});
