@@ -13,16 +13,13 @@ async function logInWithEmailAndPassword(email, password) {
 function logIn(userEmail, userPassword) {
   const result = logInWithEmailAndPassword(userEmail, userPassword)
     .then(userCredential => {
-      // Signed in
       const user = userCredential.user;
       alert('환영합니다!');
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
-      // ...
     })
     .catch(error => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(`errorCode = ${errorCode}, ${errorMessage}`);
       logInErrorPrint(errorCode);
     });
 }
@@ -44,8 +41,7 @@ function logInErrorPrint(errorCode) {
       alert();
   }
 }
-//errorCode = auth/too-many-requests, Firebase: Access to this account has been temporarily disabled due to many failed login attempts.
-//You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).
+
 const logInBtn = document.getElementById('loginBtn');
 logInBtn.addEventListener('click', handleLogInBtn);
 
