@@ -11,6 +11,7 @@
       src="https://kit.fontawesome.com/ef84290deb.js"
       crossorigin="anonymous"
     ></script>
+    <script defer type="module" src="/js/login.js"></script>
     <title>WhichBeachSearch</title>
   </head>
   <body>
@@ -27,30 +28,30 @@
         </div>
         <form action="" method="get" class="login-form">
           <div class="login-form__user">
-            <label for="user-id"
+            <label for="login-id"
               ><i class="fa-regular fa-circle-user fa-lg"></i
             ></label>
             <input
               type="email"
               placeholder="E-mail"
-              id="user-id"
-              class="user-id"
-              required
+              id="login-id"
+              class="login-id"
+              autocomplete="off"
             />
           </div>
           <div class="login-form__user">
-            <label for="user-pw"><i class="fa-solid fa-key fa-lg"></i></label>
+            <label for="login-pw"><i class="fa-solid fa-key fa-lg"></i></label>
             <input
               type="password"
               placeholder="Password"
-              id="user-pw"
-              class="user-pw"
-              required
+              id="login-pw"
+              class="login-pw"
               maxlength
+              autocomplete="off"
             />
           </div>
           <div class="login-form__submit">
-            <input type="submit" value="log-in" />
+            <input id="loginBtn" type="submit" value="log-in" />
           </div>
         </form>
 
