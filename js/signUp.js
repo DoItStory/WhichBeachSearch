@@ -29,23 +29,23 @@ function signUpErrorPrint(errorCode) {
   switch (errorCode) {
     case 'auth/email-already-in-use':
       document.getElementById('signUpEmail').focus();
-      alert(ERROR.CHECK_MAIL_DUPLICATES);
+      alert(ERROR.EMAIL_ALREADY_IN_USE);
       break;
     case 'auth/invalid-argument':
-      alert(`${errorCode}: ${ERROR.ADMIN_ERROR}`);
-      break;
     case 'auth/invalid-creation-time':
       alert(`${errorCode}: ${ERROR.ADMIN_ERROR}`);
+      break;
     case 'auth/invalid-email':
       document.getElementById('signUpEmail').focus();
-      alert(ERROR.MAIL_DOESNT_FIT);
+      alert(ERROR.INVALID_EMAIL);
       break;
     case 'auth/weak-password':
       document.getElementById('signUpPassword').focus();
-      alert(ERROR.CONFIRM_PASSWORD_DIGITS);
+      alert(ERROR.WEAK_PASSWORD);
       break;
     default:
-      alert();
+      errorCode = 'undefined error';
+      alert(ERROR.UNKNOWN_ERROR);
   }
 }
 
