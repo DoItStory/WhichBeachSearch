@@ -38,7 +38,8 @@ function logInErrorPrint(errorCode) {
       alert(ERROR.TOO_MANY_REQUESTS);
       break;
     default:
-      alert();
+      errorCode = 'undefined-error';
+      alert(ERROR.UNKNOWN_ERROR);
   }
 }
 
