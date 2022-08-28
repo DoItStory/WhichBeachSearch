@@ -22,6 +22,7 @@ function handleGoogleLogInBtn(event) {
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
+      window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
       const errorCode = error.code;
@@ -46,6 +47,7 @@ function handleFacebookLogInBtn(event) {
       const credential = FacebookAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
+      window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
       const errorCode = error.code;
