@@ -21,11 +21,11 @@ function logIn(userEmail, userPassword) {
     .catch(error => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      logInErrorPrint(errorCode);
+      errorPrint(errorCode);
     });
 }
 
-function logInErrorPrint(errorCode) {
+function errorPrint(errorCode) {
   switch (errorCode) {
     case 'auth/invalid-email':
     case 'auth/user-not-found':
@@ -44,18 +44,12 @@ function logInErrorPrint(errorCode) {
   }
 }
 
-const logInBtn = document.getElementById('loginBtn');
-logInBtn.addEventListener('click', handleLogInBtn);
-
 function handleLogInBtn(event) {
   event.preventDefault();
   const getLogInId = document.getElementById('login-id').value;
   const getLogInPassword = document.getElementById('login-pw').value;
   logIn(getLogInId, getLogInPassword);
 }
-
-const passwordResetBtn = document.getElementById('password-reset');
-passwordResetBtn.addEventListener('click', passwordReset);
 
 async function passwordReset(event) {
   event.preventDefault();
@@ -70,3 +64,9 @@ async function passwordReset(event) {
       const errorMessage = error.message;
     });
 }
+
+const logInBtn = document.getElementById('loginBtn');
+logInBtn.addEventListener('click', handleLogInBtn);
+
+const passwordResetBtn = document.getElementById('password-reset');
+passwordResetBtn.addEventListener('click', passwordReset);
