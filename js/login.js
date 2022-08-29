@@ -2,6 +2,7 @@ import { initializeFirebase } from './initialize.js';
 import {
   getAuth,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import { ERROR } from './error.js';
 
@@ -51,4 +52,21 @@ function handleLogInBtn(event) {
   const getLogInId = document.getElementById('login-id').value;
   const getLogInPassword = document.getElementById('login-pw').value;
   logIn(getLogInId, getLogInPassword);
+}
+
+const passwordResetBtn = document.getElementById('password-reset');
+passwordResetBtn.addEventListener('click', passwordReset);
+
+async function passwordReset(event) {
+  event.preventDefault();
+  const auth = getAuth();
+  const email = prompt('귀하의 이메일을 입력해주세요.');
+  await sendPasswordResetEmail(auth, email)
+    .then(() => {
+      alert('비밀번호를 재설정하는 메일이 전송되었습니다.');
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
 }
