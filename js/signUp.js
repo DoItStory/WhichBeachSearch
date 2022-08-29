@@ -44,7 +44,7 @@ function signUpErrorPrint(errorCode) {
       alert(ERROR.WEAK_PASSWORD);
       break;
     default:
-      errorCode = 'undefined error';
+      errorCode = 'undefined-error';
       alert(ERROR.UNKNOWN_ERROR);
   }
 }
