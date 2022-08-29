@@ -2,6 +2,7 @@ import { initializeFirebase } from './initialize.js';
 import {
   getAuth,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import { ERROR } from './error.js';
 
@@ -20,11 +21,11 @@ function logIn(userEmail, userPassword) {
     .catch(error => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      logInErrorPrint(errorCode);
+      errorPrint(errorCode);
     });
 }
 
-function logInErrorPrint(errorCode) {
+function errorPrint(errorCode) {
   switch (errorCode) {
     case 'auth/invalid-email':
     case 'auth/user-not-found':
@@ -43,12 +44,31 @@ function logInErrorPrint(errorCode) {
   }
 }
 
-const logInBtn = document.getElementById('loginBtn');
-logInBtn.addEventListener('click', handleLogInBtn);
-
 function handleLogInBtn(event) {
   event.preventDefault();
   const getLogInId = document.getElementById('login-id').value;
   const getLogInPassword = document.getElementById('login-pw').value;
   logIn(getLogInId, getLogInPassword);
 }
+
+async function passwordReset(event) {
+  event.preventDefault();
+  const auth = getAuth();
+  const email = prompt('귀하의 이메일을 입력해주세요.');
+  await sendPasswordResetEmail(auth, email)
+    .then(() => {
+      alert('비밀번호를 재설정하는 메일이 전송되었습니다.');
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorCode === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
+      else alert(`올바른 입력이 아니거나 요청이 취소되었습니다.`);
+    });
+}
+
+const logInBtn = document.getElementById('loginBtn');
+logInBtn.addEventListener('click', handleLogInBtn);
+
+const passwordResetBtn = document.getElementById('password-reset');
+passwordResetBtn.addEventListener('click', passwordReset);
