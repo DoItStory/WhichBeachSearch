@@ -13,4 +13,5 @@ export var ERROR = {
   POPUP_BLOCKED: `현재 팝업이 차단되어 있습니다.`,
   POPUP_CLOSED_BY_USER: `로그인 요청이 사용자에 의해 취소되었습니다.`,
   CANCELLED_POPUP_REQUEST: `이미 서버에 요청중입니다. 잠시만 기다려주세요.`,
+  USER_NOT_FOUND: `입력하신 이메일의 계정 정보가 존재하지 않습니다.`,
 };

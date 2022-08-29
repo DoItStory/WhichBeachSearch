@@ -62,6 +62,8 @@ async function passwordReset(event) {
     .catch(error => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      if (errorCode === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
+      else alert(`올바른 입력이 아니거나 요청이 취소되었습니다.`);
     });
 }
 
