@@ -16,7 +16,7 @@ function checkUserInfo(auth) {
       );
       if (askSignUp) {
         window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
-      } else history.back();
+      } else return;
     }
   });
 }
@@ -25,3 +25,11 @@ function getUserProfile() {
   const auth = getAuth();
   checkUserInfo(auth);
 }
+
+const changeNickname = document.getElementById('mypage__change-nickname');
+const changePassword = document.getElementById('mypage__change-password');
+const changeImage = document.getElementById('mypage__change-image');
+
+changeNickname.addEventListener('click', getUserProfile);
+changePassword.addEventListener('click', getUserProfile);
+changeImage.addEventListener('click', getUserProfile);

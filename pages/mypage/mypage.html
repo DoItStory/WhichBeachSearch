@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="./css/mypage.css" />
+    <script defer type="module" src="/js/mypage.js"></script>
     <script
       defer
       src="https://kit.fontawesome.com/ef84290deb.js"
@@ -18,9 +19,15 @@
       <header class="header__main">WhichBeachSearch</header>
     </div>
     <div class="mypage-content">
-      <button class="btn__menu">닉네임 변경하기</button>
-      <button class="btn__menu">비밀번호 변경하기</button>
-      <button class="btn__menu">프로필 이미지 변경하기</button>
+      <button class="btn__menu" id="mypage__change-nickname">
+        닉네임 변경하기
+      </button>
+      <button class="btn__menu" id="mypage__change-password">
+        비밀번호 변경하기
+      </button>
+      <button class="btn__menu" id="mypage__change-image">
+        프로필 이미지 변경하기
+      </button>
       <button class="btn__menu">공지사항</button>
       <button class="btn__menu">문의(건의) 하기</button>
       <button class="btn__menu">버전 정보</button>
