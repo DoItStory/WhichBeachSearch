@@ -6,6 +6,10 @@ import {
   FacebookAuthProvider,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import { ERROR } from './error.js';
+import {
+  showCircularProgress,
+  hideCircularProgress,
+} from './circular-progress.js';
 
 // Google 로그인
 async function googleLogInResult() {
@@ -16,8 +20,10 @@ async function googleLogInResult() {
 
 function handleGoogleLogInBtn(event) {
   event.preventDefault();
+  showCircularProgress();
   const result = googleLogInResult()
     .then(result => {
+      hideCircularProgress();
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       // The signed-in user info.
@@ -25,6 +31,7 @@ function handleGoogleLogInBtn(event) {
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
+      hideCircularProgress();
       const errorCode = error.code;
       const errorMessage = error.message;
       const email = error.customData.email;
@@ -42,14 +49,17 @@ async function facebookLogInResult() {
 
 function handleFacebookLogInBtn(event) {
   event.preventDefault();
+  showCircularProgress();
   const result = facebookLogInResult()
     .then(result => {
+      hideCircularProgress();
       const credential = FacebookAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
+      hideCircularProgress();
       const errorCode = error.code;
       const errorMessage = error.message;
       const email = error.customData.email;
