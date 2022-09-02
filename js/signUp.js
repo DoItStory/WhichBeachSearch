@@ -9,9 +9,9 @@ import {
   hideCircularProgress,
 } from './circular-progress.js';
 
-export async function signUpWithEmailPassword(email, password) {
+async function signUpWithEmailPassword(email, password) {
   const auth = getAuth();
-  return await createUserWithEmailAndPassword(auth, email, password);
+  return createUserWithEmailAndPassword(auth, email, password);
 }
 
 function signUp(getUserEmail, getUserPassword) {

@@ -10,9 +10,9 @@ import {
   hideCircularProgress,
 } from './circular-progress.js';
 
-async function logInWithEmailAndPassword(email, password) {
+function logInWithEmailAndPassword(email, password) {
   const auth = getAuth();
-  return await signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(auth, email, password);
 }
 
 function logIn(userEmail, userPassword) {
@@ -29,6 +29,24 @@ function logIn(userEmail, userPassword) {
       const errorCode = error.code;
       const errorMessage = error.message;
       errorPrint(errorCode);
+    });
+}
+
+function getPasswordUserInfo() {
+  const auth = getAuth();
+  const email = prompt('귀하의 이메일을 입력해주세요.');
+  return sendPasswordResetEmail(auth, email);
+}
+
+function handlePasswordReset() {
+  const result = getPasswordUserInfo()
+    .then(() => {
+      alert('비밀번호를 재설정하는 메일이 전송되었습니다.');
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorCode === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
     });
 }
 
@@ -58,20 +76,9 @@ function handleLogInBtn(event) {
   logIn(getLogInId, getLogInPassword);
 }
 
-async function passwordReset(event) {
+function passwordReset(event) {
   event.preventDefault();
-  const auth = getAuth();
-  const email = prompt('귀하의 이메일을 입력해주세요.');
-  await sendPasswordResetEmail(auth, email)
-    .then(() => {
-      alert('비밀번호를 재설정하는 메일이 전송되었습니다.');
-    })
-    .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      if (errorCode === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
-      else alert(`올바른 입력이 아니거나 요청이 취소되었습니다.`);
-    });
+  return handlePasswordReset();
 }
 
 const logInBtn = document.getElementById('loginBtn');

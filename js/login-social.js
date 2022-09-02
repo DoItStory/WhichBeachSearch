@@ -12,10 +12,10 @@ import {
 } from './circular-progress.js';
 
 // Google 로그인
-async function googleLogInResult() {
+function googleLogInResult() {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
-  return await signInWithPopup(auth, provider);
+  return signInWithPopup(auth, provider);
 }
 
 function handleGoogleLogInBtn(event) {
@@ -41,10 +41,10 @@ function handleGoogleLogInBtn(event) {
 }
 
 // Facebook 로그인
-async function facebookLogInResult() {
+function facebookLogInResult() {
   const provider = new FacebookAuthProvider();
   const auth = getAuth();
-  return await signInWithPopup(auth, provider);
+  return signInWithPopup(auth, provider);
 }
 
 function handleFacebookLogInBtn(event) {
@@ -74,7 +74,6 @@ function socialLogInErrorPrint(errorCode) {
       alert(ERROR.POPUP_BLOCKED);
       break;
     case 'auth/popup-closed-by-user':
-      alert(ERROR.POPUP_CLOSED_BY_USER);
       break;
     case 'auth/cancelled-popup-request':
       alert(ERROR.CANCELLED_POPUP_REQUEST);

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/main.css" />
     <link rel="stylesheet" href="./css/weather.css"/>
     <link rel="stylesheet" href="./css/sun-time.css"/>
+    <script defer type="module" src="/js/main.js"></script>
     <script
       defer
       src="https://kit.fontawesome.com/ef84290deb.js"
@@ -21,7 +22,7 @@
       <div class="search">
         <div class="beach-name">
           <span>해수욕장 이름</span>
-          <a type="button" href=""><i class="fa-regular fa-star"></i></a>
+          <a type="button" class="search__bookmark-btn hidden"><i class="fa-regular fa-star"></i></a>
         </div>
         <form class="search-form">
           <input
@@ -146,6 +147,8 @@
         <button class="more-info__btn" tyep="button">해수욕장 혼잡도</button>
         <button class="more-info__btn" tyep="button">지도에서 보기</button>
         <button class="more-info__btn" tyep="button">해수욕장 정보</button>
+        <!-- 테스트용 로그아웃 버튼 -->
+        <button class="more-info__btn" id="logout-btn"tyep="button">로그아웃</button>
       </div>
     </div>
 
@@ -158,8 +161,8 @@
         </li>
         <li class="bottom-nav__btn">
           <a href="/pages/bookmark/bookmark.html">
-            <i class="fa-solid fa-bookmark"></i>
-          </a>
+            <i id="bookmark-icon" class="fa-solid fa-bookmark"></i
+          ></a>
         </li>
         <li class="bottom-nav__btn">
           <a href="/pages/map/map.html">
