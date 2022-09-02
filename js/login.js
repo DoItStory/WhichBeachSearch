@@ -3,14 +3,11 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
-  setPersistence,
-  browserSessionPersistence,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import { ERROR } from './error.js';
 
 function logInWithEmailAndPassword(email, password) {
   const auth = getAuth();
-  setPersistence(auth, browserSessionPersistence);
   return signInWithEmailAndPassword(auth, email, password);
 }
 
