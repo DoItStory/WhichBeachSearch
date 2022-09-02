@@ -4,6 +4,10 @@ import {
   createUserWithEmailAndPassword,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import { ERROR } from './error.js';
+import {
+  showCircularProgress,
+  hideCircularProgress,
+} from './circular-progress.js';
 
 export async function signUpWithEmailPassword(email, password) {
   const auth = getAuth();
@@ -11,14 +15,17 @@ export async function signUpWithEmailPassword(email, password) {
 }
 
 function signUp(getUserEmail, getUserPassword) {
+  showCircularProgress();
   const result = signUpWithEmailPassword(getUserEmail, getUserPassword)
     .then(userCredential => {
+      hideCircularProgress();
       const user = userCredential.user;
       alert('회원가입에 성공하였습니다. 다시 로그인하고 이용해주세요.');
       // 화면이동
       window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
     })
     .catch(error => {
+      hideCircularProgress();
       const errorCode = error.code;
       const errorMessage = error.message;
       signUpErrorPrint(errorCode);

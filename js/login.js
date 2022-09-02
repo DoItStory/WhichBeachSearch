@@ -5,6 +5,10 @@ import {
   sendPasswordResetEmail,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import { ERROR } from './error.js';
+import {
+  showCircularProgress,
+  hideCircularProgress,
+} from './circular-progress.js';
 
 async function logInWithEmailAndPassword(email, password) {
   const auth = getAuth();
@@ -12,13 +16,16 @@ async function logInWithEmailAndPassword(email, password) {
 }
 
 function logIn(userEmail, userPassword) {
+  showCircularProgress();
   const result = logInWithEmailAndPassword(userEmail, userPassword)
     .then(userCredential => {
+      hideCircularProgress();
       const user = userCredential.user;
       alert('환영합니다!');
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
+      hideCircularProgress();
       const errorCode = error.code;
       const errorMessage = error.message;
       errorPrint(errorCode);
