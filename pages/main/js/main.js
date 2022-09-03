@@ -1,4 +1,4 @@
-import { initializeFirebase } from './initialize.js';
+import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   onAuthStateChanged,
