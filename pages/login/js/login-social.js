@@ -1,15 +1,15 @@
-import { initializeFirebase } from './initialize.js';
+import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
-import { ERROR } from './error.js';
+import { ERROR } from '../../../js/error.js';
 import {
   showCircularProgress,
   hideCircularProgress,
-} from './circular-progress.js';
+} from '../../../js/circular-progress.js';
 
 // Google 로그인
 function googleLogInResult() {

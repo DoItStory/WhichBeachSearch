@@ -1,13 +1,13 @@
-import { initializeFirebase } from './initialize.js';
+import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   createUserWithEmailAndPassword,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
-import { ERROR } from './error.js';
+import { ERROR } from '../../../js/error.js';
 import {
   showCircularProgress,
   hideCircularProgress,
-} from './circular-progress.js';
+} from '../../../js/circular-progress.js';
 
 async function signUpWithEmailPassword(email, password) {
   const auth = getAuth();
@@ -35,7 +35,7 @@ function signUp(getUserEmail, getUserPassword) {
 function signUpErrorPrint(errorCode) {
   switch (errorCode) {
     case 'auth/email-already-in-use':
-      document.getElementById('signUpEmail').focus();
+      document.getElementById('join-form__email').focus();
       alert(ERROR.EMAIL_ALREADY_IN_USE);
       break;
     case 'auth/invalid-argument':
@@ -43,11 +43,11 @@ function signUpErrorPrint(errorCode) {
       alert(`${errorCode}: ${ERROR.ADMIN_ERROR}`);
       break;
     case 'auth/invalid-email':
-      document.getElementById('signUpEmail').focus();
+      document.getElementById('join-form__email').focus();
       alert(ERROR.INVALID_EMAIL);
       break;
     case 'auth/weak-password':
-      document.getElementById('signUpPassword').focus();
+      document.getElementById('join-form__password').focus();
       alert(ERROR.WEAK_PASSWORD);
       break;
     default:
@@ -58,19 +58,19 @@ function signUpErrorPrint(errorCode) {
 
 function handleSignUpSubmit(event) {
   event.preventDefault();
-  const signUpEmail = document.getElementById('signUpEmail').value;
-  const password = document.getElementById('signUpPassword').value;
-  const passwordCheck = document.getElementById('signUpPasswordCheck').value;
+  const join-form__email = document.getElementById('join-form__email').value;
+  const password = document.getElementById('join-form__password').value;
+  const passwordCheck = document.getElementById('join-form__password-check').value;
 
-  const result = signUpCheck(signUpEmail, password, passwordCheck);
-  if (result) signUp(signUpEmail, password);
+  const result = signUpCheck(join-form__email, password, passwordCheck);
+  if (result) signUp(join-form__email, password);
 }
 
 // 회원 가입 정보 값이 비어있는지 확인
 function signUpCheck(writtenEmail, writtenPassword, writtenPasswordCheck) {
   try {
-    signUpEmailCheck(writtenEmail);
-    signUpPasswordCheck(writtenPassword, writtenPasswordCheck);
+    join-form__emailCheck(writtenEmail);
+    join-form__password-check(writtenPassword, writtenPasswordCheck);
     return true;
   } catch (e) {
     alert(`${e.message}`);
@@ -78,13 +78,13 @@ function signUpCheck(writtenEmail, writtenPassword, writtenPasswordCheck) {
   }
 }
 
-function signUpEmailCheck(inputEmail) {
+function join-form__emailCheck(inputEmail) {
   if (!inputEmail) {
     throw new Error(ERROR.EMPTY_VALUE_IN_INPUT);
   } else return true;
 }
 
-function signUpPasswordCheck(inputPassword, inputPasswordCheck) {
+function join-form__password-check(inputPassword, inputPasswordCheck) {
   if (!inputPassword || !inputPasswordCheck) {
     throw new Error(ERROR.EMPTY_VALUE_IN_INPUT);
   } else if (inputPassword !== inputPasswordCheck) {

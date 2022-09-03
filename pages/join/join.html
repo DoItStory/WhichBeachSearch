@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="./css/join.css" />
     <link rel="stylesheet" href="./css/form.css" />
-    <script defer type="module" src="../../js/error.js"></script>
     <script
       defer
       src="https://kit.fontawesome.com/ef84290deb.js"
       crossorigin="anonymous"
     ></script>
-    <script defer type="module" src="/js/signUp.js"></script>
+    <script defer type="module" src="/pages/join/js/signUp.js"></script>
     <title>WhichBeachSearch</title>
   </head>
   <body>
@@ -31,7 +30,7 @@
             <input
               type="email"
               placeholder="E-mail"
-              id="signUpEmail"
+              id="join-form__email"
               class="join-form__id"
               autocomplete="off"
             />
@@ -41,7 +40,7 @@
             <input
               type="password"
               placeholder="password"
-              id="signUpPassword"
+              id="join-form__password"
               class="join-form__pw"
               autocomplete="off"
             />
@@ -51,7 +50,7 @@
             <input
               type="password"
               placeholder="password check"
-              id="signUpPasswordCheck"
+              id="join-form__password-check"
               class="join-form__pw-check"
               autocomplete="off"
             />
@@ -61,7 +60,7 @@
             <input
               type="text"
               placeholder="닉네임 입력"
-              id="signUpName"
+              id="join-form__nickname"
               class="join__nick-name"
               maxlength="8"
               autocomplete="off"
@@ -71,7 +70,7 @@
             <img id="profilImage" class="join-form__preview-image" src="" />
             <input
               type="file"
-              id="upLoadProfilImage"
+              id="join-form__image"
               class="join-form__input-image"
             />
           </div>
