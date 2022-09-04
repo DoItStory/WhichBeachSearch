@@ -48,41 +48,31 @@ async function getUserData(uid) {
   querySnapshot.forEach(doc => {
     docRefId = doc.id;
     bookmarkListData = doc.data().docData;
-    console.log(bookmarkListData);
   });
+  paintBookmarkList(bookmarkListData);
 }
-/* 
-async function getUserData(docId) {
-  const docRef = doc(db, 'Bookmark', docId);
-  const docSnap = await getDoc(docRef);
-  bookmarkListData = docSnap.data().docData;
-  if (docSnap.exists()) {
-    console.log(bookmarkListData);
-  } else {
-    // doc.data() will be undefined in this case
-    console.log('No such document!');
+
+function paintBookmarkList(dataList) {
+  for (let data of dataList) {
+    const list = document.createElement('li');
+    list.classList.add(BOOKMARK_ITEM_CLASSNAME);
+    const div = document.createElement('div');
+    div.classList.add(BOOKMARK_DIV_CLASS);
+    const span = document.createElement('span');
+    span.textContent = data.name;
+    const address = document.createElement('address');
+    address.textContent = data.address;
+    const button = document.createElement('button');
+    button.classList.add(BOOKMARK_BTN_CLASS);
+    const icon = document.createElement('i');
+    icon.classList.add(BOOKMARK_ICON_CLASS);
+    icon.classList.add(BOOKMARK_ICON_CLASS2);
+
+    div.appendChild(span);
+    div.appendChild(address);
+    button.appendChild(icon);
+    list.appendChild(div);
+    list.appendChild(button);
+    bookmarkList.appendChild(list);
   }
-} */
-
-function paintBookmarkList() {
-  const list = document.createElement('li');
-  list.classList.add(BOOKMARK_ITEM_CLASSNAME);
-  const div = document.createElement('div');
-  div.classList.add(BOOKMARK_DIV_CLASS);
-  const span = document.createElement('span');
-  span.textContent = 'dataObject.name';
-  const address = document.createElement('address');
-  address.textContent = 'dataObject.address';
-  const button = document.createElement('button');
-  button.classList.add(BOOKMARK_BTN_CLASS);
-  const icon = document.createElement('i');
-  icon.classList.add(BOOKMARK_ICON_CLASS);
-  icon.classList.add(BOOKMARK_ICON_CLASS2);
-
-  div.appendChild(span);
-  div.appendChild(address);
-  button.appendChild(icon);
-  list.appendChild(div);
-  list.appendChild(button);
-  bookmarkList.appendChild(list);
 }
