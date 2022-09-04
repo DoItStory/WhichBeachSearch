@@ -36,18 +36,27 @@ let docRefId;
 async function handleBookmarkBtn() {
   await checkUserStore();
   if (!docRefId) {
-    // todo: 새로운 문서 생성하여 데이터 입력
-    try {
-      const docRef = await addDoc(collection(db, 'Bookmark'), {
-        name: '해운대 해수욕장',
-        address: '부산광역시 해운대구 우동',
-        uid: USER_UID,
-      });
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
+    createUserDoc();
   } else {
     // todo: 유저의 데이터 저장소에 즐겨찾기 추가 기능
+  }
+}
+// 새로운 문서(doc) 생성 함수
+async function createUserDoc() {
+  try {
+    const docData = [
+      {
+        name: '해운대 해수욕장',
+        address: '부산광역시 해운대구 우동',
+      },
+    ];
+    const docRef = await addDoc(collection(db, 'Bookmark'), {
+      docData,
+      uid: USER_UID,
+    });
+    docRefId = docRef.id;
+  } catch (e) {
+    console.error('Error adding document: ', e);
   }
 }
 
