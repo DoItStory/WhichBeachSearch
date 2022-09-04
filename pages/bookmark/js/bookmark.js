@@ -47,7 +47,7 @@ async function getUserData(uid) {
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach(doc => {
     docRefId = doc.id;
-    bookmarkListData = doc.data().docData;
+    bookmarkListData = doc.data().userBookmarkList;
   });
   paintBookmarkList(bookmarkListData);
 }

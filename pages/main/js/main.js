@@ -22,13 +22,13 @@ import {
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const HIDDEN_CLASSNAME = 'hidden';
-let USER_UID;
+let userUid;
 
 const auth = getAuth();
 onAuthStateChanged(auth, user => {
   if (user) {
     bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
-    USER_UID = user.uid;
+    userUid = user.uid;
   } else return;
 });
 
@@ -47,15 +47,15 @@ async function handleBookmarkBtn() {
 // 새로운 문서(doc) 생성 함수
 async function createUserDoc() {
   try {
-    const docData = [
+    const userBookmarkList = [
       {
         name: '해운대 해수욕장',
         address: '부산광역시 해운대구 우동',
       },
     ];
     const docRef = await addDoc(collection(db, 'Bookmark'), {
-      docData,
-      uid: USER_UID,
+      userBookmarkList,
+      uid: userUid,
     });
     docRefId = docRef.id;
   } catch (e) {
@@ -67,7 +67,7 @@ async function createUserDoc() {
 async function addDataInField(docRefId) {
   const docRef = doc(db, 'Bookmark', docRefId);
   await updateDoc(docRef, {
-    docData: arrayUnion({
+    userBookmarkList: arrayUnion({
       name: '명사십리 해수욕장',
       address: '전라남도 완도군',
     }),
@@ -76,7 +76,7 @@ async function addDataInField(docRefId) {
 
 // 유저의 uid가 포함된 문서가 있는지 찾는 함수
 async function checkUserStore() {
-  const q = query(collection(db, 'Bookmark'), where('uid', '==', USER_UID));
+  const q = query(collection(db, 'Bookmark'), where('uid', '==', userUid));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach(doc => {
     docRefId = doc.id;
