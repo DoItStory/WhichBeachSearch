@@ -11,8 +11,6 @@ import {
   query,
   where,
   getDocs,
-  doc,
-  getDoc,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
 
 const bookmarkList = document.getElementById('bookmark-list');
@@ -21,17 +19,13 @@ const BOOKMARK_DIV_CLASS = 'bookmark__info';
 const BOOKMARK_BTN_CLASS = 'bookmark__icon';
 const BOOKMARK_ICON_CLASS = 'fa-solid';
 const BOOKMARK_ICON_CLASS2 = 'fa-star';
-let userUid;
-let docRefId;
-let bookmarkListData = [];
 
 const db = fireStoreInitialize();
 const auth = getAuth();
 
 onAuthStateChanged(auth, user => {
   if (user) {
-    userUid = user.uid;
-    getUserData(userUid);
+    getUserData(user.uid);
   } else {
     const askSignUp = confirm(
       '이 기능은 로그인을 하셔야 사용이 가능합니다. 로그인 하시겠습니까?',
@@ -45,8 +39,9 @@ onAuthStateChanged(auth, user => {
 async function getUserData(uid) {
   const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
   const querySnapshot = await getDocs(q);
+  let bookmarkListData = [];
+
   querySnapshot.forEach(doc => {
-    docRefId = doc.id;
     bookmarkListData = doc.data().userBookmarkList;
   });
   paintBookmarkList(bookmarkListData);
