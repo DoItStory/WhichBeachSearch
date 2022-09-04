@@ -11,6 +11,8 @@ import {
   query,
   where,
   getDocs,
+  doc,
+  getDoc,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
 
 const bookmarkList = document.getElementById('bookmark-list');
@@ -21,13 +23,15 @@ const BOOKMARK_ICON_CLASS = 'fa-solid';
 const BOOKMARK_ICON_CLASS2 = 'fa-star';
 let userUid;
 let docRefId;
+let bookmarkListData = [];
+
 const db = fireStoreInitialize();
 const auth = getAuth();
 
 onAuthStateChanged(auth, user => {
   if (user) {
     userUid = user.uid;
-    checkUserStore(userUid);
+    getUserData(userUid);
   } else {
     const askSignUp = confirm(
       '이 기능은 로그인을 하셔야 사용이 가능합니다. 로그인 하시겠습니까?',
@@ -38,13 +42,27 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-async function checkUserStore(uid) {
+async function getUserData(uid) {
   const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach(doc => {
     docRefId = doc.id;
+    bookmarkListData = doc.data().docData;
+    console.log(bookmarkListData);
   });
 }
+/* 
+async function getUserData(docId) {
+  const docRef = doc(db, 'Bookmark', docId);
+  const docSnap = await getDoc(docRef);
+  bookmarkListData = docSnap.data().docData;
+  if (docSnap.exists()) {
+    console.log(bookmarkListData);
+  } else {
+    // doc.data() will be undefined in this case
+    console.log('No such document!');
+  }
+} */
 
 function paintBookmarkList() {
   const list = document.createElement('li');
