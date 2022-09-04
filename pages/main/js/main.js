@@ -15,6 +15,9 @@ import {
   query,
   where,
   getDocs,
+  doc,
+  updateDoc,
+  arrayUnion,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
@@ -38,7 +41,7 @@ async function handleBookmarkBtn() {
   if (!docRefId) {
     createUserDoc();
   } else {
-    // todo: 유저의 데이터 저장소에 즐겨찾기 추가 기능
+    addDataInField(docRefId);
   }
 }
 // 새로운 문서(doc) 생성 함수
@@ -58,6 +61,17 @@ async function createUserDoc() {
   } catch (e) {
     console.error('Error adding document: ', e);
   }
+}
+
+// 즐겨찾기 정보(map) 추가 함수
+async function addDataInField(docRefId) {
+  const docRef = doc(db, 'Bookmark', docRefId);
+  await updateDoc(docRef, {
+    docData: arrayUnion({
+      name: '명사십리 해수욕장',
+      address: '전라남도 완도군',
+    }),
+  });
 }
 
 // 유저의 uid가 포함된 문서가 있는지 찾는 함수
