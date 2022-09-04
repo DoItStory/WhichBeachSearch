@@ -1,14 +1,33 @@
-import { initializeFirebase } from '../../../js/initialize.js';
+import {
+  initializeFirebase,
+  fireStoreInitialize,
+} from '../../../js/initialize.js';
 import {
   getAuth,
   onAuthStateChanged,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
 
+const bookmarkList = document.getElementById('bookmark-list');
+const BOOKMARK_ITEM_CLASSNAME = 'bookmark__item';
+const BOOKMARK_DIV_CLASS = 'bookmark__info';
+const BOOKMARK_BTN_CLASS = 'bookmark__icon';
+const BOOKMARK_ICON_CLASS = 'fa-solid';
+const BOOKMARK_ICON_CLASS2 = 'fa-star';
+let userUid;
+let docRefId;
+const db = fireStoreInitialize();
 const auth = getAuth();
+
 onAuthStateChanged(auth, user => {
   if (user) {
-    const uid = user.uid;
-    const email = user.email;
+    userUid = user.uid;
+    checkUserStore(userUid);
   } else {
     const askSignUp = confirm(
       '이 기능은 로그인을 하셔야 사용이 가능합니다. 로그인 하시겠습니까?',
@@ -18,3 +37,34 @@ onAuthStateChanged(auth, user => {
     } else history.back();
   }
 });
+
+async function checkUserStore(uid) {
+  const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach(doc => {
+    docRefId = doc.id;
+  });
+}
+
+function paintBookmarkList() {
+  const list = document.createElement('li');
+  list.classList.add(BOOKMARK_ITEM_CLASSNAME);
+  const div = document.createElement('div');
+  div.classList.add(BOOKMARK_DIV_CLASS);
+  const span = document.createElement('span');
+  span.textContent = 'dataObject.name';
+  const address = document.createElement('address');
+  address.textContent = 'dataObject.address';
+  const button = document.createElement('button');
+  button.classList.add(BOOKMARK_BTN_CLASS);
+  const icon = document.createElement('i');
+  icon.classList.add(BOOKMARK_ICON_CLASS);
+  icon.classList.add(BOOKMARK_ICON_CLASS2);
+
+  div.appendChild(span);
+  div.appendChild(address);
+  button.appendChild(icon);
+  list.appendChild(div);
+  list.appendChild(button);
+  bookmarkList.appendChild(list);
+}
