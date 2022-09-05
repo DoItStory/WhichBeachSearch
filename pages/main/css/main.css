@@ -55,3 +55,10 @@
   border-radius: 0.8rem;
   border-color: rgb(203, 201, 201, 0.5);
 }
+
+.search__bookmark-btn {
+  color:rgb(247, 247, 0);
+}
+.search__bookmark-btn :hover {
+ cursor:pointer;
+}
