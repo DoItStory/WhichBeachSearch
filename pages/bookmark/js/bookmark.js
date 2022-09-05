@@ -38,10 +38,8 @@ onAuthStateChanged(auth, user => {
 });
 
 async function getUserData(uid) {
-  const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await getUserDoc(uid);
   let bookmarkListData = [];
-
   querySnapshot.forEach(doc => {
     bookmarkListData = doc.data().userBookmarkList.sort(listSortByName);
   });
@@ -73,6 +71,8 @@ function paintBookmarkList(dataList) {
     icon.classList.add(BOOKMARK_ICON_CLASS);
     icon.classList.add(BOOKMARK_ICON_CLASS2);
 
+    button.addEventListener('click', deleteBookmark);
+
     div.appendChild(span);
     div.appendChild(address);
     button.appendChild(icon);
@@ -80,4 +80,21 @@ function paintBookmarkList(dataList) {
     list.appendChild(button);
     bookmarkList.appendChild(list);
   }
+}
+
+async function deleteBookmark(event) {
+  const userUid = auth.currentUser.uid;
+  const beachName =
+    event.target.parentElement.parentElement.childNodes[0].childNodes[0]
+      .innerText;
+  let docRefId;
+  const querySnapshot = await getUserDoc(userUid);
+  querySnapshot.forEach(doc => {
+    console.log(doc.id);
+  });
+}
+
+function getUserDoc(uid) {
+  const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
+  return getDocs(q);
 }
