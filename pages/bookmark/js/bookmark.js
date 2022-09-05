@@ -16,7 +16,8 @@ import {
 const bookmarkList = document.getElementById('bookmark-list');
 const BOOKMARK_ITEM_CLASSNAME = 'bookmark__item';
 const BOOKMARK_DIV_CLASS = 'bookmark__info';
-const BOOKMARK_BTN_CLASS = 'bookmark__icon';
+const BOOKMARK_BTN_STYLE_CLASS = 'bookmark__icon';
+const BOOKMARK_BTN_CLASS = 'bookmark__btn';
 const BOOKMARK_ICON_CLASS = 'fa-solid';
 const BOOKMARK_ICON_CLASS2 = 'fa-star';
 
@@ -66,6 +67,7 @@ function paintBookmarkList(dataList) {
     const address = document.createElement('address');
     address.textContent = data.address;
     const button = document.createElement('button');
+    button.classList.add(BOOKMARK_BTN_STYLE_CLASS);
     button.classList.add(BOOKMARK_BTN_CLASS);
     const icon = document.createElement('i');
     icon.classList.add(BOOKMARK_ICON_CLASS);
