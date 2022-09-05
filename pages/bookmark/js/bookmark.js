@@ -42,9 +42,17 @@ async function getUserData(uid) {
   let bookmarkListData = [];
 
   querySnapshot.forEach(doc => {
-    bookmarkListData = doc.data().userBookmarkList;
+    bookmarkListData = doc.data().userBookmarkList.sort(listSortByName);
   });
   paintBookmarkList(bookmarkListData);
+}
+
+function listSortByName(firstArr, secondArr) {
+  let x = firstArr.name.toLowerCase();
+  let y = secondArr.name.toLowerCase();
+  if (x > y) return 1;
+  if (x < y) return -1;
+  return 0;
 }
 
 function paintBookmarkList(dataList) {
