@@ -40,17 +40,20 @@ onAuthStateChanged(auth, user => {
 const db = fireStoreInitialize();
 let docRefId;
 
-async function handleBookmarkBtn() {
-  await checkUserStore();
-  if (!docRefId) {
-    createUserDoc();
-  } else {
-    addDataInField(docRefId);
-  }
+function handleBookmarkBtn() {
+  showCircularProgress();
+  checkUserStore()
+    .then(() => {
+      if (!docRefId) {
+        createUserDoc();
+      } else {
+        addDataInField(docRefId);
+      }
+    })
+    .catch(() => {});
 }
 // 새로운 문서(doc) 생성 함수
 async function createUserDoc() {
-  showCircularProgress();
   try {
     const userBookmarkList = [
       {
@@ -72,7 +75,6 @@ async function createUserDoc() {
 
 // 즐겨찾기 정보(map) 추가 함수
 async function addDataInField(docRefId) {
-  showCircularProgress();
   const docRef = doc(db, 'Bookmark', docRefId);
   await updateDoc(docRef, {
     userBookmarkList: arrayUnion({
