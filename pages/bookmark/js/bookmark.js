@@ -11,12 +11,19 @@ import {
   query,
   where,
   getDocs,
+  doc,
+  updateDoc,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
+import {
+  showCircularProgress,
+  hideCircularProgress,
+} from '../../../js/circular-progress.js';
 
 const bookmarkList = document.getElementById('bookmark-list');
 const BOOKMARK_ITEM_CLASSNAME = 'bookmark__item';
 const BOOKMARK_DIV_CLASS = 'bookmark__info';
-const BOOKMARK_BTN_CLASS = 'bookmark__icon';
+const BOOKMARK_BTN_STYLE_CLASS = 'bookmark__icon';
+const BOOKMARK_BTN_CLASS = 'bookmark__btn';
 const BOOKMARK_ICON_CLASS = 'fa-solid';
 const BOOKMARK_ICON_CLASS2 = 'fa-star';
 
@@ -37,14 +44,14 @@ onAuthStateChanged(auth, user => {
 });
 
 async function getUserData(uid) {
-  const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
-  const querySnapshot = await getDocs(q);
+  showCircularProgress();
+  const querySnapshot = await getUserDoc(uid);
   let bookmarkListData = [];
-
   querySnapshot.forEach(doc => {
     bookmarkListData = doc.data().userBookmarkList.sort(listSortByName);
   });
   paintBookmarkList(bookmarkListData);
+  hideCircularProgress();
 }
 
 function listSortByName(firstArr, secondArr) {
@@ -66,10 +73,13 @@ function paintBookmarkList(dataList) {
     const address = document.createElement('address');
     address.textContent = data.address;
     const button = document.createElement('button');
+    button.classList.add(BOOKMARK_BTN_STYLE_CLASS);
     button.classList.add(BOOKMARK_BTN_CLASS);
     const icon = document.createElement('i');
     icon.classList.add(BOOKMARK_ICON_CLASS);
     icon.classList.add(BOOKMARK_ICON_CLASS2);
+
+    button.addEventListener('click', getInfoToBeDelete);
 
     div.appendChild(span);
     div.appendChild(address);
@@ -78,4 +88,46 @@ function paintBookmarkList(dataList) {
     list.appendChild(button);
     bookmarkList.appendChild(list);
   }
+}
+
+async function getInfoToBeDelete(event) {
+  const userUid = auth.currentUser.uid;
+  const beachName =
+    event.target.parentElement.parentElement.childNodes[0].childNodes[0]
+      .innerText;
+  const beachList = event.target.parentElement.parentElement;
+  getDocIdAndIndex(userUid, beachName);
+  beachList.remove();
+}
+
+async function getDocIdAndIndex(uid, beachName) {
+  let docRefId;
+  let deleteBookmarkIndex;
+  let bookmarkList;
+  const querySnapshot = await getUserDoc(uid);
+  querySnapshot.forEach(doc => {
+    docRefId = doc.id;
+    deleteBookmarkIndex = doc
+      .data()
+      .userBookmarkList.findIndex(beachInfo => beachInfo.name == beachName);
+    bookmarkList = doc.data().userBookmarkList;
+  });
+  deleteBookmark(docRefId, deleteBookmarkIndex, bookmarkList);
+}
+
+function getUserDoc(uid) {
+  const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
+  return getDocs(q);
+}
+
+function deleteBookmark(docRefId, deleteIndex, listArray) {
+  listArray.splice(deleteIndex, 1);
+  upDataDoc(docRefId, listArray);
+}
+
+async function upDataDoc(docId, bookmarkList) {
+  const BookmarkRef = doc(db, 'Bookmark', docId);
+  await updateDoc(BookmarkRef, {
+    userBookmarkList: bookmarkList,
+  });
 }
