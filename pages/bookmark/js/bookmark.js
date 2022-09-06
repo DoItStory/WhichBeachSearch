@@ -14,6 +14,10 @@ import {
   doc,
   updateDoc,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
+import {
+  showCircularProgress,
+  hideCircularProgress,
+} from '../../../js/circular-progress.js';
 
 const bookmarkList = document.getElementById('bookmark-list');
 const BOOKMARK_ITEM_CLASSNAME = 'bookmark__item';
@@ -40,12 +44,14 @@ onAuthStateChanged(auth, user => {
 });
 
 async function getUserData(uid) {
+  showCircularProgress();
   const querySnapshot = await getUserDoc(uid);
   let bookmarkListData = [];
   querySnapshot.forEach(doc => {
     bookmarkListData = doc.data().userBookmarkList.sort(listSortByName);
   });
   paintBookmarkList(bookmarkListData);
+  hideCircularProgress();
 }
 
 function listSortByName(firstArr, secondArr) {
