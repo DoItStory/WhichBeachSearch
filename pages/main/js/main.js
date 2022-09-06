@@ -38,19 +38,22 @@ onAuthStateChanged(auth, user => {
 
 // firestore
 const db = fireStoreInitialize();
-let docRefId;
 
-async function handleBookmarkBtn() {
-  await checkUserStore();
-  if (!docRefId) {
-    createUserDoc();
-  } else {
-    addDataInField(docRefId);
-  }
+function handleBookmarkBtn() {
+  showCircularProgress();
+  checkUserStore()
+    .then(docRefId => {
+      if (!docRefId) {
+        createUserDoc();
+      } else {
+        addDataInField(docRefId);
+      }
+    })
+    // Todo : Error 처리 필요
+    .catch(() => {});
 }
 // 새로운 문서(doc) 생성 함수
 async function createUserDoc() {
-  showCircularProgress();
   try {
     const userBookmarkList = [
       {
@@ -58,12 +61,11 @@ async function createUserDoc() {
         address: '부산광역시 해운대구 우동',
       },
     ];
-    const docRef = await addDoc(collection(db, 'Bookmark'), {
+    await addDoc(collection(db, 'Bookmark'), {
       userBookmarkList,
       uid: userUid,
     });
     hideCircularProgress();
-    docRefId = docRef.id;
   } catch (e) {
     hideCircularProgress();
     console.error('Error adding document: ', e);
@@ -72,7 +74,6 @@ async function createUserDoc() {
 
 // 즐겨찾기 정보(map) 추가 함수
 async function addDataInField(docRefId) {
-  showCircularProgress();
   const docRef = doc(db, 'Bookmark', docRefId);
   await updateDoc(docRef, {
     userBookmarkList: arrayUnion({
@@ -87,9 +88,11 @@ async function addDataInField(docRefId) {
 async function checkUserStore() {
   const q = query(collection(db, 'Bookmark'), where('uid', '==', userUid));
   const querySnapshot = await getDocs(q);
+  let docRefId = '';
   querySnapshot.forEach(doc => {
     docRefId = doc.id;
   });
+  return docRefId;
   // 해당 유저의 저장소가 1개가 아닌 모종의 이유로 1개 이상일 경우를 대비하여 에러 작성필요할듯?
 }
 
