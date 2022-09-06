@@ -58,19 +58,21 @@ function signUpErrorPrint(errorCode) {
 
 function handleSignUpSubmit(event) {
   event.preventDefault();
-  const join-form__email = document.getElementById('join-form__email').value;
+  const signUpEmail = document.getElementById('join-form__email').value;
   const password = document.getElementById('join-form__password').value;
-  const passwordCheck = document.getElementById('join-form__password-check').value;
+  const passwordCheck = document.getElementById(
+    'join-form__password-check',
+  ).value;
 
-  const result = signUpCheck(join-form__email, password, passwordCheck);
-  if (result) signUp(join-form__email, password);
+  const result = signUpCheck(signUpEmail, password, passwordCheck);
+  if (result) signUp(signUpEmail, password);
 }
 
 // 회원 가입 정보 값이 비어있는지 확인
 function signUpCheck(writtenEmail, writtenPassword, writtenPasswordCheck) {
   try {
-    join-form__emailCheck(writtenEmail);
-    join-form__password-check(writtenPassword, writtenPasswordCheck);
+    signUpEmailCheck(writtenEmail);
+    signUpPasswordCheck(writtenPassword, writtenPasswordCheck);
     return true;
   } catch (e) {
     alert(`${e.message}`);
@@ -78,13 +80,13 @@ function signUpCheck(writtenEmail, writtenPassword, writtenPasswordCheck) {
   }
 }
 
-function join-form__emailCheck(inputEmail) {
+function signUpEmailCheck(inputEmail) {
   if (!inputEmail) {
     throw new Error(ERROR.EMPTY_VALUE_IN_INPUT);
   } else return true;
 }
 
-function join-form__password-check(inputPassword, inputPasswordCheck) {
+function signUpPasswordCheck(inputPassword, inputPasswordCheck) {
   if (!inputPassword || !inputPasswordCheck) {
     throw new Error(ERROR.EMPTY_VALUE_IN_INPUT);
   } else if (inputPassword !== inputPasswordCheck) {
