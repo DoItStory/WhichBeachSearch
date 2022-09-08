@@ -31,6 +31,7 @@ import { ERROR } from '../../../js/error.js';
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > span');
 const beachAddress = document.querySelector('.beach-address');
+const HIDDEN_CLASSNAME = 'hidden';
 
 function mainScreenUpdate() {
   try {
@@ -54,14 +55,10 @@ function mainScreenUpdate() {
   }
 }
 
-const HIDDEN_CLASSNAME = 'hidden';
-let userUid;
-
 const auth = getAuth();
 onAuthStateChanged(auth, user => {
   if (user) {
     bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
-    userUid = user.uid;
   } else return;
 });
 
@@ -82,12 +79,15 @@ function handleBookmarkBtn() {
     .catch(error => {
       hideCircularProgress();
       const errorCode = error.code;
-      alert(`${ERROR.UNKNOWN_ERROR} main-error L71 : ${errorCode}`);
+      alert(
+        `${ERROR.UNKNOWN_ERROR} main-error handleBookmarkBtn : ${errorCode}`,
+      );
     });
 }
 
 // 새로운 문서(doc) 생성 함수
 async function createUserDoc() {
+  const userUID = auth.currentUser.uid;
   try {
     const userBookmarkList = [
       {
@@ -97,12 +97,12 @@ async function createUserDoc() {
     ];
     await addDoc(collection(db, 'Bookmark'), {
       userBookmarkList,
-      uid: userUid,
+      uid: userUID,
     });
   } catch (error) {
     hideCircularProgress();
     const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error L88 : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error createUserDoc : ${errorCode}`);
   }
 }
 
@@ -117,16 +117,17 @@ async function addDataInField(docRefId) {
   }).catch(error => {
     hideCircularProgress();
     const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error L111 : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error addDataInField : ${errorCode}`);
   });
 }
 // 유저의 uid가 포함된 문서가 있는지 찾는 함수
 async function checkUserStore() {
-  const q = query(collection(db, 'Bookmark'), where('uid', '==', userUid));
+  const userUID = auth.currentUser.uid;
+  const q = query(collection(db, 'Bookmark'), where('uid', '==', userUID));
   const querySnapshot = await getDocs(q).catch(error => {
     hideCircularProgress();
     const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error L129 : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error checkUserStore : ${errorCode}`);
   });
   let docRefId = '';
   querySnapshot.forEach(doc => {
