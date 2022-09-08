@@ -34,6 +34,13 @@
   display: flex;
   padding: 1.2rem;
   align-items: center;
+  transition: all 0.2s;
+}
+
+.bookmark__item:hover {
+  background: #2c97c1;
+  color:white;
+  cursor:pointer;
 }
 
 .bookmark__info {

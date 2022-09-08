@@ -25,6 +25,33 @@ import {
 } from '../../../js/circular-progress.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
+const beachName = document.querySelector('.beach-name > span');
+const beachAddress = document.querySelector('.beach-address');
+
+function mainScreenUpdate() {
+  try {
+    showCircularProgress();
+    const urlParams = new URLSearchParams(window.location.search);
+    const getbeachName = urlParams.get('pushBeachName');
+    const getbeachAddress = urlParams.get('pushBeachAddress');
+    if (getbeachName && getbeachAddress) {
+      beachName.innerHTML = getbeachName;
+      beachAddress.innerHTML = getbeachAddress;
+      hideCircularProgress();
+    } else {
+      beachName.innerHTML = '해수욕장 이름';
+      beachAddress.innerHTML = '해수욕장 주소';
+      hideCircularProgress();
+    }
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(
+      `알 수 없는 에러가 발생하였습니다. 관리자에게 문의하세요. main-error : ${errorCode}`,
+    );
+  }
+}
+
 const HIDDEN_CLASSNAME = 'hidden';
 let userUid;
 
@@ -98,6 +125,8 @@ async function checkUserStore() {
 
 const addBookmarkBtn = document.getElementById('bookmark-btn');
 addBookmarkBtn.addEventListener('click', handleBookmarkBtn);
+
+window.onload = mainScreenUpdate;
 
 // test용 로그아웃 버튼
 const logOutBtn = document.getElementById('logout-btn');

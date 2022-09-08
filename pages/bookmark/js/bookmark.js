@@ -80,6 +80,7 @@ function paintBookmarkList(dataList) {
     icon.classList.add(BOOKMARK_ICON_CLASS2);
 
     button.addEventListener('click', getInfoToBeDelete);
+    div.addEventListener('click', goToMainScreen);
 
     div.appendChild(span);
     div.appendChild(address);
@@ -88,6 +89,12 @@ function paintBookmarkList(dataList) {
     list.appendChild(button);
     bookmarkList.appendChild(list);
   }
+}
+
+function goToMainScreen(event) {
+  const pushBeachName = event.currentTarget.firstElementChild.innerText;
+  const pushBeachAddress = event.currentTarget.lastElementChild.innerText;
+  location.href = `../main/main.html?pushBeachName=${pushBeachName}&pushBeachAddress=${pushBeachAddress}`;
 }
 
 async function getInfoToBeDelete(event) {
