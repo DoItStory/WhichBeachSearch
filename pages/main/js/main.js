@@ -33,12 +33,12 @@ const beachName = document.querySelector('.beach-name > span');
 const beachAddress = document.querySelector('.beach-address');
 const HIDDEN_CLASSNAME = 'hidden';
 
-function mainScreenUpdate() {
+function mainScreenload() {
   try {
     showCircularProgress();
     const urlParams = new URLSearchParams(window.location.search);
-    const getbeachName = urlParams.get('pushBeachName');
-    const getbeachAddress = urlParams.get('pushBeachAddress');
+    const getbeachName = urlParams.get('sendBeachName');
+    const getbeachAddress = urlParams.get('sendBeachAddress');
     if (getbeachName && getbeachAddress) {
       beachName.innerHTML = getbeachName;
       beachAddress.innerHTML = getbeachAddress;
@@ -54,16 +54,6 @@ function mainScreenUpdate() {
     alert(`${ERROR.UNKNOWN_ERROR} main-error L35 : ${errorCode}`);
   }
 }
-
-const auth = getAuth();
-onAuthStateChanged(auth, user => {
-  if (user) {
-    bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
-  } else return;
-});
-
-// firestore
-const db = fireStoreInitialize();
 
 function handleBookmarkBtn() {
   showCircularProgress();
@@ -136,10 +126,20 @@ async function checkUserStore() {
   return docRefId;
 }
 
+const auth = getAuth();
+onAuthStateChanged(auth, user => {
+  if (user) {
+    bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
+  } else return;
+});
+
+// firestore
+const db = fireStoreInitialize();
+
 const addBookmarkBtn = document.getElementById('bookmark-btn');
 addBookmarkBtn.addEventListener('click', handleBookmarkBtn);
 
-window.onload = mainScreenUpdate;
+window.onload = mainScreenload;
 
 // test용 로그아웃 버튼
 const logOutBtn = document.getElementById('logout-btn');
