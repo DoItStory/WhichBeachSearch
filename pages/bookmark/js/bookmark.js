@@ -43,9 +43,9 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-async function loadBookmarkScreen(uid) {
+function loadBookmarkScreen(uid) {
   showCircularProgress();
-  const querySnapshot = await getUserDocument(uid)
+  getUserDocument(uid)
     .then(querySnapshot => {
       let bookmarkListData = [];
       querySnapshot.forEach(doc => {
@@ -127,46 +127,41 @@ function goMainScreen(event) {
   }
 }
 
-async function handleBookmarkDeleteButton(event) {
-  try {
-    const userUid = auth.currentUser.uid;
-    const beachName =
-      event.target.parentElement.parentElement.childNodes[0].childNodes[0]
-        .innerText;
-    const beachList = event.target.parentElement.parentElement;
-    deleteBookmarkList(userUid, beachName);
-    beachList.remove();
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(
-      `${ERROR.UNKNOWN_ERROR} bookmark-error handleBookmarkDeleteButton : ${errorCode}`,
-    );
-  }
-}
-
-async function deleteBookmarkList(uid, beachName) {
-  let docRefId;
-  let deleteBookmarkIndex;
-  let bookmarkList;
-  const querySnapshot = await getUserDocument(uid)
-    .then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        docRefId = doc.id;
-        deleteBookmarkIndex = doc
-          .data()
-          .userBookmarkList.findIndex(beachInfo => beachInfo.name == beachName);
-        bookmarkList = doc.data().userBookmarkList;
-      });
-      deleteBookmark(docRefId, deleteBookmarkIndex, bookmarkList);
+function handleBookmarkDeleteButton(event) {
+  const userUid = auth.currentUser.uid;
+  const beachName =
+    event.target.parentElement.parentElement.childNodes[0].childNodes[0]
+      .innerText;
+  deleteBookmarkList(userUid, beachName)
+    .then(() => {
+      const beachList = event.target.parentElement.parentElement;
+      beachList.remove();
     })
     .catch(error => {
       hideCircularProgress();
       const errorCode = error.code;
       alert(
-        `${ERROR.UNKNOWN_ERROR} bookmark-error deleteBookmarkList : ${errorCode}`,
+        `${ERROR.UNKNOWN_ERROR} bookmark-error handleBookmarkDeleteButton : ${errorCode}`,
       );
     });
+}
+
+async function deleteBookmarkList(uid, beachName) {
+  const querySnapshot = await getUserDocument(uid).catch(error => {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} bookmark-error deleteBookmarkList : ${errorCode}`,
+    );
+  });
+  querySnapshot.forEach(doc => {
+    const docRefId = doc.id;
+    const deleteBookmarkIndex = doc
+      .data()
+      .userBookmarkList.findIndex(beachInfo => beachInfo.name == beachName);
+    const bookmarkList = doc.data().userBookmarkList;
+    deleteBookmark(docRefId, deleteBookmarkIndex, bookmarkList);
+  });
 }
 
 function getUserDocument(uid) {
@@ -187,9 +182,9 @@ function deleteBookmark(docRefId, deleteBookmarkIndex, copiedBookmarkList) {
   }
 }
 
-async function upDataDocument(docId, bookmarkList) {
+function upDataDocument(docId, bookmarkList) {
   const BookmarkRef = doc(db, 'Bookmark', docId);
-  await updateDoc(BookmarkRef, {
+  updateDoc(BookmarkRef, {
     userBookmarkList: bookmarkList,
   }).catch(error => {
     hideCircularProgress();
