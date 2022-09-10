@@ -2,6 +2,7 @@ import {
   initializeFirebase,
   fireStoreInitialize,
 } from '../../../js/initialize.js';
+
 import {
   getAuth,
   onAuthStateChanged,
@@ -19,21 +20,25 @@ import {
   updateDoc,
   arrayUnion,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
+
 import {
   showCircularProgress,
   hideCircularProgress,
 } from '../../../js/circular-progress.js';
 
+import { ERROR } from '../../../js/error.js';
+
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > span');
 const beachAddress = document.querySelector('.beach-address');
+const HIDDEN_CLASSNAME = 'hidden';
 
-function mainScreenUpdate() {
+function mainScreenload() {
   try {
     showCircularProgress();
     const urlParams = new URLSearchParams(window.location.search);
-    const getbeachName = urlParams.get('pushBeachName');
-    const getbeachAddress = urlParams.get('pushBeachAddress');
+    const getbeachName = urlParams.get('sendBeachName');
+    const getbeachAddress = urlParams.get('sendBeachAddress');
     if (getbeachName && getbeachAddress) {
       beachName.innerHTML = getbeachName;
       beachAddress.innerHTML = getbeachAddress;
@@ -46,25 +51,9 @@ function mainScreenUpdate() {
   } catch (error) {
     hideCircularProgress();
     const errorCode = error.code;
-    alert(
-      `알 수 없는 에러가 발생하였습니다. 관리자에게 문의하세요. main-error : ${errorCode}`,
-    );
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   }
 }
-
-const HIDDEN_CLASSNAME = 'hidden';
-let userUid;
-
-const auth = getAuth();
-onAuthStateChanged(auth, user => {
-  if (user) {
-    bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
-    userUid = user.uid;
-  } else return;
-});
-
-// firestore
-const db = fireStoreInitialize();
 
 function handleBookmarkBtn() {
   showCircularProgress();
@@ -75,72 +64,105 @@ function handleBookmarkBtn() {
       } else {
         addDataInField(docRefId);
       }
+      hideCircularProgress();
     })
-    // Todo : Error 처리 필요
-    .catch(() => {});
+    .catch(error => {
+      hideCircularProgress();
+      const errorCode = error.code;
+      alert(
+        `${ERROR.UNKNOWN_ERROR} main-error handleBookmarkBtn : ${errorCode}`,
+      );
+    });
 }
+
 // 새로운 문서(doc) 생성 함수
 async function createUserDoc() {
-  try {
-    const userBookmarkList = [
-      {
-        name: '해운대 해수욕장',
-        address: '부산광역시 해운대구 우동',
-      },
-    ];
-    await addDoc(collection(db, 'Bookmark'), {
-      userBookmarkList,
-      uid: userUid,
-    });
-    hideCircularProgress();
-  } catch (e) {
-    hideCircularProgress();
-    console.error('Error adding document: ', e);
+  const userUID = auth.currentUser.uid;
+  if (!userUID) {
+    throw ERROR(UNDEFINED_UID);
   }
+  const userBookmarkList = [
+    {
+      name: '해운대 해수욕장',
+      address: '부산광역시 해운대구 우동',
+    },
+  ];
+  await addDoc(collection(db, 'Bookmark'), {
+    userBookmarkList,
+    uid: userUID,
+  }).catch(error => {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error createUserDoc : ${errorCode}`);
+  });
 }
 
 // 즐겨찾기 정보(map) 추가 함수
-async function addDataInField(docRefId) {
+function addDataInField(docRefId) {
   const docRef = doc(db, 'Bookmark', docRefId);
-  await updateDoc(docRef, {
+  updateDoc(docRef, {
     userBookmarkList: arrayUnion({
       name: '명사십리 해수욕장',
       address: '전라남도 완도군',
     }),
+  }).catch(error => {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error addDataInField : ${errorCode}`);
   });
-  hideCircularProgress();
 }
-
 // 유저의 uid가 포함된 문서가 있는지 찾는 함수
 async function checkUserStore() {
-  const q = query(collection(db, 'Bookmark'), where('uid', '==', userUid));
-  const querySnapshot = await getDocs(q);
+  const userUID = auth.currentUser.uid;
+  if (!userUID) {
+    throw ERROR(UNDEFINED_UID);
+  }
+  const q = query(collection(db, 'Bookmark'), where('uid', '==', userUID));
+  const querySnapshot = await getDocs(q).catch(error => {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error checkUserStore : ${errorCode}`);
+  });
   let docRefId = '';
   querySnapshot.forEach(doc => {
     docRefId = doc.id;
   });
   return docRefId;
-  // 해당 유저의 저장소가 1개가 아닌 모종의 이유로 1개 이상일 경우를 대비하여 에러 작성필요할듯?
 }
+
+const auth = getAuth();
+onAuthStateChanged(auth, user => {
+  if (user) {
+    bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
+  } else return;
+});
+
+// firestore
+const db = fireStoreInitialize();
 
 const addBookmarkBtn = document.getElementById('bookmark-btn');
 addBookmarkBtn.addEventListener('click', handleBookmarkBtn);
 
-window.onload = mainScreenUpdate;
+window.onload = mainScreenload;
 
 // test용 로그아웃 버튼
 const logOutBtn = document.getElementById('logout-btn');
 logOutBtn.addEventListener('click', logout);
 
 function logout() {
+  showCircularProgress();
   const auth = getAuth();
   signOut(auth)
     .then(() => {
       alert('로그아웃 되었습니다.');
       window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
+      hideCircularProgress();
       // Sign-out successful.
     })
     .catch(error => {
+      hideCircularProgress();
+      const errorCode = error.code;
+      alert(`로그아웃에 실패 Error = ${errorCode}`);
       // An error happened.
     });
 }
