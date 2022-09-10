@@ -51,7 +51,7 @@ function mainScreenload() {
   } catch (error) {
     hideCircularProgress();
     const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error L35 : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   }
 }
 
@@ -78,28 +78,29 @@ function handleBookmarkBtn() {
 // 새로운 문서(doc) 생성 함수
 async function createUserDoc() {
   const userUID = auth.currentUser.uid;
-  try {
-    const userBookmarkList = [
-      {
-        name: '해운대 해수욕장',
-        address: '부산광역시 해운대구 우동',
-      },
-    ];
-    await addDoc(collection(db, 'Bookmark'), {
-      userBookmarkList,
-      uid: userUID,
-    });
-  } catch (error) {
+  if (!userUID) {
+    throw ERROR(UNDEFINED_UID);
+  }
+  const userBookmarkList = [
+    {
+      name: '해운대 해수욕장',
+      address: '부산광역시 해운대구 우동',
+    },
+  ];
+  await addDoc(collection(db, 'Bookmark'), {
+    userBookmarkList,
+    uid: userUID,
+  }).catch(error => {
     hideCircularProgress();
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error createUserDoc : ${errorCode}`);
-  }
+  });
 }
 
 // 즐겨찾기 정보(map) 추가 함수
-async function addDataInField(docRefId) {
+function addDataInField(docRefId) {
   const docRef = doc(db, 'Bookmark', docRefId);
-  await updateDoc(docRef, {
+  updateDoc(docRef, {
     userBookmarkList: arrayUnion({
       name: '명사십리 해수욕장',
       address: '전라남도 완도군',
@@ -113,6 +114,9 @@ async function addDataInField(docRefId) {
 // 유저의 uid가 포함된 문서가 있는지 찾는 함수
 async function checkUserStore() {
   const userUID = auth.currentUser.uid;
+  if (!userUID) {
+    throw ERROR(UNDEFINED_UID);
+  }
   const q = query(collection(db, 'Bookmark'), where('uid', '==', userUID));
   const querySnapshot = await getDocs(q).catch(error => {
     hideCircularProgress();
