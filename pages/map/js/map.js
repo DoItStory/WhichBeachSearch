@@ -5,12 +5,20 @@ const options = {
 };
 const map = new kakao.maps.Map(mapContainer, options);
 
+function createMarkerImage() {
+  const imageSrc = '/assets/images/pin.png';
+  const imageSize = new kakao.maps.Size(30, 34);
+  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+  return markerImage;
+}
+
 function printMarkersMap(beachList) {
   for (let i = 0; i < beachList.length; i++) {
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
       position: beachList[i].latlng, // 마커를 표시할 위치
       title: beachList[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+      image: createMarkerImage(),
     });
     marker.setMap(map);
   }
