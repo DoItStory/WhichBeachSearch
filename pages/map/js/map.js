@@ -24,8 +24,11 @@ function printMarkersMap(beachList) {
       title: beachList[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
       image: createMarkerImage(),
     });
-    createInfoWindows(beachList[i]).open(map, marker);
     marker.setMap(map);
+
+    kakao.maps.event.addListener(marker, 'click', function () {
+      createInfoWindows(beachList[i]).open(map, marker);
+    });
   }
 }
 
