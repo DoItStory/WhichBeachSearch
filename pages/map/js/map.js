@@ -1,9 +1,8 @@
 const mapContainer = document.getElementById('map__container');
 
 const options = {
-  //지도를 생성할 때 필요한 기본 옵션
-  center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-  level: 3, //지도의 레벨(확대, 축소 정도)
+  center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
+  level: 7,
 };
 
 const map = new kakao.maps.Map(mapContainer, options);
