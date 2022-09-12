@@ -42,13 +42,6 @@ function moveMarkCenter(beachLatlng) {
   map.panTo(moveLatLon);
 }
 
-function createMarkerImage() {
-  const imageSrc = '/assets/images/pin.png';
-  const imageSize = new kakao.maps.Size(30, 34);
-  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  return markerImage;
-}
-
 function printMarkersMap(beachList) {
   for (let i = 0; i < beachList.length; i++) {
     const marker = new kakao.maps.Marker({
@@ -63,6 +56,13 @@ function printMarkersMap(beachList) {
       createInfoWindows(beachList[i]).open(map, marker);
     });
   }
+}
+
+function createMarkerImage() {
+  const imageSrc = '/assets/images/pin.png';
+  const imageSize = new kakao.maps.Size(30, 34);
+  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+  return markerImage;
 }
 
 function createInfoWindows(beachData) {
