@@ -54,18 +54,18 @@ function moveMarkCenter(beachData) {
   map.panTo(moveLatLon);
 }
 
-function printMarkersMap(beachList, map) {
-  for (let i = 0; i < beachList.length; i++) {
+function printMarkersMap(beachData, map) {
+  for (let i = 0; i < beachData.length; i++) {
     const marker = new kakao.maps.Marker({
       map: map,
-      position: beachList[i].latlng,
-      title: beachList[i].name,
+      position: beachData[i].latlng,
+      title: beachData[i].name,
       image: insertMarkerImage(),
     });
     marker.setMap(map);
 
     kakao.maps.event.addListener(marker, 'click', function () {
-      createInfoWindows(beachList[i]).open(map, marker);
+      createInfoWindows(beachData[i]).open(map, marker);
     });
   }
 }
