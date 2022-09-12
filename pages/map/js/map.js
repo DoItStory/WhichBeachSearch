@@ -2,13 +2,24 @@ const mapContainer = document.getElementById('map__container');
 const searchInputValue = document.getElementById('search-form__input');
 const searchFormSubmit = document.getElementById('search-form__submit');
 
-const options = {
-  center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
-  level: 7,
-};
-const map = new kakao.maps.Map(mapContainer, options);
+function initializationMap() {
+  const options = {
+    center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
+    level: 7,
+  };
+  const map = new kakao.maps.Map(mapContainer, options);
+  return map;
+}
 
-searchFormSubmit.addEventListener('click', searchPlaces);
+function loadMapScreen() {
+  try {
+    const beachDataBase = testData();
+    printMarkersMap(beachDataBase, map);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  }
+}
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces(event) {
@@ -27,6 +38,7 @@ function searchPlaces(event) {
 
 // 데이터 베이스에서 키워드를 찾는 함수입니다
 function findEnteredBeachName(inputValue) {
+  const beachDataBase = testData();
   const foundBeachData = beachDataBase.find(beach =>
     beach.name.startsWith(inputValue),
   );
@@ -37,18 +49,18 @@ function findEnteredBeachName(inputValue) {
 }
 
 // 검색된 해변으로 화면을 이동해주는 함수입니다.
-function moveMarkCenter(beachLatlng) {
-  const moveLatLon = beachLatlng.latlng;
+function moveMarkCenter(beachData) {
+  const moveLatLon = beachData.latlng;
   map.panTo(moveLatLon);
 }
 
-function printMarkersMap(beachList) {
+function printMarkersMap(beachList, map) {
   for (let i = 0; i < beachList.length; i++) {
     const marker = new kakao.maps.Marker({
-      map: map, // 마커를 표시할 지도
-      position: beachList[i].latlng, // 마커를 표시할 위치
-      title: beachList[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-      image: createMarkerImage(),
+      map: map,
+      position: beachList[i].latlng,
+      title: beachList[i].name,
+      image: insertMarkerImage(),
     });
     marker.setMap(map);
 
@@ -58,7 +70,7 @@ function printMarkersMap(beachList) {
   }
 }
 
-function createMarkerImage() {
+function insertMarkerImage() {
   const imageSrc = '/assets/images/pin.png';
   const imageSize = new kakao.maps.Size(30, 34);
   const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -110,5 +122,6 @@ function testData() {
   return testData;
 }
 
-const beachDataBase = testData();
-printMarkersMap(beachDataBase);
+const map = initializationMap();
+loadMapScreen();
+searchFormSubmit.addEventListener('click', searchPlaces);
