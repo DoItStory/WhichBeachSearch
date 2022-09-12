@@ -33,7 +33,6 @@ function findEnteredBeachName(inputValue) {
   if (!foundBeachData) {
     throw Error('검색하신 해변을 찾을 수 없습니다. 다시 입력해주세요.');
   }
-  printMarkersMap(foundBeachData);
   moveMarkCenter(foundBeachData);
 }
 
