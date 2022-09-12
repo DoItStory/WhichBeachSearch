@@ -1,10 +1,46 @@
 const mapContainer = document.getElementById('map__container');
+const searchInputValue = document.getElementById('search-form__input');
+const searchFormSubmit = document.getElementById('search-form__submit');
 
 const options = {
   center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
   level: 7,
 };
 const map = new kakao.maps.Map(mapContainer, options);
+
+searchFormSubmit.addEventListener('click', searchPlaces);
+
+// 키워드 검색을 요청하는 함수입니다
+function searchPlaces(event) {
+  event.preventDefault();
+  const searchValue = searchInputValue.value;
+  try {
+    if (!searchValue) {
+      throw Error('검색하시려는 해변의 이름을 입력해주세요.');
+    }
+    findEnteredBeachName(searchValue);
+  } catch (error) {
+    const errorMessage = error.message;
+    alert(`${errorMessage}`);
+  }
+}
+
+// 데이터 베이스에서 키워드를 찾는 함수입니다
+function findEnteredBeachName(inputValue) {
+  const foundBeachData = beachDataBase.find(beach =>
+    beach.name.startsWith(inputValue),
+  );
+  if (!foundBeachData) {
+    throw Error('검색하신 해변을 찾을 수 없습니다. 다시 입력해주세요.');
+  }
+  moveMarkCenter(foundBeachData);
+}
+
+// 검색된 해변으로 화면을 이동해주는 함수입니다.
+function moveMarkCenter(beachLatlng) {
+  const moveLatLon = beachLatlng.latlng;
+  map.panTo(moveLatLon);
+}
 
 function createMarkerImage() {
   const imageSrc = '/assets/images/pin.png';
