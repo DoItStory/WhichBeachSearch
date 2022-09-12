@@ -33,7 +33,7 @@ function printMarkersMap(beachList) {
 }
 
 function createInfoWindows(beachData) {
-  const iwContent = `<div class="info-window">
+  const infoWindowContent = `<div class="info-window">
   <div class="info-title">
     <h3 class="info-name">
       ${beachData.name}
@@ -45,14 +45,14 @@ function createInfoWindows(beachData) {
     <span>${beachData.icon}</span>
   </div>
 </div>`;
-  const iwPosition = beachData.latlng;
-  const iwRemoveable = true;
-  const infowindow = new kakao.maps.InfoWindow({
-    position: iwPosition,
-    content: iwContent,
-    removable: iwRemoveable,
+  const infoWindowPosition = beachData.latlng;
+  const infoWindowRemoveable = true;
+  const infoWindow = new kakao.maps.InfoWindow({
+    position: infoWindowPosition,
+    content: infoWindowContent,
+    removable: infoWindowRemoveable,
   });
-  return infowindow;
+  return infoWindow;
 }
 
 // 가상의(테스트) 데이터를 받아온다는 설정으로 작성 함.
