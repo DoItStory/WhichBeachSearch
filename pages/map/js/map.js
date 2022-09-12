@@ -1,7 +1,4 @@
 const mapContainer = document.getElementById('map__container');
-const INFO_WINDOW_CLASS = 'info-window';
-const INFO_WINDOW_BEACH_NAME_CLASS = 'info-window__beach-name';
-const INFO_WINDOW_BEACH_ADDRESS_CLASS = 'info-window__beach-address';
 
 const options = {
   center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
@@ -77,5 +74,5 @@ function testData() {
   return testData;
 }
 
-const positions = testData();
-printMarkersMap(positions);
+const beachDataBase = testData();
+printMarkersMap(beachDataBase);
