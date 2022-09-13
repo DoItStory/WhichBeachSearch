@@ -1,0 +1,60 @@
+.img-container {
+  width: 100%;
+  height: 18.7rem;
+}
+
+.img__login-and-join {
+  width: 100%;
+  height: 100%;
+}
+
+.input-form-basic {
+  height: 100%;
+  width: 33rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.input-form__user {
+  width: 100%;
+  height: 6rem;
+}
+
+.input-form__user:nth-child(2),
+.input-form__user:nth-child(3) {
+  margin-top: 1.1rem;
+}
+
+.input-form__input-field {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  border-radius: 0.8rem;
+  border: 0.1rem solid #887e7e;
+  padding-left: 2rem;
+  box-sizing: border-box;
+}
+
+.input-form-btn__style {
+  width: 33rem;
+  height: 6rem;
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.input-form-btn__style button {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  background-color: var(--main-color);
+  border-style: none;
+  color: white;
+}
+
+.input-form-btn__style button:hover {
+  cursor: pointer;
+}
