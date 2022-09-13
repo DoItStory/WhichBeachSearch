@@ -1,14 +1,21 @@
+import { ERROR } from '../../../js/error.js';
 const mapContainer = document.getElementById('map__container');
 const searchInputValue = document.getElementById('search-form__input');
 const searchFormSubmit = document.getElementById('search-form__submit');
 
 function initializationMap() {
-  const options = {
-    center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
-    level: 7,
-  };
-  const map = new kakao.maps.Map(mapContainer, options);
-  return map;
+  try {
+    const options = {
+      center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
+      level: 7,
+    };
+    const map = new kakao.maps.Map(mapContainer, options);
+    return map;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
+  }
 }
 
 function loadMapScreen() {
@@ -18,6 +25,7 @@ function loadMapScreen() {
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
+    alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
   }
 }
 
@@ -27,77 +35,108 @@ function searchPlaces(event) {
   const searchValue = searchInputValue.value;
   try {
     if (!searchValue) {
-      throw Error('검색하시려는 해변의 이름을 입력해주세요.');
+      throw Error(ERROR.SEARCH_VALUE_NOT_ENTERED);
     }
     findEnteredBeachName(searchValue);
   } catch (error) {
+    const errorCode = error.code;
     const errorMessage = error.message;
-    alert(`${errorMessage}`);
+    alert(`${errorCode}: ${errorMessage}`);
   }
 }
 
 // 데이터 베이스에서 키워드를 찾는 함수입니다
 function findEnteredBeachName(inputValue) {
-  const beachDataBase = testData();
-  const foundBeachData = beachDataBase.find(beach =>
-    beach.name.startsWith(inputValue),
-  );
-  if (!foundBeachData) {
-    throw Error('검색하신 해변을 찾을 수 없습니다. 다시 입력해주세요.');
+  try {
+    const beachDataBase = testData();
+    const foundBeachData = beachDataBase.find(beach =>
+      beach.name.startsWith(inputValue),
+    );
+    if (!foundBeachData) {
+      throw Error(ERROR.SEARCH_VALUE_NOT_FOUND);
+    }
+    moveMarkCenter(foundBeachData);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(`${errorCode}: ${errorMessage}`);
   }
-  moveMarkCenter(foundBeachData);
 }
 
 // 검색된 해변으로 화면을 이동해주는 함수입니다.
 function moveMarkCenter(beachData) {
-  const moveLatLon = beachData.latlng;
-  map.panTo(moveLatLon);
+  try {
+    const moveLatLon = beachData.latlng;
+    map.panTo(moveLatLon);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
+  }
 }
 
 function printMarkersMap(beachData, map) {
-  for (let i = 0; i < beachData.length; i++) {
-    const marker = new kakao.maps.Marker({
-      map: map,
-      position: beachData[i].latlng,
-      title: beachData[i].name,
-      image: insertMarkerImage(),
-    });
-    marker.setMap(map);
+  try {
+    for (let i = 0; i < beachData.length; i++) {
+      const marker = new kakao.maps.Marker({
+        map: map,
+        position: beachData[i].latlng,
+        title: beachData[i].name,
+        image: insertMarkerImage(),
+      });
+      marker.setMap(map);
 
-    kakao.maps.event.addListener(marker, 'click', function () {
-      createInfoWindows(beachData[i]).open(map, marker);
-    });
+      kakao.maps.event.addListener(marker, 'click', function () {
+        createInfoWindows(beachData[i]).open(map, marker);
+      });
+    }
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
   }
 }
 
 function insertMarkerImage() {
-  const imageSrc = '/assets/images/pin.png';
-  const imageSize = new kakao.maps.Size(30, 34);
-  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  return markerImage;
+  try {
+    const imageSrc = '/assets/images/pin.png';
+    const imageSize = new kakao.maps.Size(30, 34);
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+    return markerImage;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
+  }
 }
 
 function createInfoWindows(beachData) {
-  const infoWindowContent = `<div class="info-window">
-  <div class="info-title">
-    <h3 class="info-name">
-      ${beachData.name}
-    </h3>
-    <a href='../main/main.html?sendBeachName=${beachData.name}&sendBeachAddress=${beachData.address}'>상세 정보</a>
-  </div>
-  <div class="info-weather">
-    <span>${beachData.temp}</span>
-    <span>${beachData.icon}</span>
-  </div>
-</div>`;
-  const infoWindowPosition = beachData.latlng;
-  const infoWindowRemoveable = true;
-  const infoWindow = new kakao.maps.InfoWindow({
-    position: infoWindowPosition,
-    content: infoWindowContent,
-    removable: infoWindowRemoveable,
-  });
-  return infoWindow;
+  try {
+    const infoWindowContent = `<div class="info-window">
+    <div class="info-title">
+      <h3 class="info-name">
+        ${beachData.name}
+      </h3>
+      <a href='../main/main.html?sendBeachName=${beachData.name}&sendBeachAddress=${beachData.address}'>상세 정보</a>
+    </div>
+    <div class="info-weather">
+      <span>${beachData.temp}</span>
+      <span>${beachData.icon}</span>
+    </div>
+  </div>`;
+    const infoWindowPosition = beachData.latlng;
+    const infoWindowRemoveable = true;
+    const infoWindow = new kakao.maps.InfoWindow({
+      position: infoWindowPosition,
+      content: infoWindowContent,
+      removable: infoWindowRemoveable,
+    });
+    return infoWindow;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
+  }
 }
 
 // 가상의(테스트) 데이터를 받아온다는 설정으로 작성 함.

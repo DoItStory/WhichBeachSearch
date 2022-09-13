@@ -14,4 +14,6 @@ export var ERROR = {
   CANCELLED_POPUP_REQUEST: `이미 서버에 요청중입니다. 잠시만 기다려주세요.`,
   USER_NOT_FOUND: `입력하신 이메일의 계정 정보가 존재하지 않습니다.`,
   UNDEFINED_UID: `사용자 계정 정보를 받아올 수 없습니다. 관리자에게 문의해주세요.`,
+  SEARCH_VALUE_NOT_ENTERED: `검색하시려는 해변의 이름을 입력해주세요.`,
+  SEARCH_VALUE_NOT_FOUND: `검색하신 해변을 찾을 수 없습니다. 다시 입력해주세요.`,
 };
