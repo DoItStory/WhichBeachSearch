@@ -44,7 +44,7 @@ function mainScreenload() {
       beachAddress.innerHTML = getbeachAddress;
       hideCircularProgress();
     } else {
-      beachName.innerHTML = '해수욕장 이름';
+      beachName.innerHTML = '해운대 해수욕장';
       beachAddress.innerHTML = '해수욕장 주소';
       hideCircularProgress();
     }
