@@ -9,3 +9,8 @@ body {
 .hidden {
   display: none;
 }
+
+.background-img__size {
+  height: 20rem;
+  width: 35rem;
+}
