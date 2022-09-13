@@ -33,7 +33,7 @@ const beachName = document.querySelector('.beach-name > span');
 const beachAddress = document.querySelector('.beach-address');
 const HIDDEN_CLASSNAME = 'hidden';
 
-function mainScreenload() {
+async function mainScreenload() {
   try {
     showCircularProgress();
     const urlParams = new URLSearchParams(window.location.search);
