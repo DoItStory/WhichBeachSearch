@@ -24,8 +24,7 @@ const BOOKMARK_ITEM_CLASSNAME = 'bookmark__item';
 const BOOKMARK_DIV_CLASS = 'bookmark__info';
 const BOOKMARK_BTN_STYLE_CLASS = 'bookmark__icon';
 const BOOKMARK_BTN_CLASS = 'bookmark__btn';
-const BOOKMARK_ICON_CLASS = 'fa-solid';
-const BOOKMARK_ICON_CLASS2 = 'fa-star';
+const BOOKMARK_IMAGE_SRC = '/assets/images/TrashBin.svg';
 
 const db = fireStoreInitialize();
 const auth = getAuth();
@@ -91,9 +90,8 @@ function paintBookmarkList(beachList) {
       const bookmarkButton = document.createElement('button');
       bookmarkButton.classList.add(BOOKMARK_BTN_STYLE_CLASS);
       bookmarkButton.classList.add(BOOKMARK_BTN_CLASS);
-      const bookmarkIcon = document.createElement('i');
-      bookmarkIcon.classList.add(BOOKMARK_ICON_CLASS);
-      bookmarkIcon.classList.add(BOOKMARK_ICON_CLASS2);
+      const bookmarkIcon = document.createElement('img');
+      bookmarkIcon.src = BOOKMARK_IMAGE_SRC;
 
       bookmarkButton.addEventListener('click', handleBookmarkDeleteButton);
       beachInfoDiv.addEventListener('click', goMainScreen);
