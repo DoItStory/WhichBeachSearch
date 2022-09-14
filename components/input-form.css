@@ -1,0 +1,69 @@
+.img-container {
+  width: 100%;
+  height: 18.7rem;
+}
+
+.img__login-and-join {
+  width: 100%;
+  height: 100%;
+}
+
+.input-form-basic {
+  height: 100%;
+  width: 33rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.input-form__user {
+  width: 100%;
+  height: 6rem;
+}
+
+.input-form__user:nth-child(2),
+.input-form__user:nth-child(3),
+.input-form__user:nth-child(4) {
+  margin-top: 1.5rem;
+}
+
+.input-form__input-field {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  border-radius: 0.8rem;
+  border: 0.1rem solid #887e7e;
+  padding-left: 2rem;
+  box-sizing: border-box;
+}
+
+.input-form-btn__style {
+  width: 33rem;
+  height: 6rem;
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.input-form-btn__style button {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  background-color: var(--main-color);
+  border-style: none;
+  color: white;
+}
+
+.input-form-btn__style button:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+}
+
+.input-form-btn__style button:active {
+  position: relative;
+  top: 1px;
+  right: 1px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
