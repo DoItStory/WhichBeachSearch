@@ -94,10 +94,10 @@ function signUpPasswordCheck(inputPassword, inputPasswordCheck) {
   } else return true;
 }
 
-const signUpButton = document.getElementById('signUpbtn');
+const signUpButton = document.getElementById('join-submit__btn');
 signUpButton.addEventListener('click', handleSignUpSubmit);
 
-const cancelBtn = document.getElementById('signUpCancelBtn');
-cancelBtn.addEventListener('click', () => {
+const cancelButton = document.getElementById('join-cancel__btn');
+cancelButton.addEventListener('click', () => {
   window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
 });
