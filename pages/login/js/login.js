@@ -20,7 +20,6 @@ function logIn(userEmail, userPassword) {
   const result = logInWithEmailAndPassword(userEmail, userPassword)
     .then(userCredential => {
       hideCircularProgress();
-      const user = userCredential.user;
       alert('환영합니다!');
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
@@ -81,8 +80,8 @@ function passwordReset(event) {
   return handlePasswordReset();
 }
 
-const logInBtn = document.getElementById('loginBtn');
-logInBtn.addEventListener('click', handleLogInBtn);
+const loginButton = document.getElementById('login-button');
+loginButton.addEventListener('click', handleLogInBtn);
 
 const passwordResetBtn = document.getElementById('password-reset');
 passwordResetBtn.addEventListener('click', passwordReset);
