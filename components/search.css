@@ -10,8 +10,15 @@
 .search-form {
   display: flex;
   height: 100%;
+  border-radius: 0.8rem;
+  left: calc(50% - 150px / 2 - 2062px);
+  top: calc(50% - 24px / 2 - 465px);
+  background: rgba(255, 255, 255, 0.6);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.search-form:focus {
   background-color: white;
-  border-radius: 0.4rem;
 }
 
 .search-form__input {
