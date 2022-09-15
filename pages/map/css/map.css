@@ -19,6 +19,7 @@
   text-align: center;
   background-color: white;
   border-radius: 1rem;
+  visibility: hidden;
 }
 
 .location__filter {
@@ -26,6 +27,7 @@
   border-style: none;
   outline: none;
   text-align: center;
+  visibility: hidden;
 }
 
 .map-contents {
