@@ -28,8 +28,6 @@ function getUserProfile() {
 
 const changeNickname = document.getElementById('mypage__change-nickname');
 const changePassword = document.getElementById('mypage__change-password');
-const changeImage = document.getElementById('mypage__change-image');
 
 changeNickname.addEventListener('click', getUserProfile);
 changePassword.addEventListener('click', getUserProfile);
-changeImage.addEventListener('click', getUserProfile);

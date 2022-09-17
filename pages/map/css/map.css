@@ -19,6 +19,7 @@
   text-align: center;
   background-color: white;
   border-radius: 1rem;
+  visibility: hidden;
 }
 
 .location__filter {
@@ -26,6 +27,13 @@
   border-style: none;
   outline: none;
   text-align: center;
+  visibility: hidden;
+}
+
+.map-search__position {
+  justify-content: space-between;
+  margin-top: 0.8rem;
+  align-items: center;
 }
 
 .map-contents {

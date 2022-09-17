@@ -7,7 +7,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
 
 .header__main {
