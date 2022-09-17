@@ -30,6 +30,12 @@
   visibility: hidden;
 }
 
+.map-search__position {
+  justify-content: space-between;
+  margin-top: 0.8rem;
+  align-items: center;
+}
+
 .map-contents {
   height: 100%;
   width: 36rem;
