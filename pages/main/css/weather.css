@@ -1,52 +1,309 @@
-.weather {
-  height: 12rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 0.5rem;
+.weather-today__image {
+  width: 15.5rem;
+  height: 15.5rem;
 }
 
-.weather__title {
-  height: 1.4rem;
-  width: auto;
-  margin: 0.5rem 0 0.6rem 0.6rem;
-  font-size: 1.4rem;
-}
-
-.weather__area {
-  height: 100%;
-  width: 100%;
-  padding: 0.8rem 0.1rem 0.4rem 0.1rem;
-  background-color: var(--weather-bg-color);
-  display: flex;
-  justify-content: space-between;
-}
-
-.weather__info {
-  height: 100%;
-  width: 5rem;
+.weather__today-temp {
+  height: auto;
+  width: 15rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.weather__today-temp h2 {
+  height: 4rem;
+  font-size: 4.2rem;
+}
+.weather__today-temp span {
+  margin-top: 1rem;
+  font-size: 2.4rem;
+  display: block;
+  height: 2.5rem;
+}
+
+.weather-today__container {
+  height: 8.5rem;
+  width: 31rem;
+  background: rgba(202, 233, 235, 0.2);
+  margin-top: 1rem;
+  border-radius: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-today__item {
+  width: 7rem;
+  height: 7.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.weather-today__item img {
+  width: 3.7rem;
+  height: 3.7rem;
+}
+
+.weather-today__item span {
+  margin-top: 0.3rem;
+  font-size: 1.4rem;
+}
+
+/* 시간 날씨 */
+
+.weather-time {
+  height: 24rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.weather__title {
+  height: 3.5rem;
+  width: 100%;
+  font-size: 1.6rem;
+  border-bottom: 0.1rem solid #fffdfd;
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.weather__area {
+  margin-top: 1rem;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  white-space: nowrap;
+  font-size: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.weather__area::-webkit-scrollbar {
+  display: none;
+}
+
+.weather__info {
+  height: 19.5rem;
+  width: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1.5rem;
+}
+
+.info-upper {
+  width: 7rem;
+  height: 11rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(1.5rem);
+  border-radius: 3.5rem 3.5rem 0px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.2rem;
+  padding-bottom: 0.5rem;
 }
 
 .weather__date,
 .weather__temp,
 .weather__tide {
-  font-size: 1.3rem;
-  color: white;
+  font-size: 1.8rem;
 }
 
-.weather__icon {
-  font-size: 2.4rem;
+.info-upper .weather__icon {
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 0.3rem;
 }
 
-.weather__every-hour {
-  height: 100%;
-  width: 6.2rem;
+.info-bottom {
+  width: 7rem;
+  height: 8.5rem;
+  margin-top: 0.5rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10.348px);
+  border-radius: 0px 0px 36.5px 36.5px;
+}
+
+.info-bottom .weather__icon {
+  width: 4rem;
+  height: 4rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 시간 날씨 */
+
+/* 주간 해상 기후 */
+
+.weather-sea {
+  height: 20rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.weather-sea__area {
+  margin-top: 1rem;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  white-space: nowrap;
+  font-size: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.weather-sea__area::-webkit-scrollbar {
+  display: none;
+}
+
+.weather-sea__info {
+  height: 16rem;
+  width: 7.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.weather-sea__info span {
+  font-size: 1.6rem;
+}
+
+.sea-weather {
+  width: 7.5rem;
+  height: 14rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(0.5rem);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
+  padding-top: 0.8rem;
+  padding-bottom: 0.5rem;
 }
+
+.sea-weather .weather__icon {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.wave-height {
+  margin-top: 0.8rem;
+  font-size: 1.8rem;
+}
+.high-low-tide {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+}
+
+/* 주간 해상 기후 */
+
+/* 주간 날씨 */
+
+.weather-weekely {
+  height: 32rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.weather-weekely__area {
+  margin-top: 1rem;
+  height: 28rem;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(1.5rem);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 1rem;
+}
+
+.weather-weekely__area::-webkit-scrollbar {
+  display: none;
+}
+
+.weather-weekely__container {
+  height: 5rem;
+  width: 31rem;
+  background: rgba(251, 251, 251, 0.2);
+  border-radius: 10px;
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.weather-weekely__container:last-child {
+  margin-bottom: 0rem;
+}
+
+.weekely-day {
+  height: 100%;
+  width: 8rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  margin-left: 1rem;
+  padding-left: 1rem;
+}
+
+.weekely-rain {
+  height: 100%;
+  width: 5rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.weekely-rain img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.weekely-icon {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  margin-left: 1.5rem;
+}
+.weekely-icon img {
+  width: 6rem;
+  height: 6rem;
+}
+
+.weekely-temp {
+  width: 10rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.weekely-temp span:first-child {
+  font-size: 1.8rem;
+}
+.weekely-temp span:last-child {
+  font-size: 1.6rem;
+}
+
+/* 주간 날씨 */
