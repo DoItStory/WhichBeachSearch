@@ -172,10 +172,7 @@ async function addTodayWeatherList() {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
-  console.log('hi', fcstToday);
-
-  //const sunnyUrl = require('/assets/images/weather/sunny.svg');
-  //const waveUrl = require('/assets/images/weather/wave.png');
+  console.log(fcstToday);
 
   const weatherArea = document.getElementById('weather_area_today');
   for (const data of fcstToday) {
