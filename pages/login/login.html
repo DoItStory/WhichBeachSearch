@@ -19,59 +19,66 @@
     <div class="login-header">
       <header class="header__main">WhichBeachSearch</header>
     </div>
-
     <div class="login-contents">
-      <div class="login-screen">
-        <div class="login-guest">
-          <button onclick="location.href='../main/main.html'">
+      <div class="img-container">
+        <img class="img__login-and-join" src="/assets/images/login.svg" />
+      </div>
+      <form class="login-form input-form-basic">
+        <div class="input-form__user">
+          <input
+            type="email"
+            placeholder="이메일"
+            id="login-id"
+            class="input-form__input-field"
+            autocomplete="off"
+          />
+        </div>
+        <div class="input-form__user">
+          <input
+            type="password"
+            placeholder="비밀번호"
+            id="login-pw"
+            class="input-form__input-field"
+            maxlength
+            autocomplete="off"
+          />
+        </div>
+        <div class="password-reset-btn">
+          <button type="button" id="password-reset">비밀번호 찾기</button>
+        </div>
+        <div class="input-form-btn__style">
+          <button type="button" onclick="location.href='../main/main.html'">
             비회원으로 이용하기
           </button>
         </div>
-        <form action="" method="get" class="login-form">
-          <div class="login-form__user">
-            <label for="login-id"
-              ><i class="fa-regular fa-circle-user fa-lg"></i
-            ></label>
-            <input
-              type="email"
-              placeholder="E-mail"
-              id="login-id"
-              class="login-id"
-              autocomplete="off"
-            />
-          </div>
-          <div class="login-form__user">
-            <label for="login-pw"><i class="fa-solid fa-key fa-lg"></i></label>
-            <input
-              type="password"
-              placeholder="Password"
-              id="login-pw"
-              class="login-pw"
-              maxlength
-              autocomplete="off"
-            />
-          </div>
-          <div class="login-form__submit">
-            <input id="loginBtn" type="submit" value="log-in" />
-          </div>
-        </form>
-
-        <div class="join-find">
-          <div>
-            <button onclick="location.href='../join/join.html'">
-              회원가입
-            </button>
-          </div>
-          <div>
-            <button type="button" id="password-reset">내 정보 찾기</button>
-          </div>
+        <div class="input-form-btn__style">
+          <button id="login-button" type="submit">로그인</button>
+        </div>
+        <div class="input-form-btn__style">
+          <button type="button" onclick="location.href='../join/join.html'">
+            회원가입
+          </button>
+        </div>
+      </form>
+      <div class="login-social">
+        <div class="login-social__title">소셜 로그인</div>
+        <div class="login-social__btn">
+          <button type="button" id="google-login">
+            <img src="/assets/images/google-login.svg" />
+          </button>
+        </div>
+        <div class="login-social__btn">
+          <button type="button" id="facebook-login">
+            <img src="/assets/images/facebook-login.svg" />
+          </button>
         </div>
       </div>
     </div>
-    <div><button type="button" id="google-login">Google-Login</button></div>
-    <div><button type="button" id="facebook-login">Facebook-Login</button></div>
-    <div class="bottom-empty"></div>
 
+    <div class="bottom-empty"></div>
+    <div class="background-img__size background-img__position">
+      <img src="/assets/images/background-img.svg" />
+    </div>
     <div class="modal" id="circular-progress">
       <progress class="circular-progress modal__content" />
     </div>

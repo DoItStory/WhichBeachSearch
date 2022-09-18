@@ -1,27 +1,21 @@
 .join-header {
-  height: 100%;
+  height: 3rem;
   width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
   align-items: center;
+  margin-top: 3.5rem;
 }
 
 .join-contents {
-  height:100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.join__screen {
-  height: 48.8rem;
-  width: 29.6rem;
+  height: 80rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-color: var(--background-color);
-  border-radius: 1rem;
+  margin-top: 4.4rem;
 }
 
 .join__title {
@@ -31,6 +25,21 @@
   font-size: 1.6rem;
 }
 
+.join-form {
+  margin-top: 3rem;
+  height: 100%;
+}
+
+.join-form__empty-space {
+  width: 100%;
+  height: 4rem;
+}
 .bottom-empty {
-  height:100%;
+  height: 100%;
+}
+
+.background-img__position {
+  z-index: -1;
+  position: relative;
+  bottom: 2rem;
 }

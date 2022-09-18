@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="./css/join.css" />
-    <link rel="stylesheet" href="./css/form.css" />
     <script
       defer
       src="https://kit.fontawesome.com/ef84290deb.js"
@@ -20,69 +19,61 @@
       <header class="header__main">WhichBeachSearch</header>
     </div>
     <div class="join-contents">
-      <div class="join__screen">
-        <h1 class="join__title">회원이 되어주셔서 감사합니다!</h1>
-        <form action="" method="get" class="join-form">
-          <div class="join-form__user">
-            <label for="join-form__id"
-              >ID로 사용 할 E-mail을 입력해주세요.</label
-            >
-            <input
-              type="email"
-              placeholder="E-mail"
-              id="join-form__email"
-              class="join-form__id"
-              autocomplete="off"
-            />
-          </div>
-          <div class="join-form__user">
-            <label for="join-form__pw">비밀번호 설정</label>
-            <input
-              type="password"
-              placeholder="password"
-              id="join-form__password"
-              class="join-form__pw"
-              autocomplete="off"
-            />
-          </div>
-          <div class="join-form__user">
-            <label for="join-form__pw">비밀번호 확인</label>
-            <input
-              type="password"
-              placeholder="password check"
-              id="join-form__password-check"
-              class="join-form__pw-check"
-              autocomplete="off"
-            />
-          </div>
-          <div class="join-form__user">
-            <label for="join__nick-name">닉네임 설정</label>
-            <input
-              type="text"
-              placeholder="닉네임 입력"
-              id="join-form__nickname"
-              class="join__nick-name"
-              maxlength="8"
-              autocomplete="off"
-            />
-          </div>
-          <div class="join-form__image-container">
-            <img id="profilImage" class="join-form__preview-image" src="" />
-            <input
-              type="file"
-              id="join-form__image"
-              class="join-form__input-image"
-            />
-          </div>
-          <div class="join-form__action">
-            <button id="signUpCancelBtn" type="button">취소</button>
-            <button id="signUpbtn" type="submit">시작 하기</button>
-          </div>
-        </form>
+      <div class="img-container">
+        <img class="img__login-and-join" src="/assets/images/login.svg" />
       </div>
+      <form class="join-form input-form-basic">
+        <div class="input-form__user">
+          <input
+            type="email"
+            placeholder="이메일"
+            id="join-form__email"
+            class="input-form__input-field"
+            autocomplete="off"
+          />
+        </div>
+        <div class="input-form__user">
+          <input
+            type="password"
+            placeholder="비밀번호"
+            id="join-form__password"
+            class="input-form__input-field"
+            autocomplete="off"
+          />
+        </div>
+        <div class="input-form__user">
+          <input
+            type="password"
+            placeholder="비밀번호 확인"
+            id="join-form__password-check"
+            class="input-form__input-field"
+            autocomplete="off"
+          />
+        </div>
+        <div class="input-form__user">
+          <input
+            type="text"
+            placeholder="닉네임"
+            id="join-form__nickname"
+            class="input-form__input-field"
+            maxlength="8"
+            autocomplete="off"
+          />
+        </div>
+        <div class="join-form__empty-space"></div>
+        <div class="input-form-btn__style">
+          <button id="join-submit__btn" type="submit">시작 하기</button>
+        </div>
+        <div class="input-form-btn__style">
+          <button id="join-cancel__btn" type="button">취소</button>
+        </div>
+      </form>
     </div>
     <div class="bottom-empty"></div>
 
+    <div class="background-img__size background-img__position">
+      <img src="/assets/images/background-img.svg" />
+    </div>
     <div class="modal" id="circular-progress">
       <progress class="circular-progress modal__content" />
     </div>

@@ -1,10 +1,10 @@
 .mypage-header {
   width: 100%;
-  height: 2.5rem;
+  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .mypage-content {
@@ -12,31 +12,42 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
 }
 
-.align-right {
+.mypage-items {
   width: 100%;
+  height: 5rem;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 0.2rem solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.btn__name {
+  width: 100%;
+  font-size: 1.8rem;
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2rem;
 }
 
 .btn__menu {
+  width: auto;
+  height: 100%;
   background-color: transparent;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 0.1rem solid black;
-  text-align: left;
-  margin-bottom: 3rem;
-  padding: 2.8rem 0rem;
-}
-.btn__menu:hover {
-  background-color: #d60000;
-}
-.btn__menu:active {
-  background-color: #d6bb59;
+  border-style: none;
+  font-size: 2rem;
 }
 
-.btn__withdrawal {
-  width: fit-content;
+.btn__menu:hover {
+  cursor: pointer;
+}
+
+.btn__sign-out {
+  color: tomato;
 }

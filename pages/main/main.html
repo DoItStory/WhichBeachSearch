@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="./css/main.css" />
-    <link rel="stylesheet" href="./css/weather.css"/>
-    <link rel="stylesheet" href="./css/sun-time.css"/>
+    <link rel="stylesheet" href="./css/weather.css" />
+    <link rel="stylesheet" href="./css/sun-time.css" />
     <script defer type="module" src="/pages/main/js/main.js"></script>
     <script
       defer
@@ -18,167 +18,443 @@
     <title>WhichBeachSearch</title>
   </head>
   <body>
-    <div class="main-header">
-      <header class="main-title">WhichBeachSearch</header>
-      <div class="search">
+    <div class="main-wrapper">
+      <div class="main-header">
+        <div class="search main-search">
+          <form class="search-form">
+            <input
+              id="search-form__input"
+              class="search-form__input"
+              type="text"
+              placeholder="해수욕장 검색"
+            />
+            <button
+              id="search-form__submit"
+              class="search-form__submit"
+              type="submit"
+            >
+              <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+            </button>
+          </form>
+        </div>
         <div class="beach-name">
-          <span>해수욕장 이름</span>
-          <button type="button" id='bookmark-btn'class="search__bookmark-btn hidden"><i class="fa-solid fa-star"></i></button>
-        </div>
-        <form class="search-form">
-          <input
-            id="search-form__input"
-            class="search-form__input"
-            type="text"
-            placeholder="해수욕장 검색"
-          />
-          <button id="search-form__submit" class="search-form__submit" type="submit">
-            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+          <header>해수욕장 이름</header>
+          <button
+            type="button"
+            id="bookmark-btn"
+            class="search__bookmark-btn hidden"
+          >
+            <i class="fa-solid fa-star"></i>
           </button>
-        </form>
+        </div>
+        <address class="beach-address address-font">해수욕장 주소</address>
+        <div class="weather-today__image">
+          <img src="/assets/images/weather/sunny.svg" />
+        </div>
+        <div class="weather__today-temp">
+          <h2>25°C</h2>
+          <span>22°C / 33°C</span>
+        </div>
+        <div class="weather-today__container">
+          <div class="weather-today__item">
+            <img src="/assets/images/weather/wave.png" />
+            <span>0.3M<br />파고</span>
+          </div>
+          <div class="divider"></div>
+          <div class="weather-today__item">
+            <img src="/assets/images/beach.png" />
+            <span
+              >간조 05 : 37<br />
+              만조 22 : 58<br
+            /></span>
+          </div>
+          <div class="divider"></div>
+          <div class="weather-today__item">
+            <img src="/assets/images/weather/waterdrop.svg" />
+            <span>72%<br />강수 확률</span>
+          </div>
+        </div>
       </div>
-        <address class="beach-address">해수욕장 주소</address>
+      <div class="main-contents">
+        <div class="weather-time">
+          <h2 class="weather__title">시간 날씨 (Today)</h2>
+          <div class="weather__area">
+            <div class="weather__info">
+              <div class="info-upper">
+                <h3 class="weather__date">12:00</h3>
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/sunny.svg"
+                />
+                <span class="weather__temp">30°C</span>
+              </div>
+              <div class="info-bottom">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="weather__tide">0.1M</span>
+              </div>
+            </div>
+            <div class="weather__info">
+              <div class="info-upper">
+                <h3 class="weather__date">13:00</h3>
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/sunny.svg"
+                />
+                <span class="weather__temp">31°C</span>
+              </div>
+              <div class="info-bottom">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="weather__tide">0.2M</span>
+              </div>
+            </div>
+            <div class="weather__info">
+              <div class="info-upper">
+                <h3 class="weather__date">14:00</h3>
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/rain.svg"
+                />
+                <span class="weather__temp">31°C</span>
+              </div>
+              <div class="info-bottom">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="weather__tide">0.3M</span>
+              </div>
+            </div>
+            <div class="weather__info">
+              <div class="info-upper">
+                <h3 class="weather__date">15:00</h3>
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/rain.svg"
+                />
+                <span class="weather__temp">30°C</span>
+              </div>
+              <div class="info-bottom">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="weather__tide">0.2M</span>
+              </div>
+            </div>
+            <div class="weather__info">
+              <div class="info-upper">
+                <h3 class="weather__date">16:00</h3>
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/sunny.svg"
+                />
+                <span class="weather__temp">29°C</span>
+              </div>
+              <div class="info-bottom">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="weather__tide">0.1M</span>
+              </div>
+            </div>
+            <div class="weather__info">
+              <div class="info-upper">
+                <h3 class="weather__date">17:00</h3>
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/sunny.svg"
+                />
+                <span class="weather__temp">28°C</span>
+              </div>
+              <div class="info-bottom">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="weather__tide">0.2M</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="weather-sea">
+          <h2 class="weather__title">주간 해상 기후</h2>
+          <div class="weather-sea__area">
+            <div class="weather-sea__info">
+              <span>월요일</span>
+              <div class="sea-weather">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="wave-height"
+                  >고 0.3 M <br />
+                  저 0.1 M</span
+                >
+                <span class="high-low-tide">조 - 05:37 <br />간 - 22:58</span>
+              </div>
+            </div>
+            <div class="weather-sea__info">
+              <span>화요일</span>
+              <div class="sea-weather">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="wave-height"
+                  >고 0.3 M <br />
+                  저 0.1 M</span
+                >
+                <span class="high-low-tide">조 - 05:37 <br />간 - 22:58</span>
+              </div>
+            </div>
+            <div class="weather-sea__info">
+              <span>수요일</span>
+              <div class="sea-weather">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="wave-height"
+                  >고 0.3 M <br />
+                  저 0.1 M</span
+                >
+                <span class="high-low-tide">조 - 05:37 <br />간 - 22:58</span>
+              </div>
+            </div>
+            <div class="weather-sea__info">
+              <span>목요일</span>
+              <div class="sea-weather">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="wave-height"
+                  >고 0.3 M <br />
+                  저 0.1 M</span
+                >
+                <span class="high-low-tide">조 - 05:37 <br />간 - 22:58</span>
+              </div>
+            </div>
+            <div class="weather-sea__info">
+              <span>금요일</span>
+              <div class="sea-weather">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="wave-height"
+                  >고 0.3 M <br />
+                  저 0.1 M</span
+                >
+                <span class="high-low-tide">조 - 05:37 <br />간 - 22:58</span>
+              </div>
+            </div>
+            <div class="weather-sea__info">
+              <span>토요일</span>
+              <div class="sea-weather">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="wave-height"
+                  >고 0.3 M <br />
+                  저 0.1 M</span
+                >
+                <span class="high-low-tide">조 - 05:37 <br />간 - 22:58</span>
+              </div>
+            </div>
+            <div class="weather-sea__info">
+              <span>일요일</span>
+              <div class="sea-weather">
+                <img
+                  class="weather__icon"
+                  src="/assets/images/weather/wave.png"
+                />
+                <span class="wave-height"
+                  >고 0.3 M <br />
+                  저 0.1 M</span
+                >
+                <span class="high-low-tide">조 - 05:37 <br />간 - 22:58</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="weather-weekely">
+          <h2 class="weather__title">주간 날씨</h2>
+          <div class="weather-weekely__area">
+            <div class="weather-weekely__container">
+              <div class="weekely-day"><span>월요일</span></div>
+              <div class="weekely-rain">
+                <img src="/assets/images/weather/waterdrop.svg" /><span
+                  >70%</span
+                >
+              </div>
+              <div class="weekely-icon">
+                <img src="/assets/images/weather/rain.svg" />
+              </div>
+              <div class="weekely-temp">
+                <span>28°C /&nbsp;</span><span>25°C</span>
+              </div>
+            </div>
+            <div class="weather-weekely__container">
+              <div class="weekely-day"><span>화요일</span></div>
+              <div class="weekely-rain">
+                <img src="/assets/images/weather/waterdrop.svg" /><span
+                  >70%</span
+                >
+              </div>
+              <div class="weekely-icon">
+                <img src="/assets/images/weather/thunderstroms.svg" />
+              </div>
+              <div class="weekely-temp">
+                <span>30°C /&nbsp;</span><span>26°C</span>
+              </div>
+            </div>
+            <div class="weather-weekely__container">
+              <div class="weekely-day"><span>수요일</span></div>
+              <div class="weekely-rain">
+                <img src="/assets/images/weather/waterdrop.svg" /><span
+                  >20%</span
+                >
+              </div>
+              <div class="weekely-icon">
+                <img src="/assets/images/weather/clear-cloudy.svg" />
+              </div>
+              <div class="weekely-temp">
+                <span>31°C /&nbsp;</span><span>27°C</span>
+              </div>
+            </div>
+            <div class="weather-weekely__container">
+              <div class="weekely-day"><span>목요일</span></div>
+              <div class="weekely-rain">
+                <img src="/assets/images/weather/waterdrop.svg" /><span
+                  >30%</span
+                >
+              </div>
+              <div class="weekely-icon">
+                <img src="/assets/images/weather/sunny.svg" />
+              </div>
+              <div class="weekely-temp">
+                <span>30°C /&nbsp;</span><span>26°C</span>
+              </div>
+            </div>
+            <div class="weather-weekely__container">
+              <div class="weekely-day"><span>금요일</span></div>
+              <div class="weekely-rain">
+                <img src="/assets/images/weather/waterdrop.svg" /><span
+                  >30%</span
+                >
+              </div>
+              <div class="weekely-icon">
+                <img src="/assets/images/weather/sunny.svg" />
+              </div>
+              <div class="weekely-temp">
+                <span>32°C /&nbsp;</span><span>26°C</span>
+              </div>
+            </div>
+            <div class="weather-weekely__container">
+              <div class="weekely-day"><span>토요일</span></div>
+              <div class="weekely-rain">
+                <img src="/assets/images/weather/waterdrop.svg" /><span
+                  >10%</span
+                >
+              </div>
+              <div class="weekely-icon">
+                <img src="/assets/images/weather/sunny.svg" />
+              </div>
+              <div class="weekely-temp">
+                <span>29°C /&nbsp;</span><span>25°C</span>
+              </div>
+            </div>
+            <div class="weather-weekely__container">
+              <div class="weekely-day"><span>일요일</span></div>
+              <div class="weekely-rain">
+                <img src="/assets/images/weather/waterdrop.svg" /><span
+                  >50%</span
+                >
+              </div>
+              <div class="weekely-icon">
+                <img src="/assets/images/weather/rain.svg" />
+              </div>
+              <div class="weekely-temp">
+                <span>27°C /&nbsp;</span><span>23°C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sun-time">
+          <div class="sun-time__info">
+            <div class="sun-time__board">
+              <h2>일출</h2>
+              <span>오전 05:17</span>
+            </div>
+            <div class="sun-time__icon">
+              <img src="/assets/images/sunrise.png"></i>
+            </div>
+          </div>
+          <div class="sun-time__info">
+            <div class="sun-time__board">
+              <h2>일몰</h2>
+              <span>오후 18:17</span>
+            </div>
+            <div class="sun-time__icon sun-time__icon--color-purple">
+              <img src="/assets/images/sunset.png"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="more-info">
+          <button class="more-info__btn" tyep="button">
+            해수욕장 둘러보기
+          </button>
+          <button class="more-info__btn" tyep="button">해수욕장 혼잡도</button>
+          <button class="more-info__btn" tyep="button">지도에서 보기</button>
+          <button class="more-info__btn" tyep="button">해수욕장 정보</button>
+
+          <!-- 테스트용 로그아웃 버튼 -->
+          <button class="more-info__btn" id="logout-btn" tyep="button">
+            로그아웃
+          </button>
+        </div>
+      </div>
+      <nav class="bottom-nav">
+        <ul class="bottom-nav__list">
+          <li class="bottom-nav__btn">
+            <a href="/pages/main/main.html">
+              <i class="fa-solid fa-house"></i>
+            </a>
+          </li>
+          <li class="bottom-nav__btn">
+            <a href="/pages/bookmark/bookmark.html">
+              <i id="bookmark-icon" class="fa-solid fa-bookmark"></i
+            ></a>
+          </li>
+          <li class="bottom-nav__btn">
+            <a href="/pages/map/map.html">
+              <i class="fa-solid fa-map"></i>
+            </a>
+          </li>
+          <li class="bottom-nav__btn">
+            <a href="/pages/mypage/mypage.html">
+              <i class="fa-solid fa-ellipsis"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="modal" id="circular-progress">
+        <progress class="circular-progress modal__content" />
+      </div>
     </div>
-
-    <div class="main-contents">
-      <div class="weather">
-      <h2 class="weather__title">주간 날씨</h2>
-      <div class="weather__area">
-        <div class="weather__info">
-          <h3 class="weather__date">일요일</h3>
-          <span class="weather__icon">☀️</span>
-          <span class="weather__temp">저 17.5° </br>고 28.0°</span>
-        </div>
-        <div class="weather__info">
-          <h3 class="weather__date">월요일</h3>
-          <span class="weather__icon">🌧</span>
-          <span class="weather__temp">저 17.5° </br>고 28.0°</span>
-        </div>
-        <div class="weather__info">
-          <h3 class="weather__date">월요일</h3>
-          <span class="weather__icon">🌧</span>
-          <span class="weather__temp">저 17.5° </br>고 28.0°</span>
-        </div>
-        <div class="weather__info">
-          <h3 class="weather__date">월요일</h3>
-          <span class="weather__icon">🌧</span>
-          <span class="weather__temp">저 17.5° </br>고 28.0°</span>
-        </div>
-        <div class="weather__info">
-          <h3 class="weather__date">월요일</h3>
-          <span class="weather__icon">🌧</span>
-          <span class="weather__temp">저 17.5° </br>고 28.0°</span>
-        </div>
-        <div class="weather__info">
-          <h3 class="weather__date">월요일</h3>
-          <span class="weather__icon">🌧</span>
-          <span class="weather__temp">저 17.5° </br>고 28.0°</span>
-        </div>
-        <div class="weather__info">
-          <h3 class="weather__date">월요일</h3>
-          <span class="weather__icon">🌧</span>
-          <span class="weather__temp">저 17.5° </br>고 28.0°</span>
-        </div>
-      </div>
-      </div>
-
-      <div class="weather">
-      <h2 class="weather__title">시간 날씨 (오늘 기준)</h2>
-      <div class="weather__area">
-        <div class="weather__every-hour">
-          <h3 class="weather__date">08 : 00</h3>
-          <span class="weather__icon">☀️</span>
-          <span class="weather__temp">17.5°</span>
-          <span class="weather__tide">파고 0.3M </br>평균 0.1M</span>
-        </div>
-        <div class="weather__every-hour">
-          <h3 class="weather__date">10 : 00</h3>
-          <span class="weather__icon">☀️</span>
-          <span class="weather__temp">17.5°</span>
-          <span class="weather__tide">파고 0.3M </br>평균 0.1M</span>
-        </div>
-        <div class="weather__every-hour">
-          <h3 class="weather__date">12 : 00</h3>
-          <span class="weather__icon">☀️</span>
-          <span class="weather__temp">17.5°</span>
-          <span class="weather__tide">파고 0.3M </br>평균 0.1M</span>
-        </div>
-        <div class="weather__every-hour">
-          <h3 class="weather__date">14 : 00</h3>
-          <span class="weather__icon">☀️</span>
-          <span class="weather__temp">17.5°</span>
-          <span class="weather__tide">파고 0.3M </br>평균 0.1M</span>
-        </div>
-        <div class="weather__every-hour">
-          <h3 class="weather__date">16 : 00</h3>
-          <span class="weather__icon">☀️</span>
-          <span class="weather__temp">17.5°</span>
-          <span class="weather__tide">파고 0.3M </br>평균 0.1M</span>
-        </div>
-        <div class="weather__every-hour">
-          <h3 class="weather__date">18 : 00</h3>
-          <span class="weather__icon">☀️</span>
-          <span class="weather__temp">17.5°</span>
-          <span class="weather__tide">파고 0.3M </br>평균 0.1M</span>
-        </div>
-      </div>
-      </div>
-
-      <div class="sun-time">
-        <div class="sun-time__info">
-          <div class="sun-time__board">
-            <h2>일출</h2>
-            <span>오전 05:17</span>
-          </div> 
-          <div class="sun-time__icon">
-            <i class="fa-solid fa-sun fa-lg"></i></div>
-        </div>
-        <div class="sun-time__info">
-          <div class="sun-time__board">
-            <h2>일몰</h2>
-            <span>오후 18:17</span>
-          </div> 
-          <div class="sun-time__icon sun-time__icon--color-purple">
-            <i class="fa-regular fa-sun fa-lg"></i></div>
-        </div>
-      </div>
-
-      <div class="more-info">
-        <button class="more-info__btn" tyep="button">해수욕장 둘러보기</button>
-        <button class="more-info__btn" tyep="button">해수욕장 혼잡도</button>
-        <button class="more-info__btn" tyep="button">지도에서 보기</button>
-        <button class="more-info__btn" tyep="button">해수욕장 정보</button>
-        <!-- 테스트용 로그아웃 버튼 -->
-        <button class="more-info__btn" id="logout-btn"tyep="button">로그아웃</button>
-      </div>
-    </div>
-
-    <nav class="bottom-nav">
-      <ul class="bottom-nav__list">
-        <li class="bottom-nav__btn">
-          <a href="/pages/main/main.html">
-            <i class="fa-solid fa-house"></i>
-          </a>
-        </li>
-        <li class="bottom-nav__btn">
-          <a href="/pages/bookmark/bookmark.html">
-            <i id="bookmark-icon" class="fa-solid fa-bookmark"></i
-          ></a>
-        </li>
-        <li class="bottom-nav__btn">
-          <a href="/pages/map/map.html">
-            <i class="fa-solid fa-map"></i>
-          </a>
-        </li>
-        <li class="bottom-nav__btn">
-          <a href="/pages/mypage/mypage.html">
-            <i class="fa-solid fa-ellipsis"></i>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div class="modal" id="circular-progress">
-      <progress class="circular-progress modal__content" />
-    </div>
+    <div class="main-wrapper__back-cover"></div>
+    <div class="main-wrapper__front-cover"></div>
   </body>
 </html>

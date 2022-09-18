@@ -29,7 +29,7 @@ import {
 import { ERROR } from '../../../js/error.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
-const beachName = document.querySelector('.beach-name > span');
+const beachName = document.querySelector('.beach-name > header');
 const beachAddress = document.querySelector('.beach-address');
 const HIDDEN_CLASSNAME = 'hidden';
 

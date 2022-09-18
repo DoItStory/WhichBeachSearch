@@ -4,8 +4,8 @@
 @import '/css/color.css';
 
 /* Components */
-@import '/components/header.css';
 @import '/components/nav.css';
 @import '/components/search.css';
 @import '/components/circular-progress.css';
 @import '/components/modal.css';
+@import '/components/input-form.css';
