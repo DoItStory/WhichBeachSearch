@@ -186,7 +186,7 @@ async function addTodayWeatherList() {
     infoUpper.classList.add('info-upper');
     const weatherDate = document.createElement('h3');
     weatherDate.classList.add('weather__date');
-    weatherDate.textContent = data.fcstTime.substring(0, 2) + ' : ' + '00';
+    weatherDate.textContent = data.fcstTime.substring(0, 2) + ':' + '00';
     const weatherIcon = document.createElement('img');
     weatherIcon.classList.add('weather__icon');
     weatherIcon.src = '/assets/images/weather/sunny.svg';
