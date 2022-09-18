@@ -2,14 +2,12 @@ import {
   initializeFirebase,
   fireStoreInitialize,
 } from '../../../js/initialize.js';
-
 import {
   getAuth,
   onAuthStateChanged,
   // test용 로그아웃 버튼 생성
   signOut,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
-
 import {
   collection,
   addDoc,
@@ -20,12 +18,10 @@ import {
   updateDoc,
   arrayUnion,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
-
 import {
   showCircularProgress,
   hideCircularProgress,
 } from '../../../js/circular-progress.js';
-
 import { ERROR } from '../../../js/error.js';
 import { getVilageFcstBeachToday } from './beachInfoService.js';
 
