@@ -79,7 +79,7 @@ function handleBookmarkBtn() {
 async function createUserDoc() {
   const userUID = auth.currentUser.uid;
   if (!userUID) {
-    throw ERROR(UNDEFINED_UID);
+    throw ERROR(ERROR.UNDEFINED_UID);
   }
   const userBookmarkList = [
     {
