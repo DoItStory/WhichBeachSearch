@@ -27,6 +27,7 @@ import {
 } from '../../../js/circular-progress.js';
 
 import { ERROR } from '../../../js/error.js';
+import { getVilageFcstBeachToday } from './beachInfoService.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > header');
@@ -49,10 +50,13 @@ async function mainScreenload() {
       hideCircularProgress();
     }
   } catch (error) {
-    hideCircularProgress();
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   }
+
+  showCircularProgress();
+  await addTodayWeatherList();
+  hideCircularProgress();
 }
 
 function handleBookmarkBtn() {
@@ -165,4 +169,53 @@ function logout() {
       alert(`로그아웃에 실패 Error = ${errorCode}`);
       // An error happened.
     });
+}
+
+async function addTodayWeatherList() {
+  const fcstToday = await getVilageFcstBeachToday(304).catch(error => {
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+  });
+  console.log('hi', fcstToday);
+
+  //const sunnyUrl = require('/assets/images/weather/sunny.svg');
+  //const waveUrl = require('/assets/images/weather/wave.png');
+
+  const weatherArea = document.getElementById('weather_area_today');
+  for (const data of fcstToday) {
+    if (data.category !== 'TMP') {
+      continue;
+    }
+
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather__info');
+    const infoUpper = document.createElement('div');
+    infoUpper.classList.add('info-upper');
+    const weatherDate = document.createElement('h3');
+    weatherDate.classList.add('weather__date');
+    weatherDate.textContent = data.fcstTime.substring(0, 2) + ' : ' + '00';
+    const weatherIcon = document.createElement('img');
+    weatherIcon.classList.add('weather__icon');
+    weatherIcon.src = '/assets/images/weather/sunny.svg';
+    const weatherTemp = document.createElement('span');
+    weatherTemp.classList.add('weather__temp');
+    weatherTemp.textContent = data.fcstValue + '°';
+    const infoBottom = document.createElement('div');
+    infoBottom.classList.add('info-bottom');
+    const waveIcon = document.createElement('img');
+    waveIcon.classList.add('weather__icon');
+    waveIcon.src = '/assets/images/weather/wave.png';
+    const weatherTide = document.createElement('span');
+    weatherTide.classList.add('weather__tide');
+    weatherTide.textContent = '0.2M';
+
+    infoUpper.appendChild(weatherDate);
+    infoUpper.appendChild(weatherIcon);
+    infoUpper.appendChild(weatherTemp);
+    infoBottom.appendChild(waveIcon);
+    infoBottom.appendChild(weatherTide);
+    weatherInfo.appendChild(infoUpper);
+    weatherInfo.appendChild(infoBottom);
+    weatherArea.appendChild(weatherInfo);
+  }
 }
