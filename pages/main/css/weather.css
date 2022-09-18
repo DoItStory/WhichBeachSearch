@@ -42,6 +42,7 @@
   text-align: center;
   margin-left: 1rem;
   margin-right: 1rem;
+  margin-top: 0.3rem;
 }
 
 .weather-today__item img {
@@ -50,7 +51,7 @@
 }
 
 .weather-today__item span {
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   font-size: 1.4rem;
 }
 
@@ -147,7 +148,7 @@
 /* 주간 해상 기후 */
 
 .weather-sea {
-  height: 20rem;
+  height: 21rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -171,7 +172,7 @@
 }
 
 .weather-sea__info {
-  height: 16rem;
+  height: 16.5rem;
   width: 7.5rem;
   display: flex;
   flex-direction: column;
@@ -195,6 +196,7 @@
   text-align: center;
   padding-top: 0.8rem;
   padding-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .sea-weather .weather__icon {
@@ -258,11 +260,11 @@
 
 .weekely-day {
   height: 100%;
-  width: 8rem;
+  width: 7rem;
   display: flex;
   align-items: center;
   font-size: 1.6rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   padding-left: 1rem;
 }
 
@@ -275,8 +277,9 @@
 }
 
 .weekely-rain img {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.5rem;
 }
 
 .weekely-icon {
@@ -284,11 +287,12 @@
   height: 5rem;
   display: flex;
   align-items: center;
-  margin-left: 1.5rem;
+  margin-left: 2.5rem;
 }
+
 .weekely-icon img {
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
 }
 
 .weekely-temp {
