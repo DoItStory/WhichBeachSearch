@@ -56,7 +56,7 @@ export async function getVilageFcstBeachToday(beachNum) {
   const startTime = new Date(
     getTodayDate().getTime() + new Date().getHours() * 3600 * 1000,
   ).getTime();
-  const endTime = new Date(startTime + 24 * 3600 * 1000).getTime();
+  const endTime = new Date(startTime + 12 * 3600 * 1000).getTime();
 
   // 현재 시간 이후 ~ 내일 현재시간 까지의 데이터 가져오기
   const parsingDataArray = [];
