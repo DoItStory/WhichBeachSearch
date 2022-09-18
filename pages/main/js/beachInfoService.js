@@ -36,11 +36,7 @@ function getNearestBaseDate() {
 
 export async function getVilageFcstBeachToday(beachNum) {
   const baseDate = getNearestBaseDate();
-  const dateString = baseDate
-    .toISOString()
-    .split('T')[0]
-    .replaceAll('-', '');
-    
+  const dateString = baseDate.toISOString().split('T')[0].replaceAll('-', '');
   const timeString = baseDate.toISOString().substr(11, 5).replace(':', '');
   const result = await axios({
     method: 'get',
@@ -56,7 +52,6 @@ export async function getVilageFcstBeachToday(beachNum) {
       beach_num: beachNum,
     },
   });
-
   const dataArray = result.data.response.body.items.item;
   const startTime = new Date(
     getTodayDate().getTime() + new Date().getHours() * 3600 * 1000,
