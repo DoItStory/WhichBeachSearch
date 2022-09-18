@@ -39,8 +39,8 @@ export async function getVilageFcstBeachToday(beachNum) {
   const dateString = baseDate
     .toISOString()
     .split('T')[0]
-    .replace('-', '')
-    .replace('-', '');
+    .replaceAll('-', '');
+    
   const timeString = baseDate.toISOString().substr(11, 5).replace(':', '');
   const result = await axios({
     method: 'get',
