@@ -42,7 +42,7 @@ async function mainScreenload() {
       hideCircularProgress();
     } else {
       beachName.innerHTML = '해운대 해수욕장';
-      beachAddress.innerHTML = '해수욕장 주소';
+      beachAddress.innerHTML = '부산광역시 해운대구 우동';
       hideCircularProgress();
     }
   } catch (error) {
@@ -51,7 +51,8 @@ async function mainScreenload() {
   }
 
   showCircularProgress();
-  await addTodayWeatherList();
+  const fcstTodayData = await getWeatherData();
+  addTodayWeatherList(fcstTodayData);
   hideCircularProgress();
 }
 
@@ -167,32 +168,34 @@ function logout() {
     });
 }
 
-async function addTodayWeatherList() {
+async function getWeatherData() {
   const fcstToday = await getVilageFcstBeachToday(304).catch(error => {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
   console.log(fcstToday);
+  return fcstToday;
+}
 
+function addTodayWeatherList(fcstToday) {
+  const shortTermWeather = getShortTermWeather(fcstToday);
+  console.log(shortTermWeather);
   const weatherArea = document.getElementById('weather_area_today');
-  for (const data of fcstToday) {
-    if (data.category !== 'TMP') {
-      continue;
-    }
 
+  for (const data of shortTermWeather) {
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather__info');
     const infoUpper = document.createElement('div');
     infoUpper.classList.add('info-upper');
     const weatherDate = document.createElement('h3');
     weatherDate.classList.add('weather__date');
-    weatherDate.textContent = data.fcstTime.substring(0, 2) + ':' + '00';
+    weatherDate.textContent = data.time.substring(0, 2) + ':' + '00';
     const weatherIcon = document.createElement('img');
     weatherIcon.classList.add('weather__icon');
     weatherIcon.src = '/assets/images/weather/sunny.svg';
     const weatherTemp = document.createElement('span');
     weatherTemp.classList.add('weather__temp');
-    weatherTemp.textContent = data.fcstValue + '°';
+    weatherTemp.textContent = data.tmp + '°C';
     const infoBottom = document.createElement('div');
     infoBottom.classList.add('info-bottom');
     const waveIcon = document.createElement('img');
@@ -200,7 +203,7 @@ async function addTodayWeatherList() {
     waveIcon.src = '/assets/images/weather/wave.png';
     const weatherTide = document.createElement('span');
     weatherTide.classList.add('weather__tide');
-    weatherTide.textContent = '0.2M';
+    weatherTide.textContent = data.wav.padEnd(3, '.0') + 'M';
 
     infoUpper.appendChild(weatherDate);
     infoUpper.appendChild(weatherIcon);
@@ -211,4 +214,54 @@ async function addTodayWeatherList() {
     weatherInfo.appendChild(infoBottom);
     weatherArea.appendChild(weatherInfo);
   }
+}
+
+function getShortTermWeather(fsctBeachToday) {
+  const timeValue = new Set();
+  for (let data of fsctBeachToday) {
+    timeValue.add(data.fcstTime);
+  }
+
+  const tmpValue = fsctBeachToday
+    .filter(fsctBeachData => fsctBeachData.category == 'TMP')
+    .map(filteredData => filteredData.fcstValue);
+  const wavValue = fsctBeachToday
+    .filter(fsctBeachData => fsctBeachData.category == 'WAV')
+    .map(filteredData => filteredData.fcstValue);
+  const popValue = fsctBeachToday
+    .filter(fsctBeachData => fsctBeachData.category == 'POP')
+    .map(filteredData => filteredData.fcstValue);
+  const skyValue = fsctBeachToday
+    .filter(fsctBeachData => fsctBeachData.category == 'SKY')
+    .map(filteredData => filteredData.fcstValue);
+  const ptyValue = fsctBeachToday
+    .filter(fsctBeachData => fsctBeachData.category == 'PTY')
+    .map(filteredData => filteredData.fcstValue);
+
+  return gatherWeatherData(
+    timeValue,
+    tmpValue,
+    wavValue,
+    popValue,
+    skyValue,
+    ptyValue,
+  );
+}
+
+function gatherWeatherData(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
+  const timeArray = Array.from(timeArr);
+
+  const weatherCollection = [];
+  for (let i = 0; i < tmpArr.length; i++) {
+    weatherCollection[i] = {
+      time: timeArray[i],
+      tmp: tmpArr[i],
+      wav: wavArr[i],
+      pop: popArr[i],
+      sky: skyArr[i],
+      pty: ptyArr[i],
+    };
+  }
+
+  return weatherCollection;
 }
