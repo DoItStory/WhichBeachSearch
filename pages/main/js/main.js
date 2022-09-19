@@ -52,7 +52,9 @@ async function mainScreenload() {
 
   showCircularProgress();
   const fcstTodayData = await getWeatherData();
-  addTodayWeatherList(fcstTodayData);
+  const shortTermWeather = getShortTermWeather(fcstTodayData);
+  addTodayWeatherList(shortTermWeather);
+  paintCurrentDate(shortTermWeather);
   hideCircularProgress();
 }
 
@@ -177,8 +179,21 @@ async function getWeatherData() {
   return fcstToday;
 }
 
-function addTodayWeatherList(fcstToday) {
-  const shortTermWeather = getShortTermWeather(fcstToday);
+function paintCurrentDate(shortTermWeather) {
+  const weatherPopBorder = document.getElementById('weather-today__rain');
+  const weatherWavBorder = document.getElementById('weather-today__wave');
+
+  const todayWaveHeight = document.createElement('span');
+  todayWaveHeight.innerHTML =
+    shortTermWeather[0].wav.padEnd(3, '.0') + ' M' + '<br/>파고';
+  const chanceOfRain = document.createElement('span');
+  chanceOfRain.innerHTML = shortTermWeather[0].pop + '% <br/>강수확률';
+
+  weatherWavBorder.appendChild(todayWaveHeight);
+  weatherPopBorder.appendChild(chanceOfRain);
+}
+
+function addTodayWeatherList(shortTermWeather) {
   console.log(shortTermWeather);
   const weatherArea = document.getElementById('weather_area_today');
 
@@ -221,7 +236,6 @@ function getShortTermWeather(fsctBeachToday) {
   for (let data of fsctBeachToday) {
     timeValue.add(data.fcstTime);
   }
-
   const tmpValue = fsctBeachToday
     .filter(fsctBeachData => fsctBeachData.category == 'TMP')
     .map(filteredData => filteredData.fcstValue);
