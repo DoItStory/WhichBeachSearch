@@ -35,13 +35,7 @@ function getNearestBaseDate() {
 }
 
 export async function getVilageFcstBeachToday(beachNum) {
-  const baseDate = getNearestBaseDate();
-  const dateString = baseDate.toISOString().split('T')[0].replaceAll('-', '');
-  const timeString = baseDate.toISOString().substr(11, 5).replace(':', '');
-
-  const requestServer = await getFcstBeach(dateString, timeString, beachNum);
-
-  const dataArray = requestServer.data.response.body.items.item;
+  const requestServerData = await getFcstBeach(beachNum);
 
   const startTime = new Date(
     getTodayDate().getTime() + new Date().getHours() * 3600 * 1000,
@@ -49,9 +43,9 @@ export async function getVilageFcstBeachToday(beachNum) {
   const endTime = new Date(startTime + 12 * 3600 * 1000).getTime();
   // 현재 시간 이후 ~ 내일 현재시간 까지의 데이터 가져오기
   const parsingDataArray = [];
-  for (let i = 0; i < dataArray.length; i++) {
-    const fcstDate = dataArray[i].fcstDate;
-    const fcstHour = dataArray[i].fcstTime.substring(0, 2);
+  for (let i = 0; i < requestServerData.length; i++) {
+    const fcstDate = requestServerData[i].fcstDate;
+    const fcstHour = requestServerData[i].fcstTime.substring(0, 2);
     const currentDateString =
       fcstDate.substring(0, 4) +
       '-' +
@@ -62,13 +56,16 @@ export async function getVilageFcstBeachToday(beachNum) {
       new Date(currentDateString).getTime() + fcstHour * 3600 * 1000,
     ).getTime();
     if (startTime <= currentTime && currentTime <= endTime) {
-      parsingDataArray.push(dataArray[i]);
+      parsingDataArray.push(requestServerData[i]);
     }
   }
   return parsingDataArray;
 }
 
-export async function getFcstBeach(dateString, timeString, beachNum) {
+export async function getFcstBeach(beachNum) {
+  const baseDate = getNearestBaseDate();
+  const dateString = baseDate.toISOString().split('T')[0].replaceAll('-', '');
+  const timeString = baseDate.toISOString().substr(11, 5).replace(':', '');
   const result = await axios({
     method: 'get',
     url: 'https://apis.data.go.kr/1360000/BeachInfoservice/getVilageFcstBeach',
@@ -83,5 +80,5 @@ export async function getFcstBeach(dateString, timeString, beachNum) {
       beach_num: beachNum,
     },
   });
-  return result;
+  return result.data.response.body.items.item;
 }
