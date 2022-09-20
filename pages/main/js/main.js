@@ -23,7 +23,7 @@ import {
   hideCircularProgress,
 } from '../../../js/circular-progress.js';
 import { ERROR } from '../../../js/error.js';
-import { getVilageFcstBeachToday } from './beachInfoService.js';
+import { getVilageFcstBeachToday, getFcstBeach } from './beachInfoService.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > header');
@@ -53,6 +53,8 @@ async function mainScreenload() {
   showCircularProgress();
   const fcstTodayData = await getWeatherData();
   const shortTermWeather = getShortTermWeather(fcstTodayData);
+  const fcstWeatherData = await getWeather3DaysData();
+  const threeDaysWeather = addTodayWeatherList(shortTermWeather);
   addTodayWeatherList(shortTermWeather);
   paintCurrentDate(shortTermWeather);
   hideCircularProgress();
@@ -178,6 +180,25 @@ async function getWeatherData() {
   });
   console.log(fcstToday);
   return fcstToday;
+}
+
+// 지금으로부터 3일 정보 얻어오는 기능
+async function getWeather3DaysData() {
+  const fcstBeachData = await getFcstBeach(304).catch(error => {
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+  });
+  return fcstBeachData;
+}
+
+async function getWeather3days(threeDaysWeather) {
+  const tmnValue = beachCategoryValueFilter(
+    threeDaysWeather,
+    'TMN',
+    'fcstValue',
+  );
+  console.log(tmnValue);
+  return tmnValue;
 }
 
 function paintCurrentDate(shortTermWeather) {
