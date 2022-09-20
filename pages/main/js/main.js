@@ -51,7 +51,7 @@ async function mainScreenload() {
   }
 
   showCircularProgress();
-  const fcstTodayData = await getWeatherData();
+  const fcstTodayData = await getWeatherTodayData();
   const shortTermWeather = getShortTermWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
   const threeDaysWeather = addTodayWeatherList(shortTermWeather);
@@ -173,7 +173,7 @@ function logout() {
 }
 
 // 지금 시간으로부터 12시간 정보 얻어오는 기능
-async function getWeatherData() {
+async function getWeatherTodayData() {
   const fcstToday = await getVilageFcstBeachToday(304).catch(error => {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
