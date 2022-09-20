@@ -170,6 +170,7 @@ function logout() {
     });
 }
 
+// 지금 시간으로부터 12시간 정보 얻어오는 기능
 async function getWeatherData() {
   const fcstToday = await getVilageFcstBeachToday(304).catch(error => {
     const errorCode = error.code;
@@ -236,21 +237,11 @@ function getShortTermWeather(fsctBeachToday) {
   for (let data of fsctBeachToday) {
     timeValue.add(data.fcstTime);
   }
-  const tmpValue = fsctBeachToday
-    .filter(fsctBeachData => fsctBeachData.category == 'TMP')
-    .map(filteredData => filteredData.fcstValue);
-  const wavValue = fsctBeachToday
-    .filter(fsctBeachData => fsctBeachData.category == 'WAV')
-    .map(filteredData => filteredData.fcstValue);
-  const popValue = fsctBeachToday
-    .filter(fsctBeachData => fsctBeachData.category == 'POP')
-    .map(filteredData => filteredData.fcstValue);
-  const skyValue = fsctBeachToday
-    .filter(fsctBeachData => fsctBeachData.category == 'SKY')
-    .map(filteredData => filteredData.fcstValue);
-  const ptyValue = fsctBeachToday
-    .filter(fsctBeachData => fsctBeachData.category == 'PTY')
-    .map(filteredData => filteredData.fcstValue);
+  const tmpValue = beachCategoryValueFilter(fsctBeachToday, 'TMP', 'fcstValue');
+  const wavValue = beachCategoryValueFilter(fsctBeachToday, 'WAV', 'fcstValue');
+  const popValue = beachCategoryValueFilter(fsctBeachToday, 'POP', 'fcstValue');
+  const skyValue = beachCategoryValueFilter(fsctBeachToday, 'SKY', 'fcstValue');
+  const ptyValue = beachCategoryValueFilter(fsctBeachToday, 'PTY', 'fcstValue');
 
   return gatherWeatherData(
     timeValue,
@@ -260,6 +251,23 @@ function getShortTermWeather(fsctBeachToday) {
     skyValue,
     ptyValue,
   );
+}
+
+function beachCategoryValueFilter(collectionData, categoryStr, findValueStr) {
+  let result;
+  switch (findValueStr) {
+    case 'fcstValue':
+      result = collectionData
+        .filter(data => data.category == categoryStr)
+        .map(filteredData => filteredData.fcstValue);
+      break;
+    case 'fcstDate':
+      result = collectionData
+        .filter(data => data.category == categoryStr)
+        .map(filteredData => filteredData.fcstDate);
+      break;
+  }
+  return result;
 }
 
 function gatherWeatherData(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
