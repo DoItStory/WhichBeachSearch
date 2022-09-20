@@ -52,11 +52,10 @@ async function mainScreenload() {
 
   showCircularProgress();
   const fcstTodayData = await getWeatherTodayData();
-  const shortTermWeather = getShortTermWeather(fcstTodayData);
+  const todayWeather = getShortTermWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
-  const threeDaysWeather = addTodayWeatherList(shortTermWeather);
-  addTodayWeatherList(shortTermWeather);
-  paintCurrentDate(shortTermWeather);
+  addTodayWeatherList(todayWeather);
+  paintCurrentDate(todayWeather);
   hideCircularProgress();
 }
 
@@ -191,35 +190,25 @@ async function getWeather3DaysData() {
   return fcstBeachData;
 }
 
-async function getWeather3days(threeDaysWeather) {
-  const tmnValue = beachCategoryValueFilter(
-    threeDaysWeather,
-    'TMN',
-    'fcstValue',
-  );
-  console.log(tmnValue);
-  return tmnValue;
-}
-
-function paintCurrentDate(shortTermWeather) {
+function paintCurrentDate(todayWeather) {
   const weatherPopBorder = document.getElementById('weather-today__rain');
   const weatherWavBorder = document.getElementById('weather-today__wave');
 
   const todayWaveHeight = document.createElement('span');
   todayWaveHeight.innerHTML =
-    shortTermWeather[0].wav.padEnd(3, '.0') + ' M' + '<br/>파고';
+    todayWeather[0].wav.padEnd(3, '.0') + ' M' + '<br/>파고';
   const chanceOfRain = document.createElement('span');
-  chanceOfRain.innerHTML = shortTermWeather[0].pop + '% <br/>강수확률';
+  chanceOfRain.innerHTML = todayWeather[0].pop + '% <br/>강수확률';
 
   weatherWavBorder.appendChild(todayWaveHeight);
   weatherPopBorder.appendChild(chanceOfRain);
 }
 
-function addTodayWeatherList(shortTermWeather) {
-  console.log(shortTermWeather);
+function addTodayWeatherList(todayWeather) {
+  console.log(todayWeather);
   const weatherArea = document.getElementById('weather_area_today');
 
-  for (const data of shortTermWeather) {
+  for (const data of todayWeather) {
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather__info');
     const infoUpper = document.createElement('div');
