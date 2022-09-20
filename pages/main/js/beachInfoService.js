@@ -38,26 +38,15 @@ export async function getVilageFcstBeachToday(beachNum) {
   const baseDate = getNearestBaseDate();
   const dateString = baseDate.toISOString().split('T')[0].replaceAll('-', '');
   const timeString = baseDate.toISOString().substr(11, 5).replace(':', '');
-  const result = await axios({
-    method: 'get',
-    url: 'https://apis.data.go.kr/1360000/BeachInfoservice/getVilageFcstBeach',
-    headers: { Accept: '*/*' },
-    params: {
-      serviceKey: BEACH_INFO_SERVICE_KEY,
-      numOfRows: 5000,
-      pageNo: 1,
-      dataType: 'JSON',
-      base_date: dateString,
-      base_time: timeString,
-      beach_num: beachNum,
-    },
-  });
-  const dataArray = result.data.response.body.items.item;
+
+  const requestServer = await getFcstBeach(dateString, timeString, beachNum);
+
+  const dataArray = requestServer.data.response.body.items.item;
+
   const startTime = new Date(
     getTodayDate().getTime() + new Date().getHours() * 3600 * 1000,
   ).getTime();
   const endTime = new Date(startTime + 12 * 3600 * 1000).getTime();
-
   // 현재 시간 이후 ~ 내일 현재시간 까지의 데이터 가져오기
   const parsingDataArray = [];
   for (let i = 0; i < dataArray.length; i++) {
@@ -77,4 +66,22 @@ export async function getVilageFcstBeachToday(beachNum) {
     }
   }
   return parsingDataArray;
+}
+
+export async function getFcstBeach(dateString, timeString, beachNum) {
+  const result = await axios({
+    method: 'get',
+    url: 'https://apis.data.go.kr/1360000/BeachInfoservice/getVilageFcstBeach',
+    headers: { Accept: '*/*' },
+    params: {
+      serviceKey: BEACH_INFO_SERVICE_KEY,
+      numOfRows: 5000,
+      pageNo: 1,
+      dataType: 'JSON',
+      base_date: dateString,
+      base_time: timeString,
+      beach_num: beachNum,
+    },
+  });
+  return result;
 }
