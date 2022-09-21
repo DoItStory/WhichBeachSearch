@@ -52,7 +52,7 @@ async function mainScreenload() {
 
   showCircularProgress();
   const fcstTodayData = await getWeatherTodayData();
-  const todayWeather = getShortTermWeather(fcstTodayData);
+  const todayWeather = getTodayWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
   const threeDaysWeather = getWeather3days(fcstWeatherData);
   console.log(threeDaysWeather);
@@ -231,7 +231,7 @@ function getDayWeek(dateArr) {
   }
   return dayWeek;
 }
-
+// 오늘 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
 function paintCurrentDate(todayWeather) {
   const weatherPopBorder = document.getElementById('weather-today__rain');
   const weatherWavBorder = document.getElementById('weather-today__wave');
@@ -246,6 +246,7 @@ function paintCurrentDate(todayWeather) {
   weatherPopBorder.appendChild(chanceOfRain);
 }
 
+// 시간 날씨 리스트 화면에 나타내는 함수
 function addTodayWeatherList(todayWeather) {
   console.log(todayWeather);
   const weatherArea = document.getElementById('weather_area_today');
@@ -284,7 +285,7 @@ function addTodayWeatherList(todayWeather) {
   }
 }
 
-function getShortTermWeather(fsctBeachToday) {
+function getTodayWeather(fsctBeachToday) {
   const timeValue = new Set();
   for (let data of fsctBeachToday) {
     timeValue.add(data.fcstTime);
@@ -295,7 +296,7 @@ function getShortTermWeather(fsctBeachToday) {
   const skyValue = beachCategoryValueFilter(fsctBeachToday, 'SKY', 'fcstValue');
   const ptyValue = beachCategoryValueFilter(fsctBeachToday, 'PTY', 'fcstValue');
 
-  return gatherWeatherData(
+  return gatherTodayWeather(
     timeValue,
     tmpValue,
     wavValue,
@@ -322,7 +323,7 @@ function beachCategoryValueFilter(collectionData, categoryStr, findValueStr) {
   return result;
 }
 
-function gatherWeatherData(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
+function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
   const timeArray = Array.from(timeArr);
 
   const weatherCollection = [];
