@@ -169,6 +169,117 @@ async function getWeatherTodayData() {
   return fcstToday;
 }
 
+// 오늘 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
+function paintCurrentDate(todayWeather) {
+  const weatherPopBorder = document.getElementById('weather-today__rain');
+  const weatherWavBorder = document.getElementById('weather-today__wave');
+
+  const todayWaveHeight = document.createElement('span');
+  todayWaveHeight.innerHTML =
+    todayWeather[0].wav.padEnd(3, '.0') + ' M' + '<br/>파고';
+  const chanceOfRain = document.createElement('span');
+  chanceOfRain.innerHTML = todayWeather[0].pop + '% <br/>강수확률';
+
+  weatherWavBorder.appendChild(todayWaveHeight);
+  weatherPopBorder.appendChild(chanceOfRain);
+}
+
+// 시간 날씨 리스트 화면에 나타내는 함수
+function addTodayWeatherList(todayWeather) {
+  console.log(todayWeather);
+  const weatherArea = document.getElementById('weather_area_today');
+
+  for (const data of todayWeather) {
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('weather__info');
+    const infoUpper = document.createElement('div');
+    infoUpper.classList.add('info-upper');
+    const weatherDate = document.createElement('h3');
+    weatherDate.classList.add('weather__date');
+    weatherDate.textContent = data.time.substring(0, 2) + ':' + '00';
+    const weatherIcon = document.createElement('img');
+    weatherIcon.classList.add('weather__icon');
+    weatherIcon.src = '/assets/images/weather/sunny.svg';
+    const weatherTemp = document.createElement('span');
+    weatherTemp.classList.add('weather__temp');
+    weatherTemp.textContent = data.tmp + '°C';
+    const infoBottom = document.createElement('div');
+    infoBottom.classList.add('info-bottom');
+    const waveIcon = document.createElement('img');
+    waveIcon.classList.add('weather__icon');
+    waveIcon.src = '/assets/images/weather/wave.png';
+    const weatherTide = document.createElement('span');
+    weatherTide.classList.add('weather__tide');
+    weatherTide.textContent = data.wav.padEnd(3, '.0') + 'M';
+
+    infoUpper.appendChild(weatherDate);
+    infoUpper.appendChild(weatherIcon);
+    infoUpper.appendChild(weatherTemp);
+    infoBottom.appendChild(waveIcon);
+    infoBottom.appendChild(weatherTide);
+    weatherInfo.appendChild(infoUpper);
+    weatherInfo.appendChild(infoBottom);
+    weatherArea.appendChild(weatherInfo);
+  }
+}
+// 오늘 날씨(12시간)의 필요한 정보 받아오는 함수
+function getTodayWeather(fsctBeachToday) {
+  const timeValue = new Set();
+  for (let data of fsctBeachToday) {
+    timeValue.add(data.fcstTime);
+  }
+  const tmpValue = beachCategoryValueFilter(fsctBeachToday, 'TMP', 'fcstValue');
+  const wavValue = beachCategoryValueFilter(fsctBeachToday, 'WAV', 'fcstValue');
+  const popValue = beachCategoryValueFilter(fsctBeachToday, 'POP', 'fcstValue');
+  const skyValue = beachCategoryValueFilter(fsctBeachToday, 'SKY', 'fcstValue');
+  const ptyValue = beachCategoryValueFilter(fsctBeachToday, 'PTY', 'fcstValue');
+
+  return gatherTodayWeather(
+    timeValue,
+    tmpValue,
+    wavValue,
+    popValue,
+    skyValue,
+    ptyValue,
+  );
+}
+// 원하는 날씨 정보 데이터 필터링 함수
+function beachCategoryValueFilter(collectionData, categoryStr, findValueStr) {
+  let result;
+  switch (findValueStr) {
+    case 'fcstValue':
+      result = collectionData
+        .filter(data => data.category == categoryStr)
+        .map(filteredData => filteredData.fcstValue);
+      break;
+    case 'fcstDate':
+      result = collectionData
+        .filter(data => data.category == categoryStr)
+        .map(filteredData => filteredData.fcstDate);
+      break;
+  }
+  return result;
+}
+
+// 오늘(12시간) 날씨 정보 모아주는 함수
+function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
+  const timeArray = Array.from(timeArr);
+
+  const weatherCollection = [];
+  for (let i = 0; i < tmpArr.length; i++) {
+    weatherCollection[i] = {
+      time: timeArray[i],
+      tmp: tmpArr[i],
+      wav: wavArr[i],
+      pop: popArr[i],
+      sky: skyArr[i],
+      pty: ptyArr[i],
+    };
+  }
+
+  return weatherCollection;
+}
+
 // 지금으로부터 3일 정보 얻어오는 기능
 async function getWeather3DaysData() {
   const fcstBeachData = await getFcstBeach(304).catch(error => {
@@ -230,115 +341,6 @@ function getDayWeek(dateArr) {
     dayWeek.push(week[date.getDay()] + '요일');
   }
   return dayWeek;
-}
-// 오늘 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
-function paintCurrentDate(todayWeather) {
-  const weatherPopBorder = document.getElementById('weather-today__rain');
-  const weatherWavBorder = document.getElementById('weather-today__wave');
-
-  const todayWaveHeight = document.createElement('span');
-  todayWaveHeight.innerHTML =
-    todayWeather[0].wav.padEnd(3, '.0') + ' M' + '<br/>파고';
-  const chanceOfRain = document.createElement('span');
-  chanceOfRain.innerHTML = todayWeather[0].pop + '% <br/>강수확률';
-
-  weatherWavBorder.appendChild(todayWaveHeight);
-  weatherPopBorder.appendChild(chanceOfRain);
-}
-
-// 시간 날씨 리스트 화면에 나타내는 함수
-function addTodayWeatherList(todayWeather) {
-  console.log(todayWeather);
-  const weatherArea = document.getElementById('weather_area_today');
-
-  for (const data of todayWeather) {
-    const weatherInfo = document.createElement('div');
-    weatherInfo.classList.add('weather__info');
-    const infoUpper = document.createElement('div');
-    infoUpper.classList.add('info-upper');
-    const weatherDate = document.createElement('h3');
-    weatherDate.classList.add('weather__date');
-    weatherDate.textContent = data.time.substring(0, 2) + ':' + '00';
-    const weatherIcon = document.createElement('img');
-    weatherIcon.classList.add('weather__icon');
-    weatherIcon.src = '/assets/images/weather/sunny.svg';
-    const weatherTemp = document.createElement('span');
-    weatherTemp.classList.add('weather__temp');
-    weatherTemp.textContent = data.tmp + '°C';
-    const infoBottom = document.createElement('div');
-    infoBottom.classList.add('info-bottom');
-    const waveIcon = document.createElement('img');
-    waveIcon.classList.add('weather__icon');
-    waveIcon.src = '/assets/images/weather/wave.png';
-    const weatherTide = document.createElement('span');
-    weatherTide.classList.add('weather__tide');
-    weatherTide.textContent = data.wav.padEnd(3, '.0') + 'M';
-
-    infoUpper.appendChild(weatherDate);
-    infoUpper.appendChild(weatherIcon);
-    infoUpper.appendChild(weatherTemp);
-    infoBottom.appendChild(waveIcon);
-    infoBottom.appendChild(weatherTide);
-    weatherInfo.appendChild(infoUpper);
-    weatherInfo.appendChild(infoBottom);
-    weatherArea.appendChild(weatherInfo);
-  }
-}
-
-function getTodayWeather(fsctBeachToday) {
-  const timeValue = new Set();
-  for (let data of fsctBeachToday) {
-    timeValue.add(data.fcstTime);
-  }
-  const tmpValue = beachCategoryValueFilter(fsctBeachToday, 'TMP', 'fcstValue');
-  const wavValue = beachCategoryValueFilter(fsctBeachToday, 'WAV', 'fcstValue');
-  const popValue = beachCategoryValueFilter(fsctBeachToday, 'POP', 'fcstValue');
-  const skyValue = beachCategoryValueFilter(fsctBeachToday, 'SKY', 'fcstValue');
-  const ptyValue = beachCategoryValueFilter(fsctBeachToday, 'PTY', 'fcstValue');
-
-  return gatherTodayWeather(
-    timeValue,
-    tmpValue,
-    wavValue,
-    popValue,
-    skyValue,
-    ptyValue,
-  );
-}
-
-function beachCategoryValueFilter(collectionData, categoryStr, findValueStr) {
-  let result;
-  switch (findValueStr) {
-    case 'fcstValue':
-      result = collectionData
-        .filter(data => data.category == categoryStr)
-        .map(filteredData => filteredData.fcstValue);
-      break;
-    case 'fcstDate':
-      result = collectionData
-        .filter(data => data.category == categoryStr)
-        .map(filteredData => filteredData.fcstDate);
-      break;
-  }
-  return result;
-}
-
-function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
-  const timeArray = Array.from(timeArr);
-
-  const weatherCollection = [];
-  for (let i = 0; i < tmpArr.length; i++) {
-    weatherCollection[i] = {
-      time: timeArray[i],
-      tmp: tmpArr[i],
-      wav: wavArr[i],
-      pop: popArr[i],
-      sky: skyArr[i],
-      pty: ptyArr[i],
-    };
-  }
-
-  return weatherCollection;
 }
 
 // Start
