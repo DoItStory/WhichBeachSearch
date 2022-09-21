@@ -137,21 +137,6 @@ async function checkUserStore() {
   return docRefId;
 }
 
-const auth = getAuth();
-onAuthStateChanged(auth, user => {
-  if (user) {
-    bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
-  } else return;
-});
-
-// firestore
-const db = fireStoreInitialize();
-
-const addBookmarkBtn = document.getElementById('bookmark-btn');
-addBookmarkBtn.addEventListener('click', handleBookmarkBtn);
-
-window.onload = mainScreenload;
-
 // test용 로그아웃 버튼
 const logOutBtn = document.getElementById('logout-btn');
 logOutBtn.addEventListener('click', logout);
@@ -354,3 +339,17 @@ function gatherWeatherData(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
 
   return weatherCollection;
 }
+
+// Start
+const auth = getAuth();
+onAuthStateChanged(auth, user => {
+  if (user) {
+    bookmarkBtn.classList.remove(HIDDEN_CLASSNAME);
+  } else return;
+});
+const db = fireStoreInitialize();
+
+const addBookmarkBtn = document.getElementById('bookmark-btn');
+addBookmarkBtn.addEventListener('click', handleBookmarkBtn);
+
+window.onload = mainScreenload;
