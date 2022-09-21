@@ -55,8 +55,7 @@ async function mainScreenload() {
   const todayWeather = getTodayWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
   const threeDaysWeather = getWeather3days(fcstWeatherData);
-  console.log(threeDaysWeather);
-
+  add3DaysWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
   paintCurrentDate(todayWeather);
   hideCircularProgress();
@@ -169,7 +168,7 @@ async function getWeatherTodayData() {
   return fcstToday;
 }
 
-// 오늘 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
+// 지금 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
 function paintCurrentDate(todayWeather) {
   const weatherPopBorder = document.getElementById('weather-today__rain');
   const weatherWavBorder = document.getElementById('weather-today__wave');
@@ -341,6 +340,53 @@ function getDayWeek(dateArr) {
     dayWeek.push(week[date.getDay()] + '요일');
   }
   return dayWeek;
+}
+
+function add3DaysWeatherList(shorTermWeather) {
+  const weekelyWeatherArea = document.getElementById('weekely__area');
+
+  for (const dayWeather of shorTermWeather) {
+    const weatherWeekelyDiv = document.createElement('div');
+    weatherWeekelyDiv.classList.add('weather-weekely__container');
+    //
+    const weekelyDay = document.createElement('div');
+    weekelyDay.classList.add('weekely-day');
+    const weekelySpan = document.createElement('span');
+    weekelySpan.textContent = dayWeather.date;
+    //
+    const weekelyRainDiv = document.createElement('div');
+    weekelyRainDiv.classList.add('weekely-rain');
+    const weekelyRainIcon = document.createElement('img');
+    weekelyRainIcon.src = '/assets/images/weather/waterdrop.svg';
+    const weekelyPopSpan = document.createElement('span');
+    weekelyPopSpan.textContent = '20%';
+    //
+    const weatherIconDiv = document.createElement('div');
+    weatherIconDiv.classList.add('weekely-icon');
+    const weekelyWeatherIcon = document.createElement('img');
+    weekelyWeatherIcon.src = '/assets/images/weather/rain.svg';
+    //
+    const weekelyTempDiv = document.createElement('div');
+    weekelyTempDiv.classList.add('weekely-temp');
+    const weekelyTmxSpan = document.createElement('span');
+    weekelyTmxSpan.textContent = dayWeather.tmx.substring(0, 2) + `°C /`;
+    const weekelyTmnSpan = document.createElement('span');
+    weekelyTmnSpan.textContent = dayWeather.tmn.substring(0, 2) + `°C`;
+
+    weekelyDay.appendChild(weekelySpan);
+    weekelyRainDiv.appendChild(weekelyRainIcon);
+    weekelyRainDiv.appendChild(weekelyPopSpan);
+    weatherIconDiv.appendChild(weekelyWeatherIcon);
+    weekelyTempDiv.appendChild(weekelyTmxSpan);
+    weekelyTempDiv.appendChild(weekelyTmnSpan);
+
+    weatherWeekelyDiv.appendChild(weekelyDay);
+    weatherWeekelyDiv.appendChild(weekelyRainDiv);
+    weatherWeekelyDiv.appendChild(weatherIconDiv);
+    weatherWeekelyDiv.appendChild(weekelyTempDiv);
+
+    weekelyWeatherArea.appendChild(weatherWeekelyDiv);
+  }
 }
 
 // Start

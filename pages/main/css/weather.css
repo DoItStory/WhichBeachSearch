@@ -119,9 +119,8 @@
 }
 
 .info-upper .weather__icon {
-  width: 5rem;
-  height: 5rem;
-  margin-bottom: 0.3rem;
+  width: 5.5rem;
+  height: 5.5rem;
 }
 
 .info-bottom {
@@ -137,8 +136,8 @@
 }
 
 .info-bottom .weather__icon {
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -307,6 +306,7 @@
   font-size: 1.8rem;
 }
 .weekely-temp span:last-child {
+  margin-left: 1rem;
   font-size: 1.6rem;
 }
 
