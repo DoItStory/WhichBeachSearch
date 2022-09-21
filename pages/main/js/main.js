@@ -54,6 +54,7 @@ async function mainScreenload() {
   const fcstTodayData = await getWeatherTodayData();
   const todayWeather = getShortTermWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
+  const threeDaysWeather = getWeather3days(fcstWeatherData);
   addTodayWeatherList(todayWeather);
   paintCurrentDate(todayWeather);
   hideCircularProgress();
@@ -188,6 +189,29 @@ async function getWeather3DaysData() {
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
   return fcstBeachData;
+}
+
+function getWeather3days(WeatherDataArray) {
+  const tmnValue = beachCategoryValueFilter(
+    WeatherDataArray,
+    'TMN',
+    'fcstValue',
+  );
+  const tmxValue = beachCategoryValueFilter(
+    WeatherDataArray,
+    'TMX',
+    'fcstValue',
+  );
+  const allDateValue = new Set();
+  for (let data of WeatherDataArray) {
+    allDateValue.add(data.fcstDate);
+  }
+
+  const threedateValue = Array.from(allDateValue).splice(1, 3);
+  console.log(tmnValue);
+  console.log(tmxValue);
+  console.log(threedateValue);
+  return tmnValue;
 }
 
 function paintCurrentDate(todayWeather) {
