@@ -55,6 +55,8 @@ async function mainScreenload() {
   const todayWeather = getShortTermWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
   const threeDaysWeather = getWeather3days(fcstWeatherData);
+  console.log(threeDaysWeather);
+
   addTodayWeatherList(todayWeather);
   paintCurrentDate(todayWeather);
   hideCircularProgress();
@@ -191,6 +193,7 @@ async function getWeather3DaysData() {
   return fcstBeachData;
 }
 
+// 3일의 필요한 날씨 정보를 받아오는 함수
 function getWeather3days(WeatherDataArray) {
   const tmnValue = beachCategoryValueFilter(
     WeatherDataArray,
@@ -206,12 +209,42 @@ function getWeather3days(WeatherDataArray) {
   for (let data of WeatherDataArray) {
     allDateValue.add(data.fcstDate);
   }
+  const next3Days = Array.from(allDateValue).splice(1, 3);
 
-  const threedateValue = Array.from(allDateValue).splice(1, 3);
-  console.log(tmnValue);
-  console.log(tmxValue);
-  console.log(threedateValue);
-  return tmnValue;
+  return gather3DaysWeatherData(tmnValue, tmxValue, next3Days);
+}
+
+// 3일 날씨 정보를 모아주는 함수
+function gather3DaysWeatherData(tmnArr, tmxArr, dateData) {
+  const threeDayOfTheWeek = getDayWeek(dateData);
+
+  const threeWeatherCollection = [];
+  for (let i = 0; i < tmnArr.length; i++) {
+    threeWeatherCollection[i] = {
+      date: threeDayOfTheWeek[i],
+      tmn: tmnArr[i],
+      tmx: tmxArr[i],
+    };
+  }
+
+  return threeWeatherCollection;
+}
+
+// 요일 구하는 함수
+function getDayWeek(dateArr) {
+  const dayWeek = [];
+  for (let day of dateArr) {
+    const yyyyMMdd = String(day);
+    const sYear = yyyyMMdd.substring(0, 4);
+    const sMonth = yyyyMMdd.substring(4, 6);
+    const sDate = yyyyMMdd.substring(6, 8);
+
+    const date = new Date(Number(sYear), Number(sMonth) - 1, Number(sDate));
+
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
+    dayWeek.push(week[date.getDay()] + '요일');
+  }
+  return dayWeek;
 }
 
 function paintCurrentDate(todayWeather) {
