@@ -223,60 +223,102 @@ function addTodayWeatherList(todayWeather) {
 }
 // 오늘 날씨(12시간)의 필요한 정보 받아오는 함수
 function getTodayWeather(fsctBeachToday) {
-  const timeValue = new Set();
-  for (let data of fsctBeachToday) {
-    timeValue.add(data.fcstTime);
-  }
-  const tmpValue = beachCategoryValueFilter(fsctBeachToday, 'TMP', 'fcstValue');
-  const wavValue = beachCategoryValueFilter(fsctBeachToday, 'WAV', 'fcstValue');
-  const popValue = beachCategoryValueFilter(fsctBeachToday, 'POP', 'fcstValue');
-  const skyValue = beachCategoryValueFilter(fsctBeachToday, 'SKY', 'fcstValue');
-  const ptyValue = beachCategoryValueFilter(fsctBeachToday, 'PTY', 'fcstValue');
+  try {
+    const timeValue = new Set();
+    for (let data of fsctBeachToday) {
+      timeValue.add(data.fcstTime);
+    }
+    const tmpValue = beachCategoryValueFilter(
+      fsctBeachToday,
+      'TMP',
+      'fcstValue',
+    );
+    const wavValue = beachCategoryValueFilter(
+      fsctBeachToday,
+      'WAV',
+      'fcstValue',
+    );
+    const popValue = beachCategoryValueFilter(
+      fsctBeachToday,
+      'POP',
+      'fcstValue',
+    );
+    const skyValue = beachCategoryValueFilter(
+      fsctBeachToday,
+      'SKY',
+      'fcstValue',
+    );
+    const ptyValue = beachCategoryValueFilter(
+      fsctBeachToday,
+      'PTY',
+      'fcstValue',
+    );
 
-  return gatherTodayWeather(
-    timeValue,
-    tmpValue,
-    wavValue,
-    popValue,
-    skyValue,
-    ptyValue,
-  );
+    return gatherTodayWeather(
+      timeValue,
+      tmpValue,
+      wavValue,
+      popValue,
+      skyValue,
+      ptyValue,
+    );
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getTodayWeather : ${errorCode}`);
+  }
 }
 // 원하는 날씨 정보 데이터 필터링 함수
 function beachCategoryValueFilter(collectionData, categoryStr, findValueStr) {
-  let result;
-  switch (findValueStr) {
-    case 'fcstValue':
-      result = collectionData
-        .filter(data => data.category == categoryStr)
-        .map(filteredData => filteredData.fcstValue);
-      break;
-    case 'fcstDate':
-      result = collectionData
-        .filter(data => data.category == categoryStr)
-        .map(filteredData => filteredData.fcstDate);
-      break;
+  try {
+    let result;
+    switch (findValueStr) {
+      case 'fcstValue':
+        result = collectionData
+          .filter(data => data.category == categoryStr)
+          .map(filteredData => filteredData.fcstValue);
+        break;
+      case 'fcstDate':
+        result = collectionData
+          .filter(data => data.category == categoryStr)
+          .map(filteredData => filteredData.fcstDate);
+        break;
+    }
+    return result;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${errorCode}`,
+    );
   }
-  return result;
 }
 
 // 오늘(12시간) 날씨 정보 모아주는 함수
 function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
-  const timeArray = Array.from(timeArr);
+  try {
+    const timeArray = Array.from(timeArr);
 
-  const weatherCollection = [];
-  for (let i = 0; i < tmpArr.length; i++) {
-    weatherCollection[i] = {
-      time: timeArray[i],
-      tmp: tmpArr[i],
-      wav: wavArr[i],
-      pop: popArr[i],
-      sky: skyArr[i],
-      pty: ptyArr[i],
-    };
+    const weatherCollection = [];
+    for (let i = 0; i < tmpArr.length; i++) {
+      weatherCollection[i] = {
+        time: timeArray[i],
+        tmp: tmpArr[i],
+        wav: wavArr[i],
+        pop: popArr[i],
+        sky: skyArr[i],
+        pty: ptyArr[i],
+      };
+    }
+
+    return weatherCollection;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${errorCode}`,
+    );
   }
-
-  return weatherCollection;
 }
 
 // 지금으로부터 3일 정보 얻어오는 기능
@@ -290,57 +332,64 @@ async function getWeather3DaysData() {
 
 // 3일의 필요한 날씨 정보를 받아오는 함수
 function getWeather3days(WeatherDataArray) {
-  const weekeeTmnValue = beachCategoryValueFilter(
-    WeatherDataArray,
-    'TMN',
-    'fcstValue',
-  );
-  const weekeeTmxValue = beachCategoryValueFilter(
-    WeatherDataArray,
-    'TMX',
-    'fcstValue',
-  );
-  const allDateValue = new Set();
-  for (let data of WeatherDataArray) {
-    allDateValue.add(data.fcstDate);
+  try {
+    const weekeeTmnValue = beachCategoryValueFilter(
+      WeatherDataArray,
+      'TMN',
+      'fcstValue',
+    );
+    const weekeeTmxValue = beachCategoryValueFilter(
+      WeatherDataArray,
+      'TMX',
+      'fcstValue',
+    );
+    const allDateValue = new Set();
+    for (let data of WeatherDataArray) {
+      allDateValue.add(data.fcstDate);
+    }
+
+    const next3Days = Array.from(allDateValue).splice(1, 3);
+
+    const weekeePopValue = [];
+    for (let date of next3Days) {
+      const popDataThatDay = WeatherDataArray.filter(
+        data => data.fcstDate == date,
+      ).filter(filteredData => filteredData.category == 'POP');
+      weekeePopValue.push(weatherInfoThatDay(popDataThatDay));
+    }
+
+    const weekeeSkyValue = [];
+    for (let date of next3Days) {
+      const skyDataThatDay = WeatherDataArray.filter(
+        data => data.fcstDate == date,
+      ).filter(filteredData => filteredData.category == 'SKY');
+      weekeeSkyValue.push(weatherInfoThatDay(skyDataThatDay));
+    }
+
+    const weekeePtyValue = [];
+    for (let date of next3Days) {
+      const ptyDataThatDay = WeatherDataArray.filter(
+        data => data.fcstDate == date,
+      ).filter(filteredData => filteredData.category == 'PTY');
+      weekeePtyValue.push(weatherInfoThatDay(ptyDataThatDay));
+    }
+
+    return gather3DaysWeatherData(
+      weekeeTmnValue,
+      weekeeTmxValue,
+      weekeePopValue,
+      weekeeSkyValue,
+      weekeePtyValue,
+      next3Days,
+    );
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getWeather3days : ${errorCode}`);
   }
-
-  const next3Days = Array.from(allDateValue).splice(1, 3);
-
-  const weekeePopValue = [];
-  for (let date of next3Days) {
-    const popDataThatDay = WeatherDataArray.filter(
-      data => data.fcstDate == date,
-    ).filter(filteredData => filteredData.category == 'POP');
-    weekeePopValue.push(weatherInfoThatDay(popDataThatDay));
-  }
-
-  const weekeeSkyValue = [];
-  for (let date of next3Days) {
-    const skyDataThatDay = WeatherDataArray.filter(
-      data => data.fcstDate == date,
-    ).filter(filteredData => filteredData.category == 'SKY');
-    weekeeSkyValue.push(weatherInfoThatDay(skyDataThatDay));
-  }
-
-  const weekeePtyValue = [];
-  for (let date of next3Days) {
-    const ptyDataThatDay = WeatherDataArray.filter(
-      data => data.fcstDate == date,
-    ).filter(filteredData => filteredData.category == 'PTY');
-    weekeePtyValue.push(weatherInfoThatDay(ptyDataThatDay));
-  }
-
-  return gather3DaysWeatherData(
-    weekeeTmnValue,
-    weekeeTmxValue,
-    weekeePopValue,
-    weekeeSkyValue,
-    weekeePtyValue,
-    next3Days,
-  );
 }
 
+// 데이터를 오름차순 정렬 후 최대 값 리턴하는 함수
 function weatherInfoThatDay(dateFilteredArr) {
   const sortMax = dateFilteredArr
     .map(filteredData => filteredData.fcstValue)
@@ -360,21 +409,27 @@ function gather3DaysWeatherData(
   weekeePty,
   dateData,
 ) {
-  const threeDayOfTheWeek = getDayWeek(dateData);
-
-  const threeWeatherCollection = [];
-  for (let i = 0; i < weekeeTmn.length; i++) {
-    threeWeatherCollection[i] = {
-      date: threeDayOfTheWeek[i],
-      tmn: weekeeTmn[i],
-      tmx: weekeeTmx[i],
-      pop: weekeePop[i],
-      sky: weekeeSky[i],
-      pty: weekeePty[i],
-    };
+  try {
+    const threeDayOfTheWeek = getDayWeek(dateData);
+    const threeWeatherCollection = [];
+    for (let i = 0; i < weekeeTmn.length; i++) {
+      threeWeatherCollection[i] = {
+        date: threeDayOfTheWeek[i],
+        tmn: weekeeTmn[i],
+        tmx: weekeeTmx[i],
+        pop: weekeePop[i],
+        sky: weekeeSky[i],
+        pty: weekeePty[i],
+      };
+    }
+    return threeWeatherCollection;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error gather3DaysWeatherData : ${errorCode}`,
+    );
   }
-
-  return threeWeatherCollection;
 }
 
 // 요일 구하는 함수
@@ -394,6 +449,7 @@ function getDayWeek(dateArr) {
   return dayWeek;
 }
 
+// 날씨 아이콘 구하는 함수
 function weatherIconSrc(weatherDayArr) {
   const rainSunny = '/assets/images/weather/drizzle-sunny.svg';
   const mostlyCloudy = '/assets/images/weather/mostly-cloudy.svg';
