@@ -347,7 +347,6 @@ function getWeather3days(WeatherDataArray) {
     for (let data of WeatherDataArray) {
       allDateValue.add(data.fcstDate);
     }
-
     const next3Days = Array.from(allDateValue).splice(1, 3);
 
     const weekeePopValue = [];
@@ -440,9 +439,7 @@ function getDayWeek(dateArr) {
     const sYear = yyyyMMdd.substring(0, 4);
     const sMonth = yyyyMMdd.substring(4, 6);
     const sDate = yyyyMMdd.substring(6, 8);
-
     const date = new Date(Number(sYear), Number(sMonth) - 1, Number(sDate));
-
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     dayWeek.push(week[date.getDay()] + '요일');
   }
