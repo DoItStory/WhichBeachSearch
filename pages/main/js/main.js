@@ -290,12 +290,12 @@ async function getWeather3DaysData() {
 
 // 3일의 필요한 날씨 정보를 받아오는 함수
 function getWeather3days(WeatherDataArray) {
-  const tmnValue = beachCategoryValueFilter(
+  const weekeeTmnValue = beachCategoryValueFilter(
     WeatherDataArray,
     'TMN',
     'fcstValue',
   );
-  const tmxValue = beachCategoryValueFilter(
+  const weekeeTmxValue = beachCategoryValueFilter(
     WeatherDataArray,
     'TMX',
     'fcstValue',
@@ -304,21 +304,73 @@ function getWeather3days(WeatherDataArray) {
   for (let data of WeatherDataArray) {
     allDateValue.add(data.fcstDate);
   }
+
   const next3Days = Array.from(allDateValue).splice(1, 3);
 
-  return gather3DaysWeatherData(tmnValue, tmxValue, next3Days);
+  const weekeePopValue = [];
+  for (let date of next3Days) {
+    const popDataThatDay = WeatherDataArray.filter(
+      data => data.fcstDate == date,
+    ).filter(filteredData => filteredData.category == 'POP');
+    weekeePopValue.push(weatherInfoThatDay(popDataThatDay));
+  }
+
+  const weekeeSkyValue = [];
+  for (let date of next3Days) {
+    const skyDataThatDay = WeatherDataArray.filter(
+      data => data.fcstDate == date,
+    ).filter(filteredData => filteredData.category == 'SKY');
+    weekeeSkyValue.push(weatherInfoThatDay(skyDataThatDay));
+  }
+
+  const weekeePtyValue = [];
+  for (let date of next3Days) {
+    const ptyDataThatDay = WeatherDataArray.filter(
+      data => data.fcstDate == date,
+    ).filter(filteredData => filteredData.category == 'PTY');
+    weekeePtyValue.push(weatherInfoThatDay(ptyDataThatDay));
+  }
+
+  return gather3DaysWeatherData(
+    weekeeTmnValue,
+    weekeeTmxValue,
+    weekeePopValue,
+    weekeeSkyValue,
+    weekeePtyValue,
+    next3Days,
+  );
+}
+
+function weatherInfoThatDay(dateFilteredArr) {
+  const sortMax = dateFilteredArr
+    .map(filteredData => filteredData.fcstValue)
+    .sort(function (a, b) {
+      return b - a;
+    });
+
+  return sortMax[0];
 }
 
 // 3일 날씨 정보를 모아주는 함수
-function gather3DaysWeatherData(tmnArr, tmxArr, dateData) {
+function gather3DaysWeatherData(
+  weekeeTmn,
+  weekeeTmx,
+  weekeePop,
+  weekeeSky,
+  weekeePty,
+  dateData,
+) {
   const threeDayOfTheWeek = getDayWeek(dateData);
 
   const threeWeatherCollection = [];
-  for (let i = 0; i < tmnArr.length; i++) {
+  for (let i = 0; i < weekeeTmn.length; i++) {
     threeWeatherCollection[i] = {
       date: threeDayOfTheWeek[i],
-      tmn: tmnArr[i],
-      tmx: tmxArr[i],
+      tmn: weekeeTmn[i],
+      tmx: weekeeTmx[i],
+      pop: weekeePop[i],
+      sky: weekeeSky[i],
+      pty: weekeePty[i],
     };
   }
 
@@ -392,12 +444,12 @@ function add3DaysWeatherList(shorTermWeather) {
     const weekelyRainIcon = document.createElement('img');
     weekelyRainIcon.src = '/assets/images/weather/waterdrop.svg';
     const weekelyPopSpan = document.createElement('span');
-    weekelyPopSpan.textContent = '20%';
+    weekelyPopSpan.textContent = dayWeather.pop + '%';
     //
     const weatherIconDiv = document.createElement('div');
     weatherIconDiv.classList.add('weekely-icon');
     const weekelyWeatherIcon = document.createElement('img');
-    weekelyWeatherIcon.src = '/assets/images/weather/rain.svg';
+    weekelyWeatherIcon.src = weatherIconSrc(dayWeather);
     //
     const weekelyTempDiv = document.createElement('div');
     weekelyTempDiv.classList.add('weekely-temp');
