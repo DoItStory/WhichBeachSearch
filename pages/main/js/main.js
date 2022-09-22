@@ -198,7 +198,7 @@ function addTodayWeatherList(todayWeather) {
     weatherDate.textContent = data.time.substring(0, 2) + ':' + '00';
     const weatherIcon = document.createElement('img');
     weatherIcon.classList.add('weather__icon');
-    weatherIcon.src = '/assets/images/weather/sunny.svg';
+    weatherIcon.src = weatherIconSrc(data);
     const weatherTemp = document.createElement('span');
     weatherTemp.classList.add('weather__temp');
     weatherTemp.textContent = data.tmp + '°C';
@@ -342,6 +342,39 @@ function getDayWeek(dateArr) {
   return dayWeek;
 }
 
+function weatherIconSrc(weatherDayArr) {
+  const rainSunny = '/assets/images/weather/drizzle-sunny.svg';
+  const mostlyCloudy = '/assets/images/weather/mostly-cloudy.svg';
+  const rainSnow = '/assets/images/weather/rain-snow.svg';
+  const rain = '/assets/images/weather/rain.svg';
+  const snow = '/assets/images/weather/snow.svg';
+  const sunny = '/assets/images/weather/sunny.svg';
+
+  const skyCode = weatherDayArr.sky;
+  const ptyCode = weatherDayArr.pty;
+  let imageSrc = '';
+
+  if (skyCode == '1') {
+    if (ptyCode == '0') {
+      imageSrc = sunny;
+    } else if (ptyCode == '1' || ptyCode == '4') {
+      imageSrc = rainSunny;
+    } else if (ptyCode == '2') {
+      imageSrc = rainSnow;
+    } else if (ptyCode == '3') imageSrc = snow;
+  } else {
+    if (ptyCode == '0') {
+      imageSrc = mostlyCloudy;
+    } else if (ptyCode == '1' || ptyCode == '4') {
+      imageSrc = rain;
+    } else if (ptyCode == '2') {
+      imageSrc = rainSnow;
+    } else if (ptyCode == '3') imageSrc = snow;
+  }
+  return imageSrc;
+}
+
+// 주간 날씨 화면에 띄워주는 기능 (현재 3일까지만 구현)
 function add3DaysWeatherList(shorTermWeather) {
   const weekelyWeatherArea = document.getElementById('weekely__area');
 
