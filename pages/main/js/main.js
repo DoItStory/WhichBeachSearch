@@ -57,7 +57,8 @@ async function mainScreenload() {
   const threeDaysWeather = getWeather3days(fcstWeatherData);
   add3DaysWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
-  paintCurrentDate(todayWeather);
+  paintCurrentWeatherData(todayWeather);
+  paintCureentWaveRainData(todayWeather);
   hideCircularProgress();
 }
 
@@ -169,24 +170,31 @@ async function getWeatherTodayData() {
 }
 
 // 지금 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
-function paintCurrentDate(todayWeather) {
-  console.log(todayWeather);
+function paintCurrentWeatherData(todayWeather) {
+  const currentWeather = document.getElementById('weather-today__image');
+  const currentTempBorder = document.getElementById('weather-today__temp');
+  const currentWeatherIcon = document.createElement('img');
+  currentWeatherIcon.src = weatherIconSrc(todayWeather[0]);
+  const currentTemp = document.createElement('h2');
+  currentTemp.textContent = todayWeather[0].tmp + '°C';
+  const todayLowHighTemp = document.createElement('span');
+  todayLowHighTemp.textContent = '25°C / 33°C';
+
+  currentWeather.appendChild(currentWeatherIcon);
+  currentTempBorder.appendChild(currentTemp);
+  currentTempBorder.appendChild(todayLowHighTemp);
+}
+
+function paintCureentWaveRainData(todayWeather) {
   const weatherPopBorder = document.getElementById('weather-today__rain');
   const weatherWavBorder = document.getElementById('weather-today__wave');
-  const CurrentTempBorder = document.getElementById('weather-today__temp');
 
   const todayWaveHeight = document.createElement('span');
   todayWaveHeight.innerHTML =
     todayWeather[0].wav.padEnd(3, '.0') + ' M' + '<br/>파고';
   const chanceOfRain = document.createElement('span');
   chanceOfRain.innerHTML = todayWeather[0].pop + '% <br/>강수확률';
-  const currentTemp = document.createElement('h2');
-  currentTemp.textContent = todayWeather[0].tmp + '°C';
-  const todayLowHighTemp = document.createElement('span');
-  todayLowHighTemp.textContent = '25°C / 33°C';
 
-  CurrentTempBorder.appendChild(currentTemp);
-  CurrentTempBorder.appendChild(todayLowHighTemp);
   weatherWavBorder.appendChild(todayWaveHeight);
   weatherPopBorder.appendChild(chanceOfRain);
 }
