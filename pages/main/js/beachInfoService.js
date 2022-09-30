@@ -87,3 +87,26 @@ export async function getFcstBeach(beachNum) {
   });
   return result.data.response.body.items.item;
 }
+
+export async function getTodayFcstBeach(beachNum) {
+  const baseDate = getNearestBaseDate();
+  const dateString =
+    baseDate.toISOString().split('T')[0].replaceAll('-', '') - 1;
+  const timeString = baseDate.toISOString().substr(11, 5).replace(':', '');
+
+  const result = await axios({
+    method: 'get',
+    url: 'https://apis.data.go.kr/1360000/BeachInfoservice/getVilageFcstBeach',
+    headers: { Accept: '*/*' },
+    params: {
+      serviceKey: BEACH_INFO_SERVICE_KEY,
+      numOfRows: 500,
+      pageNo: 1,
+      dataType: 'JSON',
+      base_date: dateString,
+      base_time: timeString,
+      beach_num: beachNum,
+    },
+  });
+  return result.data.response.body.items.item;
+}
