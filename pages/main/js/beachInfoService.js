@@ -100,7 +100,7 @@ export async function getTodayFcstBeach(beachNum) {
     headers: { Accept: '*/*' },
     params: {
       serviceKey: BEACH_INFO_SERVICE_KEY,
-      numOfRows: 500,
+      numOfRows: 550,
       pageNo: 1,
       dataType: 'JSON',
       base_date: dateString,
