@@ -170,25 +170,32 @@ async function getWeatherTodayData() {
 
 // 지금 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
 function paintCurrentDate(todayWeather) {
+  console.log(todayWeather);
   const weatherPopBorder = document.getElementById('weather-today__rain');
   const weatherWavBorder = document.getElementById('weather-today__wave');
+  const CurrentTempBorder = document.getElementById('weather-today__temp');
 
   const todayWaveHeight = document.createElement('span');
   todayWaveHeight.innerHTML =
     todayWeather[0].wav.padEnd(3, '.0') + ' M' + '<br/>파고';
   const chanceOfRain = document.createElement('span');
   chanceOfRain.innerHTML = todayWeather[0].pop + '% <br/>강수확률';
+  const currentTemp = document.createElement('h2');
+  currentTemp.textContent = todayWeather[0].tmp + '°C';
+  const todayLowHighTemp = document.createElement('span');
+  todayLowHighTemp.textContent = '25°C / 33°C';
 
+  CurrentTempBorder.appendChild(currentTemp);
+  CurrentTempBorder.appendChild(todayLowHighTemp);
   weatherWavBorder.appendChild(todayWaveHeight);
   weatherPopBorder.appendChild(chanceOfRain);
 }
 
 // 시간 날씨 리스트 화면에 나타내는 함수
 function addTodayWeatherList(todayWeather) {
-  console.log(todayWeather);
   const weatherArea = document.getElementById('weather_area_today');
-
-  for (const data of todayWeather) {
+  const todayTimeWeather = todayWeather.splice('1');
+  for (const data of todayTimeWeather) {
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather__info');
     const infoUpper = document.createElement('div');
