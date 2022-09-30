@@ -57,7 +57,8 @@ async function mainScreenload() {
   const threeDaysWeather = getWeather3days(fcstWeatherData);
   add3DaysWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
-  paintCurrentDate(todayWeather);
+  paintCurrentWeatherData(todayWeather);
+  paintCureentWaveRainData(todayWeather);
   hideCircularProgress();
 }
 
@@ -169,7 +170,22 @@ async function getWeatherTodayData() {
 }
 
 // 지금 날씨 정보(강수확률, 파고) 화면에 나타내는 함수
-function paintCurrentDate(todayWeather) {
+function paintCurrentWeatherData(todayWeather) {
+  const currentWeather = document.getElementById('weather-today__image');
+  const currentTempBorder = document.getElementById('weather-today__temp');
+  const currentWeatherIcon = document.createElement('img');
+  currentWeatherIcon.src = weatherIconSrc(todayWeather[0]);
+  const currentTemp = document.createElement('h2');
+  currentTemp.textContent = todayWeather[0].tmp + '°C';
+  const todayLowHighTemp = document.createElement('span');
+  todayLowHighTemp.textContent = '25°C / 33°C';
+
+  currentWeather.appendChild(currentWeatherIcon);
+  currentTempBorder.appendChild(currentTemp);
+  currentTempBorder.appendChild(todayLowHighTemp);
+}
+
+function paintCureentWaveRainData(todayWeather) {
   const weatherPopBorder = document.getElementById('weather-today__rain');
   const weatherWavBorder = document.getElementById('weather-today__wave');
 
@@ -185,9 +201,7 @@ function paintCurrentDate(todayWeather) {
 
 // 시간 날씨 리스트 화면에 나타내는 함수
 function addTodayWeatherList(todayWeather) {
-  console.log(todayWeather);
   const weatherArea = document.getElementById('weather_area_today');
-
   for (const data of todayWeather) {
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather__info');
@@ -345,10 +359,12 @@ function getWeather3days(WeatherDataArray) {
     );
     const allDateValue = new Set();
     for (let data of WeatherDataArray) {
-      allDateValue.add(data.fcstDate);
+      if (data.category === 'TMX') {
+        allDateValue.add(data.fcstDate);
+      }
     }
-    const next3Days = Array.from(allDateValue).splice(1, 3);
 
+    const next3Days = Array.from(allDateValue);
     const weekeePopValue = [];
     for (let date of next3Days) {
       const popDataThatDay = WeatherDataArray.filter(
