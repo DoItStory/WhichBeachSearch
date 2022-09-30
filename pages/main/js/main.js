@@ -202,8 +202,7 @@ function paintCureentWaveRainData(todayWeather) {
 // 시간 날씨 리스트 화면에 나타내는 함수
 function addTodayWeatherList(todayWeather) {
   const weatherArea = document.getElementById('weather_area_today');
-  const todayTimeWeather = todayWeather.splice('1');
-  for (const data of todayTimeWeather) {
+  for (const data of todayWeather) {
     const weatherInfo = document.createElement('div');
     weatherInfo.classList.add('weather__info');
     const infoUpper = document.createElement('div');
@@ -360,10 +359,12 @@ function getWeather3days(WeatherDataArray) {
     );
     const allDateValue = new Set();
     for (let data of WeatherDataArray) {
-      allDateValue.add(data.fcstDate);
+      if (data.category === 'TMX') {
+        allDateValue.add(data.fcstDate);
+      }
     }
-    const next3Days = Array.from(allDateValue).splice(1, 3);
 
+    const next3Days = Array.from(allDateValue);
     const weekeePopValue = [];
     for (let date of next3Days) {
       const popDataThatDay = WeatherDataArray.filter(
