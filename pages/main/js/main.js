@@ -23,7 +23,11 @@ import {
   hideCircularProgress,
 } from '../../../js/circular-progress.js';
 import { ERROR } from '../../../js/error.js';
-import { getVilageFcstBeachToday, getFcstBeach } from './beachInfoService.js';
+import {
+  getVilageFcstBeachToday,
+  getFcstBeach,
+  getTodayFcstBeach,
+} from './beachInfoService.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > header');
@@ -51,15 +55,62 @@ async function mainScreenload() {
   }
 
   showCircularProgress();
+  const yesterdayTodayFcstData = await getYesterdayTodayData();
+  const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
   const fcstTodayData = await getWeatherTodayData();
   const todayWeather = getTodayWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
   const threeDaysWeather = getWeather3days(fcstWeatherData);
-  add3DaysWeatherList(threeDaysWeather);
-  addTodayWeatherList(todayWeather);
   paintCurrentWeatherData(todayWeather);
   paintCureentWaveRainData(todayWeather);
+  paintHighAndLowTemp(todayHighLowTemp);
+  add3DaysWeatherList(threeDaysWeather);
+  addTodayWeatherList(todayWeather);
   hideCircularProgress();
+}
+
+async function getYesterdayTodayData() {
+  const fcstYesterday = await getTodayFcstBeach(304).catch(error => {
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+  });
+  console.log(fcstYesterday);
+  return fcstYesterday;
+}
+
+function getTodayTempHighLow(yesterdayTodayData) {
+  const lowHighTempDate = [];
+  const today = getTodayDate();
+  const lowTemp = yesterdayTodayData
+    .filter(data => data.fcstDate == today)
+    .filter(data => data.category == 'TMN')
+    .map(data => data.fcstValue);
+  const highTemp = yesterdayTodayData
+    .filter(data => data.fcstDate == today)
+    .filter(data => data.category == 'TMX')
+    .map(data => data.fcstValue);
+
+  lowHighTempDate.push(lowTemp[0].substr(0, 2));
+  lowHighTempDate.push(highTemp[0].substr(0, 2));
+  return lowHighTempDate;
+}
+
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = ('0' + (today.getMonth() + 1)).slice(-2);
+  const day = ('0' + today.getDate()).slice(-2);
+
+  return year + month + day;
+}
+
+function paintHighAndLowTemp(todayTempData) {
+  const currentTempBorder = document.getElementById('weather-today__temp');
+  const todayLowHighTemp = document.createElement('span');
+  todayLowHighTemp.textContent =
+    todayTempData[0] + '°C / ' + todayTempData[1] + '°C';
+
+  currentTempBorder.appendChild(todayLowHighTemp);
 }
 
 function handleBookmarkBtn() {
@@ -165,7 +216,6 @@ async function getWeatherTodayData() {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
-  console.log(fcstToday);
   return fcstToday;
 }
 
@@ -177,12 +227,9 @@ function paintCurrentWeatherData(todayWeather) {
   currentWeatherIcon.src = weatherIconSrc(todayWeather[0]);
   const currentTemp = document.createElement('h2');
   currentTemp.textContent = todayWeather[0].tmp + '°C';
-  const todayLowHighTemp = document.createElement('span');
-  todayLowHighTemp.textContent = '25°C / 33°C';
 
   currentWeather.appendChild(currentWeatherIcon);
   currentTempBorder.appendChild(currentTemp);
-  currentTempBorder.appendChild(todayLowHighTemp);
 }
 
 function paintCureentWaveRainData(todayWeather) {
