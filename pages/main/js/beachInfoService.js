@@ -1,3 +1,5 @@
+import { getXMLMidLandFcst, getXMLMidTiaFcst } from './mediumTermForecast.js';
+
 const BEACH_INFO_SERVICE_KEY =
   'DnqahC7Oj+ryIm2AlkiWQr+DVjZDHv9/I4U79tgfopjyNp2aOfvpA5gC5+yC6uWPYU1VgICsIBV2xCZ/h4czDg==';
 
@@ -109,4 +111,38 @@ export async function getTodayFcstBeach(beachNum) {
     },
   });
   return result.data.response.body.items.item;
+}
+
+function getRequiredBaseDate() {
+  const korDate = getKorDate();
+  const todayDate = getTodayDate();
+  const currentHour = korDate.getUTCHours();
+  if (currentHour < 6) {
+    return new Date(todayDate.getTime() - 6 * 3600 * 1000);
+  }
+  let minHour = 0;
+  if (currentHour >= 18) {
+    minHour = 18;
+  } else if (6 <= currentHour && currentHour < 18) {
+    minHour = 6;
+  }
+  return new Date(todayDate.getTime() + minHour * 3600 * 1000);
+}
+
+export async function getMidLandFcst(cityCode) {
+  const baseDate = getRequiredBaseDate();
+  const dateAndTimeString =
+    baseDate.toISOString().split('T')[0].replaceAll('-', '') +
+    baseDate.toISOString().substr(11, 5).replace(':', '');
+  const result = await getXMLMidLandFcst(cityCode, dateAndTimeString);
+  return result.response.body.items.item;
+}
+
+export async function getMidTiaFcst(cityCode) {
+  const baseDate = getRequiredBaseDate();
+  const dateAndTimeString =
+    baseDate.toISOString().split('T')[0].replaceAll('-', '') +
+    baseDate.toISOString().substr(11, 5).replace(':', '');
+  const result = await getXMLMidTiaFcst(cityCode, dateAndTimeString);
+  return result.response.body.items.item;
 }
