@@ -27,6 +27,8 @@ import {
   getVilageFcstBeachToday,
   getFcstBeach,
   getTodayFcstBeach,
+  getMidLandFcst,
+  getMidTiaFcst,
 } from './beachInfoService.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
@@ -61,56 +63,14 @@ async function mainScreenload() {
   const todayWeather = getTodayWeather(fcstTodayData);
   const fcstWeatherData = await getWeather3DaysData();
   const threeDaysWeather = getWeather3days(fcstWeatherData);
+  const midLandFcst = await getAfter3DaysLandData();
+  const midTiaFcst = await getAfter3DaysTiaData();
   paintCurrentWeatherData(todayWeather);
   paintCureentWaveRainData(todayWeather);
   paintHighAndLowTemp(todayHighLowTemp);
   add3DaysWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
   hideCircularProgress();
-}
-
-async function getYesterdayTodayData() {
-  const fcstYesterday = await getTodayFcstBeach(304).catch(error => {
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
-  });
-  console.log(fcstYesterday);
-  return fcstYesterday;
-}
-
-function getTodayTempHighLow(yesterdayTodayData) {
-  const lowHighTempDate = [];
-  const today = getTodayDate();
-  const lowTemp = yesterdayTodayData
-    .filter(data => data.fcstDate == today)
-    .filter(data => data.category == 'TMN')
-    .map(data => data.fcstValue);
-  const highTemp = yesterdayTodayData
-    .filter(data => data.fcstDate == today)
-    .filter(data => data.category == 'TMX')
-    .map(data => data.fcstValue);
-
-  lowHighTempDate.push(lowTemp[0].substr(0, 2));
-  lowHighTempDate.push(highTemp[0].substr(0, 2));
-  return lowHighTempDate;
-}
-
-function getTodayDate() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = ('0' + (today.getMonth() + 1)).slice(-2);
-  const day = ('0' + today.getDate()).slice(-2);
-
-  return year + month + day;
-}
-
-function paintHighAndLowTemp(todayTempData) {
-  const currentTempBorder = document.getElementById('weather-today__temp');
-  const todayLowHighTemp = document.createElement('span');
-  todayLowHighTemp.textContent =
-    todayTempData[0] + '°C / ' + todayTempData[1] + '°C';
-
-  currentTempBorder.appendChild(todayLowHighTemp);
 }
 
 function handleBookmarkBtn() {
@@ -588,6 +548,100 @@ function add3DaysWeatherList(shorTermWeather) {
 
     weekelyWeatherArea.appendChild(weatherWeekelyDiv);
   }
+}
+// 어제, 오늘 데이터를 구하기 위한 api 요청
+async function getYesterdayTodayData() {
+  const fcstYesterday = await getTodayFcstBeach(304).catch(error => {
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+  });
+  console.log(fcstYesterday);
+  return fcstYesterday;
+}
+
+// 오늘 날씨의 최저, 최고 기온 구하는 함수
+function getTodayTempHighLow(yesterdayTodayData) {
+  const lowHighTempDate = [];
+  const today = getTodayDate();
+  const lowTemp = yesterdayTodayData
+    .filter(data => data.fcstDate == today)
+    .filter(data => data.category == 'TMN')
+    .map(data => data.fcstValue);
+  const highTemp = yesterdayTodayData
+    .filter(data => data.fcstDate == today)
+    .filter(data => data.category == 'TMX')
+    .map(data => data.fcstValue);
+
+  lowHighTempDate.push(lowTemp[0].substr(0, 2));
+  lowHighTempDate.push(highTemp[0].substr(0, 2));
+  return lowHighTempDate;
+}
+// 오늘의 날짜 얻는 함수
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = ('0' + (today.getMonth() + 1)).slice(-2);
+  const day = ('0' + today.getDate()).slice(-2);
+
+  return year + month + day;
+}
+
+// 오늘의 최저, 최고 기온 표시해주는 함수
+function paintHighAndLowTemp(todayTempData) {
+  const currentTempBorder = document.getElementById('weather-today__temp');
+  const todayLowHighTemp = document.createElement('span');
+  todayLowHighTemp.textContent =
+    todayTempData[0] + '°C / ' + todayTempData[1] + '°C';
+
+  currentTempBorder.appendChild(todayLowHighTemp);
+}
+// 3일 이후의 육상 데이터 구하는 함수
+async function getAfter3DaysLandData() {
+  const midLandFcstRequest = await getMidLandFcst('11H20000');
+  const resultLandData = landDataSet(midLandFcstRequest);
+  return resultLandData;
+}
+// 육상(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
+function landDataSet(midLandFcstData) {
+  const midLandDataArray = [];
+  for (let data of Object.values(midLandFcstData)) {
+    midLandDataArray.push(data);
+  }
+
+  const midLandRequiredDataSet = [];
+  let contactNum = 0;
+  for (let i = 0; i < 4; i++) {
+    midLandRequiredDataSet[i] = {
+      rnSt: midLandDataArray[2 + contactNum],
+      wf: midLandDataArray[15 + contactNum],
+    };
+    contactNum = contactNum + 2;
+  }
+  return midLandRequiredDataSet;
+}
+// 3일 이후 기온 데이터 구하는 함수
+async function getAfter3DaysTiaData() {
+  const midTiaFcstRequest = await getMidTiaFcst('11H20201');
+  const resultTiaData = tiaDataSet(midTiaFcstRequest);
+  return resultTiaData;
+}
+// 기온(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
+function tiaDataSet(tiaFcstData) {
+  const midTempDataArray = [];
+  for (let data of Object.values(tiaFcstData)) {
+    midTempDataArray.push(data);
+  }
+
+  const midTempRequiredDataSet = [];
+  let contactNum = 0;
+  for (let i = 0; i < 4; i++) {
+    midTempRequiredDataSet[i] = {
+      taMin: midTempDataArray[7 + contactNum],
+      taMax: midTempDataArray[10 + contactNum],
+    };
+    contactNum = contactNum + 6;
+  }
+  return midTempRequiredDataSet;
 }
 
 // Start
