@@ -69,48 +69,9 @@ async function mainScreenload() {
   hideCircularProgress();
 }
 
-async function getYesterdayTodayData() {
-  const fcstYesterday = await getTodayFcstBeach(304).catch(error => {
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
-  });
-  console.log(fcstYesterday);
-  return fcstYesterday;
 }
 
-function getTodayTempHighLow(yesterdayTodayData) {
-  const lowHighTempDate = [];
-  const today = getTodayDate();
-  const lowTemp = yesterdayTodayData
-    .filter(data => data.fcstDate == today)
-    .filter(data => data.category == 'TMN')
-    .map(data => data.fcstValue);
-  const highTemp = yesterdayTodayData
-    .filter(data => data.fcstDate == today)
-    .filter(data => data.category == 'TMX')
-    .map(data => data.fcstValue);
 
-  lowHighTempDate.push(lowTemp[0].substr(0, 2));
-  lowHighTempDate.push(highTemp[0].substr(0, 2));
-  return lowHighTempDate;
-}
-
-function getTodayDate() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = ('0' + (today.getMonth() + 1)).slice(-2);
-  const day = ('0' + today.getDate()).slice(-2);
-
-  return year + month + day;
-}
-
-function paintHighAndLowTemp(todayTempData) {
-  const currentTempBorder = document.getElementById('weather-today__temp');
-  const todayLowHighTemp = document.createElement('span');
-  todayLowHighTemp.textContent =
-    todayTempData[0] + '°C / ' + todayTempData[1] + '°C';
-
-  currentTempBorder.appendChild(todayLowHighTemp);
 }
 
 function handleBookmarkBtn() {
@@ -588,6 +549,52 @@ function add3DaysWeatherList(shorTermWeather) {
 
     weekelyWeatherArea.appendChild(weatherWeekelyDiv);
   }
+}
+// 어제, 오늘 데이터를 구하기 위한 api 요청
+async function getYesterdayTodayData() {
+  const fcstYesterday = await getTodayFcstBeach(304).catch(error => {
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+  });
+  console.log(fcstYesterday);
+  return fcstYesterday;
+}
+
+// 오늘 날씨의 최저, 최고 기온 구하는 함수
+function getTodayTempHighLow(yesterdayTodayData) {
+  const lowHighTempDate = [];
+  const today = getTodayDate();
+  const lowTemp = yesterdayTodayData
+    .filter(data => data.fcstDate == today)
+    .filter(data => data.category == 'TMN')
+    .map(data => data.fcstValue);
+  const highTemp = yesterdayTodayData
+    .filter(data => data.fcstDate == today)
+    .filter(data => data.category == 'TMX')
+    .map(data => data.fcstValue);
+
+  lowHighTempDate.push(lowTemp[0].substr(0, 2));
+  lowHighTempDate.push(highTemp[0].substr(0, 2));
+  return lowHighTempDate;
+}
+// 오늘의 날짜 얻는 함수
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = ('0' + (today.getMonth() + 1)).slice(-2);
+  const day = ('0' + today.getDate()).slice(-2);
+
+  return year + month + day;
+}
+
+// 오늘의 최저, 최고 기온 표시해주는 함수
+function paintHighAndLowTemp(todayTempData) {
+  const currentTempBorder = document.getElementById('weather-today__temp');
+  const todayLowHighTemp = document.createElement('span');
+  todayLowHighTemp.textContent =
+    todayTempData[0] + '°C / ' + todayTempData[1] + '°C';
+
+  currentTempBorder.appendChild(todayLowHighTemp);
 }
 
 // Start
