@@ -41,14 +41,14 @@ function xmlToJson(xml) {
   return obj;
 }
 
-export async function getXMLMidLandFcst() {
+export async function getXMLMidLandFcst(cityCode) {
   const url =
     'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst';
   const reqURL =
     url +
     '?serviceKey=' +
     MEDIUM_TERM_FORECAST_SERVICE_KEY +
-    `&numOfRows=10&pageNo=1&regId=11B00000&tmFc=202210011800`;
+    `&numOfRows=100&pageNo=1&regId=${cityCode}&tmFc=202210011800`;
   const response = await fetch(reqURL);
   const xmlString = await response.text();
   const XmlNode = new DOMParser().parseFromString(xmlString, 'text/xml');
@@ -56,5 +56,16 @@ export async function getXMLMidLandFcst() {
   return resultJSON.response.body.items.item;
 }
 
-const test = getXMLfromAPI();
-console.log(test);
+export async function getXMLMidTiaFcst(cityCode) {
+  const url = 'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa';
+  const reqURL =
+    url +
+    '?serviceKey=' +
+    MEDIUM_TERM_FORECAST_SERVICE_KEY +
+    `&numOfRows=100&pageNo=1&regId=${cityCode}&tmFc=202210011800`;
+  const response = await fetch(reqURL);
+  const xmlString = await response.text();
+  const XmlNode = new DOMParser().parseFromString(xmlString, 'text/xml');
+  const resultJSON = xmlToJson(XmlNode);
+  return resultJSON.response.body.items.item;
+}
