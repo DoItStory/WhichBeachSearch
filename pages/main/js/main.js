@@ -562,7 +562,7 @@ async function getYesterdayTodayData() {
 // 오늘 날씨의 최저, 최고 기온 구하는 함수
 function getTodayTempHighLow(yesterdayTodayData) {
   const lowHighTempDate = [];
-  const today = getTodayDate();
+  const today = todayDateRequest();
   const lowTemp = yesterdayTodayData
     .filter(data => data.fcstDate == today)
     .filter(data => data.category == 'TMN')
@@ -577,7 +577,7 @@ function getTodayTempHighLow(yesterdayTodayData) {
   return lowHighTempDate;
 }
 // 오늘의 날짜 얻는 함수
-function getTodayDate() {
+function todayDateRequest() {
   const today = new Date();
   const year = today.getFullYear();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
