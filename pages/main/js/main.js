@@ -65,12 +65,44 @@ async function mainScreenload() {
   const threeDaysWeather = getWeather3days(fcstWeatherData);
   const midLandFcst = await getAfter3DaysLandData();
   const midTiaFcst = await getAfter3DaysTiaData();
+  const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
   paintCurrentWeatherData(todayWeather);
   paintCureentWaveRainData(todayWeather);
   paintHighAndLowTemp(todayHighLowTemp);
   add3DaysWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
   hideCircularProgress();
+}
+
+function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
+  const midWeekDateArray = getMidWeekDays();
+  const dayOfTheWeek = getDayWeek(midWeekDateArray);
+  const midWeekDaysWeatherData = [];
+  for (let i = 0; i < 4; i++) {
+    midWeekDaysWeatherData[i] = {
+      date: dayOfTheWeek[i],
+      pop: landFcst[i].rnSt,
+      weather: landFcst[i].wf,
+      tmn: tiaFcst[i].taMin,
+      tmx: tiaFcst[i].taMax,
+    };
+  }
+
+  return midWeekDaysWeatherData;
+}
+
+function getMidWeekDays() {
+  const midWeekDays = [];
+  for (let Days = 0; Days < 4; Days++) {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    today.setDate(today.getDate() + (4 + Days));
+    const day = ('0' + today.getDate()).slice(-2);
+    const daysDate = year + month + day;
+    midWeekDays.push(daysDate);
+  }
+  return midWeekDays;
 }
 
 function handleBookmarkBtn() {
@@ -582,7 +614,6 @@ function todayDateRequest() {
   const year = today.getFullYear();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
   const day = ('0' + today.getDate()).slice(-2);
-
   return year + month + day;
 }
 
