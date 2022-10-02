@@ -74,37 +74,6 @@ async function mainScreenload() {
   hideCircularProgress();
 }
 
-function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
-  const midWeekDateArray = getMidWeekDays();
-  const dayOfTheWeek = getDayWeek(midWeekDateArray);
-  const midWeekDaysWeatherData = [];
-  for (let i = 0; i < 4; i++) {
-    midWeekDaysWeatherData[i] = {
-      date: dayOfTheWeek[i],
-      pop: landFcst[i].rnSt,
-      weather: landFcst[i].wf,
-      tmn: tiaFcst[i].taMin,
-      tmx: tiaFcst[i].taMax,
-    };
-  }
-
-  return midWeekDaysWeatherData;
-}
-
-function getMidWeekDays() {
-  const midWeekDays = [];
-  for (let Days = 0; Days < 4; Days++) {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = ('0' + (today.getMonth() + 1)).slice(-2);
-    today.setDate(today.getDate() + (4 + Days));
-    const day = ('0' + today.getDate()).slice(-2);
-    const daysDate = year + month + day;
-    midWeekDays.push(daysDate);
-  }
-  return midWeekDays;
-}
-
 function handleBookmarkBtn() {
   showCircularProgress();
   checkUserStore()
@@ -673,6 +642,38 @@ function tiaDataSet(tiaFcstData) {
     contactNum = contactNum + 6;
   }
   return midTempRequiredDataSet;
+}
+
+// 4~7일의 요일 구하는 함수
+function getMidWeekDays() {
+  const midWeekDays = [];
+  for (let Days = 0; Days < 4; Days++) {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    today.setDate(today.getDate() + (4 + Days));
+    const day = ('0' + today.getDate()).slice(-2);
+    const daysDate = year + month + day;
+    midWeekDays.push(daysDate);
+  }
+  return midWeekDays;
+}
+
+// 4~7일 중기 육상, 기온, 날짜 데이터 배열로 모으는 함수
+function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
+  const midWeekDateArray = getMidWeekDays();
+  const dayOfTheWeek = getDayWeek(midWeekDateArray);
+  const midWeekDaysWeatherData = [];
+  for (let i = 0; i < 4; i++) {
+    midWeekDaysWeatherData[i] = {
+      date: dayOfTheWeek[i],
+      pop: landFcst[i].rnSt,
+      weather: landFcst[i].wf,
+      tmn: tiaFcst[i].taMin,
+      tmx: tiaFcst[i].taMax,
+    };
+  }
+  return midWeekDaysWeatherData;
 }
 
 // Start
