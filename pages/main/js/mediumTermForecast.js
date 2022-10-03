@@ -1,7 +1,7 @@
 const MEDIUM_TERM_FORECAST_SERVICE_KEY =
   'c49IwM1m6ZGmj8bTICkOnONZr9f2dmu32k9bP2DGr8v5X7BtIeA%2FiAhEVRaiuc05bCbvyegzV%2BA7GSL59xO4pg%3D%3D';
 
-function xmlToJson(xml) {
+export function xmlToJson(xml) {
   let obj = {};
   if (xml.nodeType == 1) {
     if (xml.attributes.length > 0) {
