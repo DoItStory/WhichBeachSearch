@@ -71,6 +71,7 @@ async function mainScreenload() {
   paintHighAndLowTemp(todayHighLowTemp);
   add3DaysWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
+  add3DaysWeatherList(midWeekDaysWeather);
   hideCircularProgress();
 }
 
@@ -503,6 +504,44 @@ function weatherIconSrc(weatherDayArr) {
   return imageSrc;
 }
 
+function midTermWeatherIconSrc(midWeatherDayArr) {
+  const rainSunny = '/assets/images/weather/drizzle-sunny.svg';
+  const mostlyCloudy = '/assets/images/weather/mostly-cloudy.svg';
+  const rainSnow = '/assets/images/weather/rain-snow.svg';
+  const rain = '/assets/images/weather/rain.svg';
+  const snow = '/assets/images/weather/snow.svg';
+  const sunny = '/assets/images/weather/sunny.svg';
+
+  const weatherString = midWeatherDayArr.weather;
+  let imageSrc = '';
+
+  switch (weatherString) {
+    case '맑음':
+      imageSrc = sunny;
+      break;
+    case '구름많음':
+    case '흐림':
+      imageSrc = mostlyCloudy;
+      break;
+    case '구름많고 비':
+    case '구름많고 소나기':
+    case '흐리고 비':
+    case '흐리고 소나기':
+      imageSrc = rain;
+      break;
+    case '구름많고 눈':
+    case '흐리고 눈':
+      imageSrc = snow;
+      break;
+    case '구름많고 비/눈':
+    case '흐리고 비/눈':
+      imageSrc = rainSnow;
+      break;
+  }
+
+  return imageSrc;
+}
+
 // 주간 날씨 화면에 띄워주는 기능 (현재 3일까지만 구현)
 function add3DaysWeatherList(shorTermWeather) {
   const weekelyWeatherArea = document.getElementById('weekely__area');
@@ -526,7 +565,12 @@ function add3DaysWeatherList(shorTermWeather) {
     const weatherIconDiv = document.createElement('div');
     weatherIconDiv.classList.add('weekely-icon');
     const weekelyWeatherIcon = document.createElement('img');
-    weekelyWeatherIcon.src = weatherIconSrc(dayWeather);
+    if (dayWeather.weather) {
+      weekelyWeatherIcon.src = midTermWeatherIconSrc(dayWeather);
+    }
+    if (dayWeather.pty && dayWeather.sky) {
+      weekelyWeatherIcon.src = weatherIconSrc(dayWeather);
+    }
     //
     const weekelyTempDiv = document.createElement('div');
     weekelyTempDiv.classList.add('weekely-temp');
