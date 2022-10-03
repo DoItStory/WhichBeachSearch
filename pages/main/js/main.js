@@ -71,35 +71,14 @@ async function mainScreenload() {
     '129.161686',
     '35.1588527',
   );
-  console.log(riseSunsetDataRequest.sunrise.substring(0, 2));
   paintCurrentWeatherData(todayWeather);
   paintCureentWaveRainData(todayWeather);
   paintHighAndLowTemp(todayHighLowTemp);
-  add3DaysWeatherList(threeDaysWeather);
+  addWeekWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
-  add3DaysWeatherList(midWeekDaysWeather);
+  addWeekWeatherList(midWeekDaysWeather);
   paintSunriseSunsetTime(riseSunsetDataRequest);
   hideCircularProgress();
-}
-
-function paintSunriseSunsetTime(sunriseSunseTimeData) {
-  const sunriseDiv = document.getElementById('sun-time__sunrise');
-  const sunsetDiv = document.getElementById('sun-time__sunset');
-  const sunriseSpan = document.createElement('span');
-  sunriseSpan.textContent =
-    '오전 ' +
-    sunriseSunseTimeData.sunrise.substring(0, 2) +
-    ':' +
-    sunriseSunseTimeData.sunrise.substring(2);
-  const sunsetSpan = document.createElement('span');
-  sunsetSpan.textContent =
-    '오후 ' +
-    sunriseSunseTimeData.sunset.substring(0, 2) +
-    ':' +
-    sunriseSunseTimeData.sunset.substring(2);
-
-  sunriseDiv.appendChild(sunriseSpan);
-  sunsetDiv.appendChild(sunsetSpan);
 }
 
 function handleBookmarkBtn() {
@@ -530,7 +509,7 @@ function weatherIconSrc(weatherDayArr) {
   }
   return imageSrc;
 }
-
+// 중기 날씨 정보 아이콘 결정 함수
 function midTermWeatherIconSrc(midWeatherDayArr) {
   const rainSunny = '/assets/images/weather/drizzle-sunny.svg';
   const mostlyCloudy = '/assets/images/weather/mostly-cloudy.svg';
@@ -570,7 +549,7 @@ function midTermWeatherIconSrc(midWeatherDayArr) {
 }
 
 // 주간 날씨 화면에 띄워주는 기능 (현재 3일까지만 구현)
-function add3DaysWeatherList(shorTermWeather) {
+function addWeekWeatherList(shorTermWeather) {
   const weekelyWeatherArea = document.getElementById('weekely__area');
 
   for (const dayWeather of shorTermWeather) {
@@ -745,6 +724,26 @@ function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
     };
   }
   return midWeekDaysWeatherData;
+}
+// 일몰 일출 화면에 나타내주는 함수
+function paintSunriseSunsetTime(sunriseSunseTimeData) {
+  const sunriseDiv = document.getElementById('sun-time__sunrise');
+  const sunsetDiv = document.getElementById('sun-time__sunset');
+  const sunriseSpan = document.createElement('span');
+  sunriseSpan.textContent =
+    '오전 ' +
+    sunriseSunseTimeData.sunrise.substring(0, 2) +
+    ':' +
+    sunriseSunseTimeData.sunrise.substring(2);
+  const sunsetSpan = document.createElement('span');
+  sunsetSpan.textContent =
+    '오후 ' +
+    sunriseSunseTimeData.sunset.substring(0, 2) +
+    ':' +
+    sunriseSunseTimeData.sunset.substring(2);
+
+  sunriseDiv.appendChild(sunriseSpan);
+  sunsetDiv.appendChild(sunsetSpan);
 }
 
 // Start
