@@ -1,5 +1,5 @@
 import { getXMLMidLandFcst, getXMLMidTiaFcst } from './mediumTermForecast.js';
-
+import { getLCRiseSetInfo } from './sunriseSunset.js';
 const BEACH_INFO_SERVICE_KEY =
   'DnqahC7Oj+ryIm2AlkiWQr+DVjZDHv9/I4U79tgfopjyNp2aOfvpA5gC5+yC6uWPYU1VgICsIBV2xCZ/h4czDg==';
 
@@ -145,4 +145,13 @@ export async function getMidTiaFcst(cityCode) {
     baseDate.toISOString().substr(11, 5).replace(':', '');
   const result = await getXMLMidTiaFcst(cityCode, dateAndTimeString);
   return result.response.body.items.item;
+}
+
+export async function getRiseSunsetInfo(lon, lat) {
+  const baseDate = getNearestBaseDate();
+  const dateString =
+    baseDate.toISOString().split('T')[0].replaceAll('-', '') - 1;
+  const riseSunsetInfo = await getLCRiseSetInfo(lon, lat, dateString);
+
+  return riseSunsetInfo;
 }

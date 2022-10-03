@@ -29,6 +29,7 @@ import {
   getTodayFcstBeach,
   getMidLandFcst,
   getMidTiaFcst,
+  getRiseSunsetInfo,
 } from './beachInfoService.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
@@ -66,13 +67,39 @@ async function mainScreenload() {
   const midLandFcst = await getAfter3DaysLandData();
   const midTiaFcst = await getAfter3DaysTiaData();
   const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
+  const riseSunsetDataRequest = await getRiseSunsetInfo(
+    '129.161686',
+    '35.1588527',
+  );
+  console.log(riseSunsetDataRequest.sunrise.substring(0, 2));
   paintCurrentWeatherData(todayWeather);
   paintCureentWaveRainData(todayWeather);
   paintHighAndLowTemp(todayHighLowTemp);
   add3DaysWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
   add3DaysWeatherList(midWeekDaysWeather);
+  paintSunriseSunsetTime(riseSunsetDataRequest);
   hideCircularProgress();
+}
+
+function paintSunriseSunsetTime(sunriseSunseTimeData) {
+  const sunriseDiv = document.getElementById('sun-time__sunrise');
+  const sunsetDiv = document.getElementById('sun-time__sunset');
+  const sunriseSpan = document.createElement('span');
+  sunriseSpan.textContent =
+    '오전 ' +
+    sunriseSunseTimeData.sunrise.substring(0, 2) +
+    ':' +
+    sunriseSunseTimeData.sunrise.substring(2);
+  const sunsetSpan = document.createElement('span');
+  sunsetSpan.textContent =
+    '오후 ' +
+    sunriseSunseTimeData.sunset.substring(0, 2) +
+    ':' +
+    sunriseSunseTimeData.sunset.substring(2);
+
+  sunriseDiv.appendChild(sunriseSpan);
+  sunsetDiv.appendChild(sunsetSpan);
 }
 
 function handleBookmarkBtn() {
