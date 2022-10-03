@@ -15,5 +15,5 @@ export async function getLCRiseSetInfo(lonString, latString, dateString) {
   const xmlString = await response.text();
   const XmlNode = new DOMParser().parseFromString(xmlString, 'text/xml');
   const resultJSON = xmlToJson(XmlNode);
-  return resultJSON;
+  return resultJSON.response.body.items.item;
 }
