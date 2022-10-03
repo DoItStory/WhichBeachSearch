@@ -1,3 +1,4 @@
+import { ERROR } from '../../../js/error.js';
 import { getXMLMidLandFcst, getXMLMidTiaFcst } from './mediumTermForecast.js';
 import { getLCRiseSetInfo } from './sunriseSunset.js';
 const BEACH_INFO_SERVICE_KEY =
@@ -134,7 +135,12 @@ export async function getMidLandFcst(cityCode) {
   const dateAndTimeString =
     baseDate.toISOString().split('T')[0].replaceAll('-', '') +
     baseDate.toISOString().substr(11, 5).replace(':', '');
-  const result = await getXMLMidLandFcst(cityCode, dateAndTimeString);
+  const result = await getXMLMidLandFcst(cityCode, dateAndTimeString).catch(
+    error => {
+      const errorCode = error.code;
+      alert(`${ERROR.INTERNAL_ERROR} API-error getMidLandFcst : ${errorCode}`);
+    },
+  );
   return result.response.body.items.item;
 }
 
@@ -143,7 +149,12 @@ export async function getMidTiaFcst(cityCode) {
   const dateAndTimeString =
     baseDate.toISOString().split('T')[0].replaceAll('-', '') +
     baseDate.toISOString().substr(11, 5).replace(':', '');
-  const result = await getXMLMidTiaFcst(cityCode, dateAndTimeString);
+  const result = await getXMLMidTiaFcst(cityCode, dateAndTimeString).catch(
+    error => {
+      const errorCode = error.code;
+      alert(`${ERROR.INTERNAL_ERROR} API-error getMidLandFcst : ${errorCode}`);
+    },
+  );
   return result.response.body.items.item;
 }
 
@@ -151,7 +162,12 @@ export async function getRiseSunsetInfo(lon, lat) {
   const baseDate = getNearestBaseDate();
   const dateString =
     baseDate.toISOString().split('T')[0].replaceAll('-', '') - 1;
-  const riseSunsetInfo = await getLCRiseSetInfo(lon, lat, dateString);
+  const riseSunsetInfo = await getLCRiseSetInfo(lon, lat, dateString).catch(
+    error => {
+      const errorCode = error.code;
+      alert(`${ERROR.INTERNAL_ERROR} API-error getMidLandFcst : ${errorCode}`);
+    },
+  );
 
   return riseSunsetInfo;
 }

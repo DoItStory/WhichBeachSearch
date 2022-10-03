@@ -71,35 +71,14 @@ async function mainScreenload() {
     '129.161686',
     '35.1588527',
   );
-  console.log(riseSunsetDataRequest.sunrise.substring(0, 2));
   paintCurrentWeatherData(todayWeather);
   paintCureentWaveRainData(todayWeather);
   paintHighAndLowTemp(todayHighLowTemp);
-  add3DaysWeatherList(threeDaysWeather);
+  addWeekWeatherList(threeDaysWeather);
   addTodayWeatherList(todayWeather);
-  add3DaysWeatherList(midWeekDaysWeather);
+  addWeekWeatherList(midWeekDaysWeather);
   paintSunriseSunsetTime(riseSunsetDataRequest);
   hideCircularProgress();
-}
-
-function paintSunriseSunsetTime(sunriseSunseTimeData) {
-  const sunriseDiv = document.getElementById('sun-time__sunrise');
-  const sunsetDiv = document.getElementById('sun-time__sunset');
-  const sunriseSpan = document.createElement('span');
-  sunriseSpan.textContent =
-    '오전 ' +
-    sunriseSunseTimeData.sunrise.substring(0, 2) +
-    ':' +
-    sunriseSunseTimeData.sunrise.substring(2);
-  const sunsetSpan = document.createElement('span');
-  sunsetSpan.textContent =
-    '오후 ' +
-    sunriseSunseTimeData.sunset.substring(0, 2) +
-    ':' +
-    sunriseSunseTimeData.sunset.substring(2);
-
-  sunriseDiv.appendChild(sunriseSpan);
-  sunsetDiv.appendChild(sunsetSpan);
 }
 
 function handleBookmarkBtn() {
@@ -485,17 +464,23 @@ function gather3DaysWeatherData(
 
 // 요일 구하는 함수
 function getDayWeek(dateArr) {
-  const dayWeek = [];
-  for (let day of dateArr) {
-    const yyyyMMdd = String(day);
-    const sYear = yyyyMMdd.substring(0, 4);
-    const sMonth = yyyyMMdd.substring(4, 6);
-    const sDate = yyyyMMdd.substring(6, 8);
-    const date = new Date(Number(sYear), Number(sMonth) - 1, Number(sDate));
-    const week = ['일', '월', '화', '수', '목', '금', '토'];
-    dayWeek.push(week[date.getDay()] + '요일');
+  try {
+    const dayWeek = [];
+    for (let day of dateArr) {
+      const yyyyMMdd = String(day);
+      const sYear = yyyyMMdd.substring(0, 4);
+      const sMonth = yyyyMMdd.substring(4, 6);
+      const sDate = yyyyMMdd.substring(6, 8);
+      const date = new Date(Number(sYear), Number(sMonth) - 1, Number(sDate));
+      const week = ['일', '월', '화', '수', '목', '금', '토'];
+      dayWeek.push(week[date.getDay()] + '요일');
+    }
+    return dayWeek;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getDayWeek : ${errorCode}`);
   }
-  return dayWeek;
 }
 
 // 날씨 아이콘 구하는 함수
@@ -530,7 +515,7 @@ function weatherIconSrc(weatherDayArr) {
   }
   return imageSrc;
 }
-
+// 중기 날씨 정보 아이콘 결정 함수
 function midTermWeatherIconSrc(midWeatherDayArr) {
   const rainSunny = '/assets/images/weather/drizzle-sunny.svg';
   const mostlyCloudy = '/assets/images/weather/mostly-cloudy.svg';
@@ -570,7 +555,7 @@ function midTermWeatherIconSrc(midWeatherDayArr) {
 }
 
 // 주간 날씨 화면에 띄워주는 기능 (현재 3일까지만 구현)
-function add3DaysWeatherList(shorTermWeather) {
+function addWeekWeatherList(shorTermWeather) {
   const weekelyWeatherArea = document.getElementById('weekely__area');
 
   for (const dayWeather of shorTermWeather) {
@@ -633,28 +618,42 @@ async function getYesterdayTodayData() {
 
 // 오늘 날씨의 최저, 최고 기온 구하는 함수
 function getTodayTempHighLow(yesterdayTodayData) {
-  const lowHighTempDate = [];
-  const today = todayDateRequest();
-  const lowTemp = yesterdayTodayData
-    .filter(data => data.fcstDate == today)
-    .filter(data => data.category == 'TMN')
-    .map(data => data.fcstValue);
-  const highTemp = yesterdayTodayData
-    .filter(data => data.fcstDate == today)
-    .filter(data => data.category == 'TMX')
-    .map(data => data.fcstValue);
+  try {
+    const lowHighTempDate = [];
+    const today = todayDateRequest();
+    const lowTemp = yesterdayTodayData
+      .filter(data => data.fcstDate == today)
+      .filter(data => data.category == 'TMN')
+      .map(data => data.fcstValue);
+    const highTemp = yesterdayTodayData
+      .filter(data => data.fcstDate == today)
+      .filter(data => data.category == 'TMX')
+      .map(data => data.fcstValue);
 
-  lowHighTempDate.push(lowTemp[0].substr(0, 2));
-  lowHighTempDate.push(highTemp[0].substr(0, 2));
-  return lowHighTempDate;
+    lowHighTempDate.push(lowTemp[0].substr(0, 2));
+    lowHighTempDate.push(highTemp[0].substr(0, 2));
+    return lowHighTempDate;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error getTodayTempHighLow : ${errorCode}`,
+    );
+  }
 }
 // 오늘의 날짜 얻는 함수
 function todayDateRequest() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = ('0' + (today.getMonth() + 1)).slice(-2);
-  const day = ('0' + today.getDate()).slice(-2);
-  return year + month + day;
+  try {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    const day = ('0' + today.getDate()).slice(-2);
+    return year + month + day;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error todayDateRequest : ${errorCode}`);
+  }
 }
 
 // 오늘의 최저, 최고 기온 표시해주는 함수
@@ -668,83 +667,140 @@ function paintHighAndLowTemp(todayTempData) {
 }
 // 3일 이후의 육상 데이터 구하는 함수
 async function getAfter3DaysLandData() {
-  const midLandFcstRequest = await getMidLandFcst('11H20000');
+  const midLandFcstRequest = await getMidLandFcst('11H20000').catch(error => {
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error getAfter3DaysLandData : ${errorCode}`,
+    );
+  });
   const resultLandData = landDataSet(midLandFcstRequest);
   return resultLandData;
 }
 // 육상(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
 function landDataSet(midLandFcstData) {
-  const midLandDataArray = [];
-  for (let data of Object.values(midLandFcstData)) {
-    midLandDataArray.push(data);
-  }
+  try {
+    const midLandDataArray = [];
+    for (let data of Object.values(midLandFcstData)) {
+      midLandDataArray.push(data);
+    }
 
-  const midLandRequiredDataSet = [];
-  let contactNum = 0;
-  for (let i = 0; i < 4; i++) {
-    midLandRequiredDataSet[i] = {
-      rnSt: midLandDataArray[2 + contactNum],
-      wf: midLandDataArray[15 + contactNum],
-    };
-    contactNum = contactNum + 2;
+    const midLandRequiredDataSet = [];
+    let contactNum = 0;
+    for (let i = 0; i < 4; i++) {
+      midLandRequiredDataSet[i] = {
+        rnSt: midLandDataArray[2 + contactNum],
+        wf: midLandDataArray[15 + contactNum],
+      };
+      contactNum = contactNum + 2;
+    }
+    return midLandRequiredDataSet;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error landDataSet : ${errorCode}`);
   }
-  return midLandRequiredDataSet;
 }
 // 3일 이후 기온 데이터 구하는 함수
 async function getAfter3DaysTiaData() {
-  const midTiaFcstRequest = await getMidTiaFcst('11H20201');
+  const midTiaFcstRequest = await getMidTiaFcst('11H20201').catch(error => {
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error getAfter3DaysTiaData : ${errorCode}`,
+    );
+  });
   const resultTiaData = tiaDataSet(midTiaFcstRequest);
   return resultTiaData;
 }
 // 기온(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
 function tiaDataSet(tiaFcstData) {
-  const midTempDataArray = [];
-  for (let data of Object.values(tiaFcstData)) {
-    midTempDataArray.push(data);
-  }
+  try {
+    const midTempDataArray = [];
+    for (let data of Object.values(tiaFcstData)) {
+      midTempDataArray.push(data);
+    }
 
-  const midTempRequiredDataSet = [];
-  let contactNum = 0;
-  for (let i = 0; i < 4; i++) {
-    midTempRequiredDataSet[i] = {
-      taMin: midTempDataArray[7 + contactNum],
-      taMax: midTempDataArray[10 + contactNum],
-    };
-    contactNum = contactNum + 6;
+    const midTempRequiredDataSet = [];
+    let contactNum = 0;
+    for (let i = 0; i < 4; i++) {
+      midTempRequiredDataSet[i] = {
+        taMin: midTempDataArray[7 + contactNum],
+        taMax: midTempDataArray[10 + contactNum],
+      };
+      contactNum = contactNum + 6;
+    }
+    return midTempRequiredDataSet;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error tiaDataSet : ${errorCode}`);
   }
-  return midTempRequiredDataSet;
 }
 
 // 4~7일의 요일 구하는 함수
 function getMidWeekDays() {
-  const midWeekDays = [];
-  for (let Days = 0; Days < 4; Days++) {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = ('0' + (today.getMonth() + 1)).slice(-2);
-    today.setDate(today.getDate() + (4 + Days));
-    const day = ('0' + today.getDate()).slice(-2);
-    const daysDate = year + month + day;
-    midWeekDays.push(daysDate);
+  try {
+    const midWeekDays = [];
+    for (let Days = 0; Days < 4; Days++) {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = ('0' + (today.getMonth() + 1)).slice(-2);
+      today.setDate(today.getDate() + (4 + Days));
+      const day = ('0' + today.getDate()).slice(-2);
+      const daysDate = year + month + day;
+      midWeekDays.push(daysDate);
+    }
+    return midWeekDays;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getMidWeekDays : ${errorCode}`);
   }
-  return midWeekDays;
 }
 
 // 4~7일 중기 육상, 기온, 날짜 데이터 배열로 모으는 함수
 function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
-  const midWeekDateArray = getMidWeekDays();
-  const dayOfTheWeek = getDayWeek(midWeekDateArray);
-  const midWeekDaysWeatherData = [];
-  for (let i = 0; i < 4; i++) {
-    midWeekDaysWeatherData[i] = {
-      date: dayOfTheWeek[i],
-      pop: landFcst[i].rnSt,
-      weather: landFcst[i].wf,
-      tmn: tiaFcst[i].taMin,
-      tmx: tiaFcst[i].taMax,
-    };
+  try {
+    const midWeekDateArray = getMidWeekDays();
+    const dayOfTheWeek = getDayWeek(midWeekDateArray);
+    const midWeekDaysWeatherData = [];
+    for (let i = 0; i < 4; i++) {
+      midWeekDaysWeatherData[i] = {
+        date: dayOfTheWeek[i],
+        pop: landFcst[i].rnSt,
+        weather: landFcst[i].wf,
+        tmn: tiaFcst[i].taMin,
+        tmx: tiaFcst[i].taMax,
+      };
+    }
+    return midWeekDaysWeatherData;
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error midWeekDaysWeatherRequest : ${errorCode}`,
+    );
   }
-  return midWeekDaysWeatherData;
+}
+
+// 일몰 일출 화면에 나타내주는 함수
+function paintSunriseSunsetTime(sunriseSunseTimeData) {
+  const sunriseDiv = document.getElementById('sun-time__sunrise');
+  const sunsetDiv = document.getElementById('sun-time__sunset');
+  const sunriseSpan = document.createElement('span');
+  sunriseSpan.textContent =
+    '오전 ' +
+    sunriseSunseTimeData.sunrise.substring(0, 2) +
+    ':' +
+    sunriseSunseTimeData.sunrise.substring(2);
+  const sunsetSpan = document.createElement('span');
+  sunsetSpan.textContent =
+    '오후 ' +
+    sunriseSunseTimeData.sunset.substring(0, 2) +
+    ':' +
+    sunriseSunseTimeData.sunset.substring(2);
+
+  sunriseDiv.appendChild(sunriseSpan);
+  sunsetDiv.appendChild(sunsetSpan);
 }
 
 // Start
