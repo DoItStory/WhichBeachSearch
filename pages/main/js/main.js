@@ -5,8 +5,6 @@ import {
 import {
   getAuth,
   onAuthStateChanged,
-  // test용 로그아웃 버튼 생성
-  signOut,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import {
   collection,
@@ -154,28 +152,6 @@ async function checkUserStore() {
     docRefId = doc.id;
   });
   return docRefId;
-}
-
-// test용 로그아웃 버튼
-const logOutBtn = document.getElementById('logout-btn');
-logOutBtn.addEventListener('click', logout);
-
-function logout() {
-  showCircularProgress();
-  const auth = getAuth();
-  signOut(auth)
-    .then(() => {
-      alert('로그아웃 되었습니다.');
-      window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
-      hideCircularProgress();
-      // Sign-out successful.
-    })
-    .catch(error => {
-      hideCircularProgress();
-      const errorCode = error.code;
-      alert(`로그아웃에 실패 Error = ${errorCode}`);
-      // An error happened.
-    });
 }
 
 // 지금 시간으로부터 12시간 정보 얻어오는 기능
