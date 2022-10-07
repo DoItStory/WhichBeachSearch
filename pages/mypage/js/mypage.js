@@ -2,7 +2,12 @@ import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   onAuthStateChanged,
+  signOut,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
+import {
+  showCircularProgress,
+  hideCircularProgress,
+} from '../../../js/circular-progress.js';
 
 function checkUserInfo(auth) {
   onAuthStateChanged(auth, user => {
@@ -26,8 +31,28 @@ function getUserProfile() {
   checkUserInfo(auth);
 }
 
+function logout() {
+  showCircularProgress();
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      alert('로그아웃 되었습니다.');
+      window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
+      hideCircularProgress();
+      // Sign-out successful.
+    })
+    .catch(error => {
+      hideCircularProgress();
+      const errorCode = error.code;
+      alert(`로그아웃에 실패 Error = ${errorCode}`);
+      // An error happened.
+    });
+}
+
 const changeNickname = document.getElementById('mypage__change-nickname');
 const changePassword = document.getElementById('mypage__change-password');
+const logOutBtn = document.getElementById('logout-btn');
 
 changeNickname.addEventListener('click', getUserProfile);
 changePassword.addEventListener('click', getUserProfile);
+logOutBtn.addEventListener('click', logout);
