@@ -56,14 +56,14 @@ async function mainScreenload() {
   }
 
   showCircularProgress();
-  const yesterdayTodayFcstData = await getYesterdayTodayData();
+  const yesterdayTodayFcstData = await getYesterdayTodayData(304);
   const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
-  const fcstTodayData = await getWeatherTodayData();
+  const fcstTodayData = await getWeatherTodayData(304);
   const todayWeather = getTodayWeather(fcstTodayData);
-  const fcstWeatherData = await getWeather3DaysData();
+  const fcstWeatherData = await getWeather3DaysData(304);
   const threeDaysWeather = getWeather3days(fcstWeatherData);
-  const midLandFcst = await getAfter3DaysLandData();
-  const midTiaFcst = await getAfter3DaysTiaData();
+  const midLandFcst = await getAfter3DaysLandData('11H20000');
+  const midTiaFcst = await getAfter3DaysTiaData('11H20201');
   const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
   const riseSunsetDataRequest = await getRiseSunsetInfo(
     '129.161686',
@@ -155,8 +155,8 @@ async function checkUserStore() {
 }
 
 // 지금 시간으로부터 12시간 정보 얻어오는 기능
-async function getWeatherTodayData() {
-  const fcstToday = await getVilageFcstBeachToday(304).catch(error => {
+async function getWeatherTodayData(beachCode) {
+  const fcstToday = await getVilageFcstBeachToday(beachCode).catch(error => {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
@@ -327,8 +327,8 @@ function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
 }
 
 // 지금으로부터 3일 정보 얻어오는 기능
-async function getWeather3DaysData() {
-  const fcstBeachData = await getFcstBeach(304).catch(error => {
+async function getWeather3DaysData(beachCode) {
+  const fcstBeachData = await getFcstBeach(beachCode).catch(error => {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
@@ -583,8 +583,8 @@ function addWeekWeatherList(shorTermWeather) {
   }
 }
 // 어제, 오늘 데이터를 구하기 위한 api 요청
-async function getYesterdayTodayData() {
-  const fcstYesterday = await getTodayFcstBeach(304).catch(error => {
+async function getYesterdayTodayData(beachCode) {
+  const fcstYesterday = await getTodayFcstBeach(beachCode).catch(error => {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
@@ -642,8 +642,8 @@ function paintHighAndLowTemp(todayTempData) {
   currentTempBorder.appendChild(todayLowHighTemp);
 }
 // 3일 이후의 육상 데이터 구하는 함수
-async function getAfter3DaysLandData() {
-  const midLandFcstRequest = await getMidLandFcst('11H20000').catch(error => {
+async function getAfter3DaysLandData(landCode) {
+  const midLandFcstRequest = await getMidLandFcst(landCode).catch(error => {
     const errorCode = error.code;
     alert(
       `${ERROR.UNKNOWN_ERROR} main-error getAfter3DaysLandData : ${errorCode}`,
@@ -677,8 +677,8 @@ function landDataSet(midLandFcstData) {
   }
 }
 // 3일 이후 기온 데이터 구하는 함수
-async function getAfter3DaysTiaData() {
-  const midTiaFcstRequest = await getMidTiaFcst('11H20201').catch(error => {
+async function getAfter3DaysTiaData(cityCode) {
+  const midTiaFcstRequest = await getMidTiaFcst(cityCode).catch(error => {
     const errorCode = error.code;
     alert(
       `${ERROR.UNKNOWN_ERROR} main-error getAfter3DaysTiaData : ${errorCode}`,
