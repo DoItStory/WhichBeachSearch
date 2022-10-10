@@ -35,53 +35,62 @@ const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > header');
 const beachAddress = document.querySelector('.beach-address');
 const HIDDEN_CLASSNAME = 'hidden';
-const BEACH_DATABASE_LIST = getBaechDataListArray().then(data => {
-  const dataList = data;
-  console.log(dataList);
-});
+
+function getTheBeachData(beachCode, beachData) {
+  if (beachCode) {
+    const findDataReceivedBeach = beachData.filter(
+      data => data.beachCode == beachCode,
+    );
+    beachName.innerHTML = findDataReceivedBeach[0].beachName;
+    beachAddress.innerHTML = findDataReceivedBeach[0].address;
+    return findDataReceivedBeach;
+  }
+  if (!beachCode);
+  {
+    const randomBeachCode = Math.floor(Math.random() * 218) + 1;
+    const findDataBeach = beachData.filter(
+      data => data.beachCode == randomBeachCode,
+    );
+    beachName.innerHTML = findDataBeach[0].beachName;
+    beachAddress.innerHTML = findDataBeach[0].address;
+    return findDataBeach;
+  }
+}
 
 async function mainScreenload() {
-  try {
-    showCircularProgress();
-    const urlParams = new URLSearchParams(window.location.search);
-    const getbeachName = urlParams.get('sendBeachName');
-    const getbeachAddress = urlParams.get('sendBeachAddress');
-    if (getbeachName && getbeachAddress) {
-      beachName.innerHTML = getbeachName;
-      beachAddress.innerHTML = getbeachAddress;
-      hideCircularProgress();
-    } else {
-      beachName.innerHTML = '해운대 해수욕장';
-      beachAddress.innerHTML = '부산광역시 해운대구 우동';
-      hideCircularProgress();
-    }
-  } catch (error) {
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
-  }
-
   showCircularProgress();
-  const yesterdayTodayFcstData = await getYesterdayTodayData(304);
-  const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
-  const fcstTodayData = await getWeatherTodayData(304);
-  const todayWeather = getTodayWeather(fcstTodayData);
-  const fcstWeatherData = await getWeather3DaysData(304);
-  const threeDaysWeather = getWeather3days(fcstWeatherData);
-  const midLandFcst = await getAfter3DaysLandData('11H20000');
-  const midTiaFcst = await getAfter3DaysTiaData('11H20201');
-  const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
-  const riseSunsetDataRequest = await getRiseSunsetInfo(
-    '129.161686',
-    '35.1588527',
-  );
-  paintCurrentWeatherData(todayWeather);
-  paintCureentWaveRainData(todayWeather);
-  paintHighAndLowTemp(todayHighLowTemp);
-  addWeekWeatherList(threeDaysWeather);
-  addTodayWeatherList(todayWeather);
-  addWeekWeatherList(midWeekDaysWeather);
-  paintSunriseSunsetTime(riseSunsetDataRequest);
-  hideCircularProgress();
+  getBaechDataListArray()
+    .then(beachDataBase => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const getBeachCode = urlParams.get('sendBeachCode');
+      return getTheBeachData(getBeachCode, beachDataBase);
+    })
+    .then(beachData => {
+      hideCircularProgress();
+      console.log(beachData);
+    });
+
+  /*     const yesterdayTodayFcstData =  getYesterdayTodayData(1);
+    const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
+    const fcstTodayData = await getWeatherTodayData(1);
+    const todayWeather = getTodayWeather(fcstTodayData);
+    const fcstWeatherData = await getWeather3DaysData(1);
+    const threeDaysWeather = getWeather3days(fcstWeatherData);
+    const midLandFcst = await getAfter3DaysLandData('11H20000');
+    const midTiaFcst = await getAfter3DaysTiaData('11H20201');
+    const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
+    const riseSunsetDataRequest = await getRiseSunsetInfo(
+      '129.161686',
+      '35.1588527',
+    );
+    paintCurrentWeatherData(todayWeather);
+    paintCureentWaveRainData(todayWeather);
+    paintHighAndLowTemp(todayHighLowTemp);
+    addWeekWeatherList(threeDaysWeather);
+    addTodayWeatherList(todayWeather);
+    addWeekWeatherList(midWeekDaysWeather);
+    paintSunriseSunsetTime(riseSunsetDataRequest);
+    hideCircularProgress(); */
 }
 
 function handleBookmarkBtn() {
