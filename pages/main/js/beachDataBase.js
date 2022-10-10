@@ -1,6 +1,6 @@
 const GOOGLE_SPREAD_SHEETS_KEY = '1E7hpYjYFQbxtb6emM3DgdwabrJzwE82_MtY0bzyLUe0';
 
-export async function queryFunc() {
+export async function getBaechDataListArray() {
   return google.charts.load('current', { packages: ['corechart'] }).then(() => {
     let query = new google.visualization.Query(
       `http://spreadsheets.google.com/tq?key=${GOOGLE_SPREAD_SHEETS_KEY}&pub=1`,
