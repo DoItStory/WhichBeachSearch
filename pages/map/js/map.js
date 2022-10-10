@@ -117,7 +117,7 @@ function createInfoWindows(beachData) {
       <h3 class="info-name">
         ${beachData.name}
       </h3>
-      <a href='../main/main.html?sendBeachName=${beachData.name}&sendBeachAddress=${beachData.address}'>상세 정보</a>
+      <a href='../main/main.html?sendBeachCode=${beachData.beachCode}'>상세 정보</a>
     </div>
     <div class="info-weather">
       <span>${beachData.temp}</span>
@@ -148,6 +148,7 @@ function testData() {
     temp: '현재 27°',
     icon: '☀️',
     latlng: new kakao.maps.LatLng(35.1584224777778, 129.160646111111),
+    beachCode: '304',
   };
   const TEST_BEACH_2 = {
     name: '광안리 해수욕장',
