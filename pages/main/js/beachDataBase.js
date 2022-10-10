@@ -1,43 +1,53 @@
+import { ERROR } from '../../../js/error.js';
 const GOOGLE_SPREAD_SHEETS_KEY = '1E7hpYjYFQbxtb6emM3DgdwabrJzwE82_MtY0bzyLUe0';
 
-google.charts
-  .load('current', { packages: ['corechart'] })
-  .then(async function () {
-    const query = new google.visualization.Query(
-      `http://spreadsheets.google.com/tq?key=${GOOGLE_SPREAD_SHEETS_KEY}&pub=1`,
-    );
-    query.send(function (response) {
-      let dataTable = response.getDataTable();
-      let jsonData = dataTable.toJSON();
-      jsonData = JSON.parse(jsonData);
-      const beachData = jsonData.rows;
-      const beachListData = parsingBeachList(beachData);
-      console.log(beachListData);
+export async function getBaechDataListArray() {
+  return google.charts
+    .load('current', { packages: ['corechart'] })
+    .then(() => {
+      let query = new google.visualization.Query(
+        `http://spreadsheets.google.com/tq?key=${GOOGLE_SPREAD_SHEETS_KEY}&pub=1`,
+        'auto',
+      );
+      return getSpreadSheetsDataList(query);
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      alert(`${ERROR.INTERNAL_ERROR} api-error : ${errorCode}`);
     });
-  });
-
-function handleQueryResponse(response) {
-  const dataTable = response.getDataTable();
-  let jsonData = dataTable.toJSON();
-  jsonData = JSON.parse(jsonData);
-  const beachData = jsonData.rows;
-  return parsingBeachList(beachData);
 }
 
-function parsingBeachList(beachDb) {
-  const convertedData = [];
-  for (let i = 0; i < 219; i++) {
-    convertedData[i] = {
-      beachCode: beachDb[i].c[0].v.toString(),
-      beachName: beachDb[i].c[1].v,
-      lon: beachDb[i].c[2].v.toString(),
-      lat: beachDb[i].c[3].v.toString(),
-      address: beachDb[i].c[4].v,
-      landCode: beachDb[i].c[5].v,
-      cityCode: beachDb[i].c[6].v,
-      panoramaLink: beachDb[i].c[7].v,
-      informationLink: beachDb[i].c[8].v,
-    };
-  }
-  return convertedData;
+async function getSpreadSheetsDataList(query) {
+  return new Promise((resolve, reject) => {
+    query.send(response => {
+      if (response.isError()) {
+        console.error(
+          'Error in query: ' +
+            response.getMessage() +
+            ' ' +
+            response.getDetailedMessage(),
+        );
+        return;
+      }
+      resolve(dataListParsing(response));
+    });
+  });
+}
+
+function dataListParsing(response) {
+  let dataTable = response.getDataTable().toJSON();
+  let jsonData = JSON.parse(dataTable);
+  let cols = jsonData.cols.map(col => col.label);
+  let rows = jsonData.rows.map(row => {
+    let newRow;
+
+    row.c.forEach((obj, index) => {
+      if (obj == null || obj == undefined) return; //빈값이 경우 정지
+      obj[cols[index]] = 'f' in obj ? obj['f'] : obj['v'];
+      ['f', 'v'].forEach(each => delete obj[each]);
+      newRow = { ...newRow, ...obj };
+    });
+    return newRow;
+  });
+  return rows;
 }

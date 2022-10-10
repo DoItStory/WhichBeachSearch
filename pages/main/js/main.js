@@ -29,11 +29,16 @@ import {
   getMidTiaFcst,
   getRiseSunsetInfo,
 } from './beachInfoService.js';
+import { getBaechDataListArray } from './beachDataBase.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > header');
 const beachAddress = document.querySelector('.beach-address');
 const HIDDEN_CLASSNAME = 'hidden';
+const BEACH_DATABASE_LIST = getBaechDataListArray().then(data => {
+  const dataList = data;
+  console.log(dataList);
+});
 
 async function mainScreenload() {
   try {
