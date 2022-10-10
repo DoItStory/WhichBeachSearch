@@ -1,13 +1,20 @@
+import { ERROR } from '../../../js/error.js';
 const GOOGLE_SPREAD_SHEETS_KEY = '1E7hpYjYFQbxtb6emM3DgdwabrJzwE82_MtY0bzyLUe0';
 
 export async function getBaechDataListArray() {
-  return google.charts.load('current', { packages: ['corechart'] }).then(() => {
-    let query = new google.visualization.Query(
-      `http://spreadsheets.google.com/tq?key=${GOOGLE_SPREAD_SHEETS_KEY}&pub=1`,
-      'auto',
-    );
-    return getSpreadSheetsDataList(query);
-  });
+  return google.charts
+    .load('current', { packages: ['corechart'] })
+    .then(() => {
+      let query = new google.visualization.Query(
+        `http://spreadsheets.google.com/tq?key=${GOOGLE_SPREAD_SHEETS_KEY}&pub=1`,
+        'auto',
+      );
+      return getSpreadSheetsDataList(query);
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      alert(`${ERROR.INTERNAL_ERROR} api-error : ${errorCode}`);
+    });
 }
 
 async function getSpreadSheetsDataList(query) {
