@@ -36,27 +36,6 @@ const beachName = document.querySelector('.beach-name > header');
 const beachAddress = document.querySelector('.beach-address');
 const HIDDEN_CLASSNAME = 'hidden';
 
-function getTheBeachData(beachCode, beachData) {
-  if (beachCode) {
-    const findDataReceivedBeach = beachData.filter(
-      data => data.beachCode == beachCode,
-    );
-    beachName.innerHTML = findDataReceivedBeach[0].beachName;
-    beachAddress.innerHTML = findDataReceivedBeach[0].address;
-    return findDataReceivedBeach;
-  }
-  if (!beachCode);
-  {
-    const randomBeachCode = Math.floor(Math.random() * 218) + 1;
-    const findDataBeach = beachData.filter(
-      data => data.beachCode == randomBeachCode,
-    );
-    beachName.innerHTML = findDataBeach[0].beachName;
-    beachAddress.innerHTML = findDataBeach[0].address;
-    return findDataBeach;
-  }
-}
-
 async function mainScreenload() {
   showCircularProgress();
   getBaechDataListArray()
@@ -66,31 +45,13 @@ async function mainScreenload() {
       return getTheBeachData(getBeachCode, beachDataBase);
     })
     .then(beachData => {
+      paintMainScreen(beachData);
+    })
+    .catch(error => {
       hideCircularProgress();
-      console.log(beachData);
+      const errorCode = error.code;
+      alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
     });
-
-  /*     const yesterdayTodayFcstData =  getYesterdayTodayData(1);
-    const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
-    const fcstTodayData = await getWeatherTodayData(1);
-    const todayWeather = getTodayWeather(fcstTodayData);
-    const fcstWeatherData = await getWeather3DaysData(1);
-    const threeDaysWeather = getWeather3days(fcstWeatherData);
-    const midLandFcst = await getAfter3DaysLandData('11H20000');
-    const midTiaFcst = await getAfter3DaysTiaData('11H20201');
-    const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
-    const riseSunsetDataRequest = await getRiseSunsetInfo(
-      '129.161686',
-      '35.1588527',
-    );
-    paintCurrentWeatherData(todayWeather);
-    paintCureentWaveRainData(todayWeather);
-    paintHighAndLowTemp(todayHighLowTemp);
-    addWeekWeatherList(threeDaysWeather);
-    addTodayWeatherList(todayWeather);
-    addWeekWeatherList(midWeekDaysWeather);
-    paintSunriseSunsetTime(riseSunsetDataRequest);
-    hideCircularProgress(); */
 }
 
 function handleBookmarkBtn() {
@@ -791,6 +752,58 @@ function paintSunriseSunsetTime(sunriseSunseTimeData) {
 
   sunriseDiv.appendChild(sunriseSpan);
   sunsetDiv.appendChild(sunsetSpan);
+}
+
+async function paintMainScreen(beachData) {
+  showCircularProgress();
+  const yesterdayTodayFcstData = await getYesterdayTodayData(
+    beachData[0].beachCode,
+  );
+  const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
+  const fcstTodayData = await getWeatherTodayData(beachData[0].beachCode);
+  const todayWeather = getTodayWeather(fcstTodayData);
+  const fcstWeatherData = await getWeather3DaysData(beachData[0].beachCode);
+  const threeDaysWeather = getWeather3days(fcstWeatherData);
+  const midLandFcst = await getAfter3DaysLandData(beachData[0].landCode);
+  const midTiaFcst = await getAfter3DaysTiaData(beachData[0].cityCode);
+  const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
+  const riseSunsetDataRequest = await getRiseSunsetInfo(
+    beachData[0].lon,
+    beachData[0].lat,
+  );
+
+  paintHighAndLowTemp(todayHighLowTemp);
+  paintCurrentWeatherData(todayWeather);
+  paintCureentWaveRainData(todayWeather);
+  addTodayWeatherList(todayWeather);
+  addWeekWeatherList(threeDaysWeather);
+  addWeekWeatherList(midWeekDaysWeather);
+  paintSunriseSunsetTime(riseSunsetDataRequest);
+  hideCircularProgress();
+}
+
+function getTheBeachData(beachCode, beachData) {
+  showCircularProgress();
+  if (beachCode) {
+    const findDataReceivedBeach = beachData.filter(
+      data => data.beachCode == beachCode,
+    );
+    beachName.innerHTML = findDataReceivedBeach[0].beachName;
+    beachAddress.innerHTML = findDataReceivedBeach[0].address;
+    hideCircularProgress();
+    return findDataReceivedBeach;
+  }
+  if (!beachCode);
+  {
+    const randomBeachCode = Math.floor(Math.random() * 218) + 1;
+    const findDataBeach = beachData.filter(
+      data => data.beachCode == randomBeachCode,
+    );
+    beachName.innerHTML = findDataBeach[0].beachName;
+    beachAddress.innerHTML = findDataBeach[0].address;
+    hideCircularProgress();
+    return findDataBeach;
+  }
 }
 
 // Start
