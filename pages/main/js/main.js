@@ -45,7 +45,9 @@ async function mainScreenload() {
       return getTheBeachData(getBeachCode, beachDataBase);
     })
     .then(beachData => {
+      console.log(beachData);
       paintMainScreen(beachData);
+      handleInfoBtn(beachData);
     })
     .catch(error => {
       hideCircularProgress();
@@ -752,6 +754,17 @@ function paintSunriseSunsetTime(sunriseSunseTimeData) {
 
   sunriseDiv.appendChild(sunriseSpan);
   sunsetDiv.appendChild(sunsetSpan);
+}
+
+function handleInfoBtn(beachData) {
+  const infoBtn = document.getElementById('info-btn');
+  infoBtn.addEventListener('click', function () {
+    if (beachData[0].informationLink === 'none') {
+      return alert('죄송합니다. 해당 해수욕장에 대한 자료가 준비중입니다.');
+    } else {
+      return window.open(beachData[0].informationLink);
+    }
+  });
 }
 
 async function paintMainScreen(beachData) {
