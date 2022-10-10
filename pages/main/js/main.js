@@ -47,7 +47,7 @@ async function mainScreenload() {
     .then(beachData => {
       console.log(beachData);
       paintMainScreen(beachData);
-      handleInfoBtn(beachData);
+      handleMoreInfoBtn(beachData);
     })
     .catch(error => {
       hideCircularProgress();
@@ -756,7 +756,7 @@ function paintSunriseSunsetTime(sunriseSunseTimeData) {
   sunsetDiv.appendChild(sunsetSpan);
 }
 
-function handleInfoBtn(beachData) {
+function handleMoreInfoBtn(beachData) {
   const infoBtn = document.getElementById('info-btn');
   const panoramaBtn = document.getElementById('panorama-btn');
 
