@@ -16,4 +16,5 @@ export var ERROR = {
   UNDEFINED_UID: `사용자 계정 정보를 받아올 수 없습니다. 관리자에게 문의해주세요.`,
   SEARCH_VALUE_NOT_ENTERED: `검색하시려는 해변의 이름을 입력해주세요.`,
   SEARCH_VALUE_NOT_FOUND: `검색하신 해변을 찾을 수 없습니다. 다시 입력해주세요.`,
+  NONE_MORE_BEACH_INFORMATION: `죄송합니다. 해당 해수욕장에 대한 자료가 준비중입니다.`,
 };
