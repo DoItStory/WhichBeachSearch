@@ -148,7 +148,7 @@ function testData() {
     temp: '현재 27°',
     icon: '☀️',
     latlng: new kakao.maps.LatLng(35.1584224777778, 129.160646111111),
-    beachCode: '304',
+    beachCode: '1',
   };
   const TEST_BEACH_2 = {
     name: '광안리 해수욕장',
