@@ -58,17 +58,23 @@ async function mainScreenload() {
 }
 
 function handleBookmarkBtn(beachData) {
-  const addBookmarkBtn = document.getElementById('bookmark-btn');
-  addBookmarkBtn.addEventListener('click', function (event) {
-    if (event) {
-      addBookmark(beachData);
-      alert('북마크에 추가되었습니다.');
-      hideCircularProgress();
-    } else return;
-  });
+  try {
+    const addBookmarkBtn = document.getElementById('bookmark-btn');
+    addBookmarkBtn.addEventListener('click', function (event) {
+      if (event) {
+        addBookmark(beachData);
+        alert('북마크에 추가되었습니다.');
+        hideCircularProgress();
+      } else return;
+    });
+  } catch (error) {
+    hideCircularProgress();
+    const errorCode = error.code;
+    alert(`${ERROR.UNKNOWN_ERROR} main-error handleBookmarkBtn : ${errorCode}`);
+  }
 }
 
-async function addBookmark(beachData) {
+function addBookmark(beachData) {
   showCircularProgress();
   checkUserStore()
     .then(docRefId => {
@@ -127,7 +133,7 @@ function addDataInField(docRefId, beachData) {
 async function checkUserStore() {
   const userUID = auth.currentUser.uid;
   if (!userUID) {
-    throw ERROR(UNDEFINED_UID);
+    throw ERROR(ERROR.UNDEFINED_UID);
   }
   const q = query(collection(db, 'Bookmark'), where('uid', '==', userUID));
   const querySnapshot = await getDocs(q).catch(error => {
