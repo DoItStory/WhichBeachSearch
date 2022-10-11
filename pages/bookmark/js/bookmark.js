@@ -92,12 +92,16 @@ function paintBookmarkList(beachList) {
       bookmarkButton.classList.add(BOOKMARK_BTN_CLASS);
       const bookmarkIcon = document.createElement('img');
       bookmarkIcon.src = BOOKMARK_IMAGE_SRC;
+      const beachCode = document.createElement('span');
+      beachCode.classList.add('hidden');
+      beachCode.textContent = data.beachNum;
 
       bookmarkButton.addEventListener('click', handleBookmarkDeleteButton);
       beachInfoDiv.addEventListener('click', goMainScreen);
 
       beachInfoDiv.appendChild(beachNameSpan);
       beachInfoDiv.appendChild(beachAddress);
+      beachInfoDiv.appendChild(beachCode);
       bookmarkButton.appendChild(bookmarkIcon);
       beachList.appendChild(beachInfoDiv);
       beachList.appendChild(bookmarkButton);
@@ -115,9 +119,8 @@ function paintBookmarkList(beachList) {
 function goMainScreen(event) {
   showCircularProgress();
   try {
-    const sendBeachName = event.currentTarget.firstElementChild.innerText;
-    const sendBeachAddress = event.currentTarget.lastElementChild.innerText;
-    location.href = `../main/main.html?sendBeachName=${sendBeachName}&sendBeachAddress=${sendBeachAddress}`;
+    const sendBeachCode = event.currentTarget.lastElementChild.textContent;
+    location.href = `../main/main.html?sendBeachCode=${sendBeachCode}`;
   } catch (error) {
     hideCircularProgress();
     const errorCode = error.code;
