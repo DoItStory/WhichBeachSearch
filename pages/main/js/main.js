@@ -48,6 +48,7 @@ async function mainScreenload() {
       console.log(beachData);
       paintMainScreen(beachData);
       handleMoreInfoBtn(beachData);
+      handleBookmarkBtn(beachData);
     })
     .catch(error => {
       hideCircularProgress();
@@ -56,36 +57,45 @@ async function mainScreenload() {
     });
 }
 
-function handleBookmarkBtn() {
+function handleBookmarkBtn(beachData) {
+  const addBookmarkBtn = document.getElementById('bookmark-btn');
+  addBookmarkBtn.addEventListener('click', function (event) {
+    if (event) {
+      addBookmark(beachData);
+      alert('북마크에 추가되었습니다.');
+      hideCircularProgress();
+    } else return;
+  });
+}
+
+async function addBookmark(beachData) {
   showCircularProgress();
   checkUserStore()
     .then(docRefId => {
       if (!docRefId) {
-        createUserDoc();
+        createUserDoc(beachData);
       } else {
-        addDataInField(docRefId);
+        addDataInField(docRefId, beachData);
       }
-      hideCircularProgress();
     })
     .catch(error => {
       hideCircularProgress();
       const errorCode = error.code;
-      alert(
-        `${ERROR.UNKNOWN_ERROR} main-error handleBookmarkBtn : ${errorCode}`,
-      );
+      alert(`${ERROR.UNKNOWN_ERROR} main-error addBookmark : ${errorCode}`);
     });
 }
 
 // 새로운 문서(doc) 생성 함수
-async function createUserDoc() {
+async function createUserDoc(beachData) {
   const userUID = auth.currentUser.uid;
   if (!userUID) {
     throw ERROR(ERROR.UNDEFINED_UID);
   }
   const userBookmarkList = [
     {
-      name: '해운대 해수욕장',
-      address: '부산광역시 해운대구 우동',
+      name: beachData[0].beachName,
+      address: beachData[0].address,
+      beachNum: beachData[0].beachCode,
     },
   ];
   await addDoc(collection(db, 'Bookmark'), {
@@ -99,12 +109,13 @@ async function createUserDoc() {
 }
 
 // 즐겨찾기 정보(map) 추가 함수
-function addDataInField(docRefId) {
+function addDataInField(docRefId, beachData) {
   const docRef = doc(db, 'Bookmark', docRefId);
   updateDoc(docRef, {
     userBookmarkList: arrayUnion({
-      name: '명사십리 해수욕장',
-      address: '전라남도 완도군',
+      name: beachData[0].beachName,
+      address: beachData[0].address,
+      beachNum: beachData[0].beachCode,
     }),
   }).catch(error => {
     hideCircularProgress();
@@ -778,7 +789,6 @@ function handleMoreInfoBtn(beachData) {
 }
 
 async function paintMainScreen(beachData) {
-  showCircularProgress();
   const yesterdayTodayFcstData = await getYesterdayTodayData(
     beachData[0].beachCode,
   );
@@ -813,7 +823,6 @@ function getTheBeachData(beachCode, beachData) {
     );
     beachName.innerHTML = findDataReceivedBeach[0].beachName;
     beachAddress.innerHTML = findDataReceivedBeach[0].address;
-    hideCircularProgress();
     return findDataReceivedBeach;
   }
   if (!beachCode);
@@ -824,7 +833,6 @@ function getTheBeachData(beachCode, beachData) {
     );
     beachName.innerHTML = findDataBeach[0].beachName;
     beachAddress.innerHTML = findDataBeach[0].address;
-    hideCircularProgress();
     return findDataBeach;
   }
 }
@@ -837,8 +845,5 @@ onAuthStateChanged(auth, user => {
   } else return;
 });
 const db = fireStoreInitialize();
-
-const addBookmarkBtn = document.getElementById('bookmark-btn');
-addBookmarkBtn.addEventListener('click', handleBookmarkBtn);
 
 window.onload = mainScreenload;
