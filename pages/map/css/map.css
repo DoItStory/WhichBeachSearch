@@ -49,16 +49,18 @@
 
 .info-window {
   padding: 0.5rem;
-  width: 100%;
-  height: auto;
+  width: 16rem;
+  height: 5rem;
 }
 
 .info-title {
+  font-size: 2rem;
   width: 100%;
-  height: 3rem;
+  height: 2.5rem;
 }
 
 .info-title a {
+  font-size: 1.2rem;
   text-decoration: none;
   color: #5085bb;
 }
@@ -66,16 +68,6 @@
 .info-name {
   margin-bottom: 0.2rem;
   font-size: 1.5rem;
-}
-
-.info-weather {
-  text-align: center;
-  font-size: 1.8rem;
-}
-
-.info-weather span:last-child {
-  font-size: 2.5rem;
-  margin-left: 0.5rem;
 }
 
 .map__nav {
