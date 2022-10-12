@@ -1,4 +1,6 @@
 import { ERROR } from '../../../js/error.js';
+import { getBaechDataListArray } from '../../main/js/beachDataBase.js';
+
 const mapContainer = document.getElementById('map__container');
 const searchInputValue = document.getElementById('search-form__input');
 const searchFormSubmit = document.getElementById('search-form__submit');
@@ -19,25 +21,31 @@ function initializationMap() {
 }
 
 function loadMapScreen() {
-  try {
-    const beachDataBase = testData();
-    printMarkersMap(beachDataBase, map);
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
-  }
+  getBaechDataListArray()
+    .then(beachData => {
+      printMarkersMap(beachData, map);
+      searchFormSubmit.addEventListener('click', async function (event) {
+        if (event) {
+          event.preventDefault();
+          searchPlaces(beachData);
+        }
+      });
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
+    });
 }
 
 // 키워드 검색을 요청하는 함수입니다
-function searchPlaces(event) {
-  event.preventDefault();
+function searchPlaces(beachData) {
   const searchValue = searchInputValue.value;
   try {
     if (!searchValue) {
       throw Error(ERROR.SEARCH_VALUE_NOT_ENTERED);
     }
-    findEnteredBeachName(searchValue);
+    findEnteredBeachName(searchValue, beachData);
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -46,11 +54,10 @@ function searchPlaces(event) {
 }
 
 // 데이터 베이스에서 키워드를 찾는 함수입니다
-function findEnteredBeachName(inputValue) {
+function findEnteredBeachName(inputValue, beachData) {
   try {
-    const beachDataBase = testData();
-    const foundBeachData = beachDataBase.find(beach =>
-      beach.name.startsWith(inputValue),
+    const foundBeachData = beachData.find(beach =>
+      beach.beachName.startsWith(inputValue),
     );
     if (!foundBeachData) {
       throw Error(ERROR.SEARCH_VALUE_NOT_FOUND);
@@ -66,7 +73,7 @@ function findEnteredBeachName(inputValue) {
 // 검색된 해변으로 화면을 이동해주는 함수입니다.
 function moveMarkCenter(beachData) {
   try {
-    const moveLatLon = beachData.latlng;
+    const moveLatLon = new kakao.maps.LatLng(beachData.lat, beachData.lon);
     map.panTo(moveLatLon);
   } catch (error) {
     const errorCode = error.code;
@@ -77,17 +84,17 @@ function moveMarkCenter(beachData) {
 
 function printMarkersMap(beachData, map) {
   try {
-    for (let i = 0; i < beachData.length; i++) {
+    for (let data of beachData) {
       const marker = new kakao.maps.Marker({
         map: map,
-        position: beachData[i].latlng,
-        title: beachData[i].name,
+        position: new kakao.maps.LatLng(data.lat, data.lon),
+        title: data.name,
         image: insertMarkerImage(),
       });
       marker.setMap(map);
 
       kakao.maps.event.addListener(marker, 'click', function () {
-        createInfoWindows(beachData[i]).open(map, marker);
+        createInfoWindows(data).open(map, marker);
       });
     }
   } catch (error) {
@@ -115,13 +122,9 @@ function createInfoWindows(beachData) {
     const infoWindowContent = `<div class="info-window">
     <div class="info-title">
       <h3 class="info-name">
-        ${beachData.name}
+        ${beachData.beachName}
       </h3>
       <a href='../main/main.html?sendBeachCode=${beachData.beachCode}'>상세 정보</a>
-    </div>
-    <div class="info-weather">
-      <span>${beachData.temp}</span>
-      <span>${beachData.icon}</span>
     </div>
   </div>`;
     const infoWindowPosition = beachData.latlng;
@@ -164,4 +167,3 @@ function testData() {
 
 const map = initializationMap();
 loadMapScreen();
-searchFormSubmit.addEventListener('click', searchPlaces);
