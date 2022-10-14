@@ -36,22 +36,24 @@ const beachName = document.querySelector('.beach-name > header');
 const beachAddress = document.querySelector('.beach-address');
 const searchInput = document.getElementById('search-form__input');
 const searchList = document.getElementById('search-list');
-const searchListBox = document.querySelector('.list-box');
+const searchListContainer = document.querySelector('.list-box');
+const searchListItem = document.querySelector('.beach-text');
 const HIDDEN_CLASSNAME = 'hidden';
 
 async function mainScreenload() {
   showCircularProgress();
   getBaechDataListArray()
     .then(beachDataBase => {
-      seachBeach(beachDataBase);
+      autoCompleteSearchTerms(beachDataBase);
       const urlParams = new URLSearchParams(window.location.search);
       const getBeachCode = urlParams.get('sendBeachCode');
       return getTheBeachData(getBeachCode, beachDataBase);
     })
     .then(beachData => {
-      paintMainScreen(beachData);
-      handleMoreInfoBtn(beachData);
-      handleBookmarkBtn(beachData);
+      //paintMainScreen(beachData);
+      //handleMoreInfoBtn(beachData);
+      //handleBookmarkBtn(beachData);
+      hideCircularProgress();
     })
     .catch(error => {
       hideCircularProgress();
@@ -60,7 +62,7 @@ async function mainScreenload() {
     });
 }
 
-function seachBeach(beachData) {
+function autoCompleteSearchTerms(beachData) {
   searchInput.addEventListener('keyup', function () {
     const input = searchInput.value;
     const suggestions = beachData.filter(function (beach) {
@@ -68,9 +70,9 @@ function seachBeach(beachData) {
     });
 
     if (searchInput.value != '' && suggestions != '') {
-      searchListBox.classList.remove(HIDDEN_CLASSNAME);
+      searchListContainer.classList.remove(HIDDEN_CLASSNAME);
     } else {
-      searchListBox.classList.add(HIDDEN_CLASSNAME);
+      searchListContainer.classList.add(HIDDEN_CLASSNAME);
     }
     while (searchList.firstChild) {
       searchList.removeChild(searchList.firstChild);
