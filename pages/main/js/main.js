@@ -37,7 +37,7 @@ const beachAddress = document.querySelector('.beach-address');
 const searchInput = document.getElementById('search-form__input');
 const searchList = document.getElementById('search-list');
 const searchListContainer = document.querySelector('.list-box');
-const searchListItem = document.querySelector('.beach-text');
+const beachNameSubmit = document.getElementById('search-form__submit');
 const HIDDEN_CLASSNAME = 'hidden';
 
 async function mainScreenload() {
@@ -50,9 +50,9 @@ async function mainScreenload() {
       return getTheBeachData(getBeachCode, beachDataBase);
     })
     .then(beachData => {
-      //paintMainScreen(beachData);
-      //handleMoreInfoBtn(beachData);
-      //handleBookmarkBtn(beachData);
+      paintMainScreen(beachData);
+      handleMoreInfoBtn(beachData);
+      handleBookmarkBtn(beachData);
       hideCircularProgress();
     })
     .catch(error => {
@@ -68,6 +68,7 @@ function autoCompleteSearchTerms(beachData) {
     const suggestions = beachData.filter(function (beach) {
       return beach.beachName.toLowerCase().startsWith(input);
     });
+    searchList.innerHTML = '';
 
     if (searchInput.value != '' && suggestions != '') {
       searchListContainer.classList.remove(HIDDEN_CLASSNAME);
@@ -78,17 +79,19 @@ function autoCompleteSearchTerms(beachData) {
       searchList.removeChild(searchList.firstChild);
     }
 
-    for (let index = 0; index < 4; index++) {
-      const searchListName = document.createElement('li');
-      searchListName.classList.add('beach-text');
-      searchListName.textContent = suggestions[index].beachName;
-      searchList.appendChild(searchListName);
-    }
-  });
+    if (suggestions) {
+      for (let index = 0; index < 4; index++) {
+        const searchListName = document.createElement('li');
+        searchListName.classList.add('beach-text');
+        searchListName.textContent = suggestions[index].beachName;
+        searchList.appendChild(searchListName);
 
-  searchInput.addEventListener('focusout', () => {
-    const listBox = document.querySelector('.beach-text');
-    listBox.classList.add(HIDDEN_CLASSNAME);
+        searchListName.onclick = () => {
+          searchInput.value = searchListName.textContent;
+          searchList.innerHTML = '';
+        };
+      }
+    }
   });
 }
 
