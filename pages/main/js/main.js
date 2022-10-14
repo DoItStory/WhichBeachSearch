@@ -67,7 +67,7 @@ function seachBeach(beachData) {
       return beach.beachName.toLowerCase().startsWith(input);
     });
 
-    if (searchInput.value != '') {
+    if (searchInput.value != '' && suggestions != '') {
       searchListBox.classList.remove(HIDDEN_CLASSNAME);
     } else {
       searchListBox.classList.add(HIDDEN_CLASSNAME);
