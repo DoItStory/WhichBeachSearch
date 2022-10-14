@@ -83,6 +83,11 @@ function seachBeach(beachData) {
       searchList.appendChild(searchListName);
     }
   });
+
+  searchInput.addEventListener('focusout', () => {
+    const listBox = document.querySelector('.beach-text');
+    listBox.classList.add(HIDDEN_CLASSNAME);
+  });
 }
 
 function handleBookmarkBtn(beachData) {
