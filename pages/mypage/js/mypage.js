@@ -49,10 +49,8 @@ function logout() {
     });
 }
 
-const changeNickname = document.getElementById('mypage__change-nickname');
 const changePassword = document.getElementById('mypage__change-password');
 const logOutBtn = document.getElementById('logout-btn');
 
-changeNickname.addEventListener('click', getUserProfile);
 changePassword.addEventListener('click', getUserProfile);
 logOutBtn.addEventListener('click', logout);
