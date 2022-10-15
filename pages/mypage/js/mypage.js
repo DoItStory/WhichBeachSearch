@@ -49,8 +49,8 @@ function logout() {
     });
 }
 
-const changePassword = document.getElementById('mypage__change-password');
+const changePasswordBtn = document.getElementById('mypage__change-password');
 const logOutBtn = document.getElementById('logout-btn');
 
-changePassword.addEventListener('click', getUserProfile);
+changePasswordBtn.addEventListener('click', changePassword);
 logOutBtn.addEventListener('click', logout);
