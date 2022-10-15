@@ -53,7 +53,6 @@ async function mainScreenload() {
       paintMainScreen(beachData);
       handleMoreInfoBtn(beachData);
       handleBookmarkBtn(beachData);
-      hideCircularProgress();
     })
     .catch(error => {
       hideCircularProgress();
@@ -62,9 +61,17 @@ async function mainScreenload() {
     });
 }
 
+function submitBeachName(beachData, input) {
+  beachNameSubmit.addEventListener('click', () => {
+    const submitBeachCode = beachData.filter(beach => beach.beachName == input);
+    location.href = `../main/main.html?sendBeachCode=${submitBeachCode[0].beachCode}`;
+  });
+}
+
 function autoCompleteSearchTerms(beachData) {
   searchInput.addEventListener('keyup', function () {
     const input = searchInput.value;
+    let resultValue;
     const suggestions = beachData.filter(function (beach) {
       return beach.beachName.toLowerCase().startsWith(input);
     });
@@ -88,7 +95,9 @@ function autoCompleteSearchTerms(beachData) {
 
         searchListName.onclick = () => {
           searchInput.value = searchListName.textContent;
+          resultValue = searchListName.textContent;
           searchList.innerHTML = '';
+          submitBeachName(beachData, resultValue);
         };
       }
     }
