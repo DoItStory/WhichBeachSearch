@@ -71,7 +71,6 @@ function submitBeachName(beachData, input) {
 function autoCompleteSearchTerms(beachData) {
   searchInput.addEventListener('keyup', function () {
     const input = searchInput.value;
-    let resultValue;
     const suggestions = beachData.filter(function (beach) {
       return beach.beachName.toLowerCase().startsWith(input);
     });
@@ -95,9 +94,9 @@ function autoCompleteSearchTerms(beachData) {
 
         searchListName.onclick = () => {
           searchInput.value = searchListName.textContent;
-          resultValue = searchListName.textContent;
+          const selectBeachName = searchListName.textContent;
           searchList.innerHTML = '';
-          submitBeachName(beachData, resultValue);
+          submitBeachName(beachData, selectBeachName);
         };
       }
     }
