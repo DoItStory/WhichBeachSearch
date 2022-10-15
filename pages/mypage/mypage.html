@@ -71,5 +71,29 @@
     <div class="modal" id="circular-progress">
       <progress class="circular-progress modal__content" />
     </div>
+    <div class="modal" id="password-change">
+      <form class="change-form">
+        <input
+          type="password"
+          placeholder="새 비밀번호를 입력해주세요."
+          id="new-password"
+          class="password-change__input"
+          autocomplete="off"
+        />
+        <input
+          type="password"
+          placeholder="비밀번호를 다시 입력해주세요."
+          id="new-password__check"
+          class="password-change__input"
+          autocomplete="off"
+        />
+        <div class="change-submit">
+          <button id="change-submit__btn" type="submit">비밀번호 변경</button>
+        </div>
+        <div class="change-submit">
+          <button id="change-cancle__btn" type="button">취소</button>
+        </div>
+      </form>
+    </div>
   </body>
 </html>

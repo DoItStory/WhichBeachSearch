@@ -29,6 +29,10 @@ function checkUserInfo(auth) {
 function getUserProfile() {
   const auth = getAuth();
   checkUserInfo(auth);
+function changePassword() {
+  const passwordCheckWindow = document.getElementById('password-change');
+  passwordCheckWindow.style.display = 'flex';
+}
 }
 
 function logout() {
