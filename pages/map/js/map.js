@@ -24,6 +24,8 @@ function loadMapScreen() {
   getBaechDataListArray()
     .then(beachData => {
       printMarkersMap(beachData, map);
+      const urlParams = new URLSearchParams(window.location.search);
+      mainToMoverMap(urlParams);
       searchFormSubmit.addEventListener('click', async function (event) {
         if (event) {
           event.preventDefault();
@@ -36,6 +38,16 @@ function loadMapScreen() {
       const errorMessage = error.message;
       alert(`${ERROR.UNKNOWN_ERROR} ${errorCode}: ${errorMessage}`);
     });
+}
+
+function mainToMoverMap(urlParameter) {
+  const BeachLocation = {
+    lat: urlParameter.get('sendLat'),
+    lon: urlParameter.get('sendLon'),
+  };
+  if (BeachLocation.lat != '' && BeachLocation.lon != '') {
+    moveMarkCenter(BeachLocation);
+  }
 }
 
 // 키워드 검색을 요청하는 함수입니다

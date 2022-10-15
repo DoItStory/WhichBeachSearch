@@ -822,6 +822,7 @@ function paintSunriseSunsetTime(sunriseSunseTimeData) {
 function handleMoreInfoBtn(beachData) {
   const infoBtn = document.getElementById('info-btn');
   const panoramaBtn = document.getElementById('panorama-btn');
+  const goToMapBtn = document.getElementById('move-map-btn');
 
   infoBtn.addEventListener('click', function () {
     if (beachData[0].informationLink === 'none') {
@@ -837,6 +838,10 @@ function handleMoreInfoBtn(beachData) {
     } else {
       return window.open(beachData[0].panoramaLink);
     }
+  });
+
+  goToMapBtn.addEventListener('click', function () {
+    location.href = `../map/map.html?sendLat=${beachData[0].lat}&sendLon=${beachData[0].lon}`;
   });
 }
 
