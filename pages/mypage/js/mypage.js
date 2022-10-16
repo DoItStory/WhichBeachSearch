@@ -3,41 +3,17 @@ import {
   getAuth,
   onAuthStateChanged,
   signOut,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import {
   showCircularProgress,
   hideCircularProgress,
 } from '../../../js/circular-progress.js';
 
-function checkUserInfo(auth) {
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      const uid = user.uid;
-      const email = user.email;
-      alert('내 정보 변경이 가능하십니다.');
-    } else {
-      const askSignUp = confirm(
-        '이 기능은 로그인을 하셔야 사용이 가능합니다. 로그인 하시겠습니까?',
-      );
-      if (askSignUp) {
-        window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
-      } else return;
-    }
-  });
-}
-
-function getUserProfile() {
-  const auth = getAuth();
-  checkUserInfo(auth);
-function changePassword() {
-  const passwordCheckWindow = document.getElementById('password-change');
-  passwordCheckWindow.style.display = 'flex';
-}
-}
-
 function logout() {
   showCircularProgress();
-  const auth = getAuth();
   signOut(auth)
     .then(() => {
       alert('로그아웃 되었습니다.');
@@ -53,8 +29,70 @@ function logout() {
     });
 }
 
+async function changePassword() {
+  const password = prompt('사용자 확인을 위해 현재 비밀번호를 입력하세요', '');
+  let credential = EmailAuthProvider.credential(
+    auth.currentUser.email,
+    password,
+  );
+  reauthenticateWithCredential(auth.currentUser, credential)
+    .then(() => {
+      passwordCheckWindow.style.display = 'flex';
+      passwordInput.value = '';
+      passwordCheckInput.value = '';
+      const changeSubmitBtn = document.getElementById('change-submit__btn');
+      changeSubmitBtn.addEventListener(
+        'click',
+        function () {
+          new Promise(rejolve => {
+            const password = passwordInput.value;
+            const checkPassword = passwordCheckInput.value;
+            const result = passwordCheck(password, checkPassword);
+            if (result) {
+              rejolve(password);
+            }
+          }).then(newPassword => {
+            passwordCheckWindow.style.display = 'none';
+            alert('변경 성공');
+            return updatePassword(auth.currentUser, newPassword);
+          });
+        },
+        { once: true },
+      );
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      alert(`사용자 인증 실패 Error = ${errorCode}`);
+    });
+  const changeCancleBtn = document.getElementById('change-cancle__btn');
+  changeCancleBtn.addEventListener('click', () => {
+    location.reload();
+  });
+}
+
+function passwordCheck(password, checkPassword) {
+  if (!password || !checkPassword) {
+    alert('비밀번호를 다시 입력해주세요.');
+    passwordCheckWindow.style.display = 'none';
+    return false;
+  } else if (password !== checkPassword) {
+    alert('입력한 비밀번호가 서로 다릅니다. 다시 시도해주세요');
+    passwordCheckWindow.style.display = 'none';
+    return false;
+  } else if (password.length < 6) {
+    alert('비밀번호는 6자 이상으로 설정해주세요.');
+    passwordCheckWindow.style.display = 'none';
+    return false;
+  }
+  console.log('success');
+  return true;
+}
+
+const auth = getAuth();
 const changePasswordBtn = document.getElementById('mypage__change-password');
 const logOutBtn = document.getElementById('logout-btn');
-
+const passwordCheckWindow = document.getElementById('password-change');
+const passwordInput = document.getElementById('new-password');
+const passwordCheckInput = document.getElementById('new-password__check');
 changePasswordBtn.addEventListener('click', changePassword);
 logOutBtn.addEventListener('click', logout);
