@@ -32,6 +32,7 @@ function loadMapScreen() {
           searchPlaces(beachData);
         }
       });
+      history.replaceState({}, null, location.pathname);
     })
     .catch(error => {
       const errorCode = error.code;
