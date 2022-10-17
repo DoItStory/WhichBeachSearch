@@ -30,7 +30,10 @@ function logout() {
 }
 
 async function changePassword() {
-  const password = prompt('사용자 확인을 위해 현재 비밀번호를 입력하세요', '');
+  const password = prompt(
+    '사용자 확인을 위해 현재 비밀번호를 입력해주세요. (영문으로 입력)',
+    '',
+  );
   let credential = EmailAuthProvider.credential(
     auth.currentUser.email,
     password,
@@ -44,18 +47,14 @@ async function changePassword() {
       changeSubmitBtn.addEventListener(
         'click',
         function () {
-          new Promise(rejolve => {
-            const password = passwordInput.value;
-            const checkPassword = passwordCheckInput.value;
-            const result = passwordCheck(password, checkPassword);
-            if (result) {
-              rejolve(password);
-            }
-          }).then(newPassword => {
+          const password = passwordInput.value;
+          const checkPassword = passwordCheckInput.value;
+          const result = passwordCheck(password, checkPassword);
+          if (result) {
+            alert('비밀번호 변경 성공하였습니다.');
             passwordCheckWindow.style.display = 'none';
-            alert('변경 성공');
-            return updatePassword(auth.currentUser, newPassword);
-          });
+            return updatePassword(auth.currentUser, password);
+          }
         },
         { once: true },
       );
