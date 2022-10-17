@@ -160,28 +160,5 @@ function createInfoWindows(beachData) {
   }
 }
 
-// 가상의(테스트) 데이터를 받아온다는 설정으로 작성 함.
-function testData() {
-  const testData = [];
-  const TEST_BEACH_1 = {
-    name: '해운대 해수욕장',
-    address: '부산광역시 해운대구 우동',
-    temp: '현재 27°',
-    icon: '☀️',
-    latlng: new kakao.maps.LatLng(35.1584224777778, 129.160646111111),
-    beachCode: '1',
-  };
-  const TEST_BEACH_2 = {
-    name: '광안리 해수욕장',
-    address: '부산광역시 해운대구 우동',
-    temp: '현재 25°',
-    icon: '🌧',
-    latlng: new kakao.maps.LatLng(35.1535555555556, 129.119405555556),
-  };
-  testData.push(TEST_BEACH_1);
-  testData.push(TEST_BEACH_2);
-  return testData;
-}
-
 const map = initializationMap();
 loadMapScreen();
