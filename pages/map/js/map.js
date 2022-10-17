@@ -45,8 +45,14 @@ function mainToMoverMap(urlParameter) {
     lat: urlParameter.get('sendLat'),
     lon: urlParameter.get('sendLon'),
   };
+  if (BeachLocation.lat === null && BeachLocation.lon === null) {
+    BeachLocation.lat = 35.1584224777778;
+    BeachLocation.lon = 129.160646111111;
+    return moveMarkCenter(BeachLocation);
+  }
+
   if (BeachLocation.lat != '' && BeachLocation.lon != '') {
-    moveMarkCenter(BeachLocation);
+    return moveMarkCenter(BeachLocation);
   }
 }
 
