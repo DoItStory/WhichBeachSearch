@@ -30,7 +30,10 @@ function logout() {
 }
 
 async function changePassword() {
-  const password = prompt('사용자 확인을 위해 현재 비밀번호를 입력하세요', '');
+  const password = prompt(
+    '사용자 확인을 위해 현재 비밀번호를 입력해주세요. (영문으로 입력)',
+    '',
+  );
   let credential = EmailAuthProvider.credential(
     auth.currentUser.email,
     password,
