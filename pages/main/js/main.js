@@ -50,6 +50,7 @@ async function mainScreenload() {
       return getTheBeachData(getBeachCode, beachDataBase);
     })
     .then(beachData => {
+      history.replaceState({}, null, location.pathname);
       paintMainScreen(beachData);
       handleMoreInfoBtn(beachData);
       handleBookmarkBtn(beachData);
