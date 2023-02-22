@@ -629,7 +629,6 @@ async function getYesterdayTodayData(beachCode) {
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
   });
-  console.log(fcstYesterday);
   return fcstYesterday;
 }
 
