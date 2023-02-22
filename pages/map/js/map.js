@@ -8,7 +8,7 @@ const searchFormSubmit = document.getElementById('search-form__submit');
 function initializationMap() {
   try {
     const options = {
-      center: new kakao.maps.LatLng(35.15723495522564, 129.13830306583512), //지도 중심좌표.
+      center: new kakao.maps.LatLng(38.18828056, 128.6055889), //지도 중심좌표.
       level: 7,
     };
     const map = new kakao.maps.Map(mapContainer, options);
@@ -47,8 +47,8 @@ function mainToMoverMap(urlParameter) {
     lon: urlParameter.get('sendLon'),
   };
   if (BeachLocation.lat === null && BeachLocation.lon === null) {
-    BeachLocation.lat = 35.1584224777778;
-    BeachLocation.lon = 129.160646111111;
+    BeachLocation.lat = 38.18828056;
+    BeachLocation.lon = 128.6055889;
     return moveMarkCenter(BeachLocation);
   }
 
