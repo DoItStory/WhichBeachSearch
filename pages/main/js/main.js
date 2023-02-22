@@ -109,9 +109,8 @@ function handleBookmarkBtn(beachData) {
     const addBookmarkBtn = document.getElementById('bookmark-btn');
     addBookmarkBtn.addEventListener('click', function (event) {
       if (event) {
+        showCircularProgress();
         addBookmark(beachData);
-        alert('북마크에 추가되었습니다.');
-        hideCircularProgress();
       } else return;
     });
   } catch (error) {
@@ -122,13 +121,14 @@ function handleBookmarkBtn(beachData) {
 }
 
 function addBookmark(beachData) {
-  showCircularProgress();
   checkUserStore()
     .then(docRefId => {
       if (!docRefId) {
         createUserDoc(beachData);
       } else {
         addDataInField(docRefId, beachData);
+        hideCircularProgress();
+        alert('북마크에 추가되었습니다.');
       }
     })
     .catch(error => {
