@@ -604,9 +604,9 @@ function addWeekWeatherList(shorTermWeather) {
     const weekelyTempDiv = document.createElement('div');
     weekelyTempDiv.classList.add('weekely-temp');
     const weekelyTmxSpan = document.createElement('span');
-    weekelyTmxSpan.textContent = dayWeather.tmx.substring(0, 2) + `°C /`;
+    weekelyTmxSpan.textContent = dayWeather.tmx.split('.', 1) + `°C /`;
     const weekelyTmnSpan = document.createElement('span');
-    weekelyTmnSpan.textContent = dayWeather.tmn.substring(0, 2) + `°C`;
+    weekelyTmnSpan.textContent = dayWeather.tmn.split('.', 1) + `°C`;
 
     weekelyDay.appendChild(weekelySpan);
     weekelyRainDiv.appendChild(weekelyRainIcon);
