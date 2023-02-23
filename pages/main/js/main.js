@@ -70,7 +70,7 @@ function autoCompleteSearchTerms(beachData) {
   searchInput.addEventListener('keyup', function () {
     const input = searchInput.value;
     const suggestions = beachData.filter(function (beach) {
-      return beach.beachName.toLowerCase().startsWith(input);
+      return beach.beachName.toLowerCase().includes(input);
     });
     searchList.innerHTML = '';
 
