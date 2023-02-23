@@ -1,5 +1,8 @@
 import { ERROR } from '../../../js/error.js';
-import { getXMLMidLandFcst, getXMLMidTiaFcst } from './mediumTermForecast.js';
+import {
+  getXMLMidTiaFcst,
+  getRequestMidLandFcst,
+} from './mediumTermForecast.js';
 import { getLCRiseSetInfo } from './sunriseSunset.js';
 const BEACH_INFO_SERVICE_KEY =
   'DnqahC7Oj+ryIm2AlkiWQr+DVjZDHv9/I4U79tgfopjyNp2aOfvpA5gC5+yC6uWPYU1VgICsIBV2xCZ/h4czDg==';
@@ -135,13 +138,13 @@ export async function getMidLandFcst(cityCode) {
   const dateAndTimeString =
     baseDate.toISOString().split('T')[0].replaceAll('-', '') +
     baseDate.toISOString().substr(11, 5).replace(':', '');
-  const result = await getXMLMidLandFcst(cityCode, dateAndTimeString).catch(
+  const result = await getRequestMidLandFcst(cityCode, dateAndTimeString).catch(
     error => {
       const errorCode = error.code;
       alert(`${ERROR.INTERNAL_ERROR} API-error getMidLandFcst : ${errorCode}`);
     },
   );
-  return result.response.body.items.item;
+  return result[0];
 }
 
 export async function getMidTiaFcst(cityCode) {

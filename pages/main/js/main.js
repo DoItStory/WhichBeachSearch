@@ -1,7 +1,4 @@
-import {
-  initializeFirebase,
-  fireStoreInitialize,
-} from '../../../js/initialize.js';
+import { fireStoreInitialize } from '../../../js/initialize.js';
 import {
   getAuth,
   onAuthStateChanged,
@@ -25,9 +22,9 @@ import {
   getVilageFcstBeachToday,
   getFcstBeach,
   getTodayFcstBeach,
-  getMidLandFcst,
   getMidTiaFcst,
   getRiseSunsetInfo,
+  getMidLandFcst,
 } from './beachInfoService.js';
 import { getBaechDataListArray } from './beachDataBase.js';
 
