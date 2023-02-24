@@ -208,7 +208,7 @@ function paintCurrentWeatherData(todayWeather) {
   const currentWeatherIcon = document.createElement('img');
   currentWeatherIcon.src = weatherIconSrc(todayWeather[0]);
   const currentTemp = document.createElement('h2');
-  currentTemp.textContent = todayWeather[0].tmp + '°C';
+  currentTemp.textContent = todayWeather[0].tmp.split('.', 1) + '°C';
 
   currentWeather.appendChild(currentWeatherIcon);
   currentTempBorder.appendChild(currentTemp);
@@ -649,8 +649,8 @@ function getTodayTempHighLow(yesterdayTodayData) {
       .filter(data => data.category == 'TMX')
       .map(data => data.fcstValue);
 
-    lowHighTempDate.push(lowTemp[0].substr(0, 2));
-    lowHighTempDate.push(highTemp[0].substr(0, 2));
+    lowHighTempDate.push(lowTemp[0].split('.', 1));
+    lowHighTempDate.push(highTemp[0].split('.', 1));
     return lowHighTempDate;
   } catch (error) {
     hideCircularProgress();
