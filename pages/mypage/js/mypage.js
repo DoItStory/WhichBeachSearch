@@ -17,7 +17,7 @@ function logout() {
   signOut(auth)
     .then(() => {
       alert('로그아웃 되었습니다.');
-      window.location.href = 'http://127.0.0.1:5500/pages/login/login.html';
+      window.location.href = '/pages/login/login.html';
       hideCircularProgress();
       // Sign-out successful.
     })
