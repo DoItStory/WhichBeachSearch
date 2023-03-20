@@ -83,21 +83,21 @@ Code Convention & Commit Convention 설정 및 정의
 
 <br>
 
-|                                       HTML5                                       |                                      CSS                                       |                                      JavaScript                                      |                                         Firebase                                         |
-| :-------------------------------------------------------------------------------: | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
-| <br><img src="assets/images/readme/HTML5.svg" width="80" height="80" alt="html"/> | <br><img src="assets/images/readme/CSS.svg" width="80" height="80" alt="css"/> | <br><img src="assets/images/readme/Javascript.svg" width="80" height="80" alt="js"/> | <br><img src="assets/images/readme/firebase.png" width="80" height="80" alt="firebase"/> |
+|                                     HTML5                                     |                                    CSS                                     |                                    JavaScript                                    |                                       Firebase                                       |
+| :---------------------------------------------------------------------------: | :------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: |
+| <img src="assets/images/readme/HTML5.svg" width="80" height="80" alt="html"/> | <img src="assets/images/readme/CSS.svg" width="80" height="80" alt="css"/> | <img src="assets/images/readme/Javascript.svg" width="80" height="80" alt="js"/> | <img src="assets/images/readme/firebase.png" width="80" height="80" alt="firebase"/> |
 
 <br>
 
-|                                           GitHub                                           |                                           GitHub-Desktop                                            |                                        GitFlow                                         |
-| :----------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
-| <br><img src="assets/images/readme/github-white.png" width="80" height="80" alt="github"/> | <br><img src="assets/images/readme/Github-desktop.svg" width="80" height="80" alt="githubDesktop"/> | <br><img src="assets/images/readme/gitflow.png" width="80" height="80" alt="gitflow"/> |
+|                                         GitHub                                         |                                         GitHub-Desktop                                          |                                      GitFlow                                       |
+| :------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
+| <img src="assets/images/readme/github-white.png" width="80" height="80" alt="github"/> | <img src="assets/images/readme/Github-desktop.svg" width="80" height="80" alt="githubDesktop"/> | <img src="assets/images/readme/gitflow.png" width="80" height="80" alt="gitflow"/> |
 
 <br>
 
-|                                       Jira                                       |                                          Confluence                                          |
-| :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
-| <br><img src="assets/images/readme/jira.svg" width="70" height="70" alt="jira"/> | <br><img src="assets/images/readme/confluence.png" width="70" height="70" alt="confluence"/> |
+|                                     Jira                                     |                                        Confluence                                        |
+| :--------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
+| <img src="assets/images/readme/jira.svg" width="70" height="70" alt="jira"/> | <img src="assets/images/readme/confluence.png" width="70" height="70" alt="confluence"/> |
 
 <br>
 <br>
@@ -182,7 +182,6 @@ Code Convention & Commit Convention 설정 및 정의
 <br>
 
 ## 배운 점 및 아쉬운 점
-
 
 <br>
 
