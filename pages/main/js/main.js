@@ -34,6 +34,7 @@ import {
   todayDateRequest,
   midTermWeatherIconSrc,
   beachCategoryValueFilter,
+  getMidWeekDays
 } from './util.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
@@ -621,26 +622,7 @@ function tiaDataSet(tiaFcstData) {
   }
 }
 
-// 4~7일의 요일 구하는 함수
-function getMidWeekDays() {
-  try {
-    const midWeekDays = [];
-    for (let Days = 0; Days < 4; Days++) {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = ('0' + (today.getMonth() + 1)).slice(-2);
-      today.setDate(today.getDate() + (4 + Days));
-      const day = ('0' + today.getDate()).slice(-2);
-      const daysDate = year + month + day;
-      midWeekDays.push(daysDate);
-    }
-    return midWeekDays;
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error getMidWeekDays : ${errorCode}`);
-  }
-}
+
 
 // 4~7일 중기 육상, 기온, 날짜 데이터 배열로 모으는 함수
 function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
