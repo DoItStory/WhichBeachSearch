@@ -44,6 +44,7 @@ const searchInput = document.getElementById('search-form__input');
 const searchList = document.getElementById('search-list');
 const searchListContainer = document.querySelector('.list-box');
 const beachNameSubmit = document.getElementById('search-form__submit');
+const addBookmarkBtn = document.getElementById('bookmark-btn');
 const HIDDEN_CLASSNAME = 'hidden';
 
 async function mainScreenload() {
@@ -59,7 +60,10 @@ async function mainScreenload() {
       history.replaceState({}, null, location.pathname);
       paintMainScreen(beachData);
       handleMoreInfoBtn(beachData);
-      handleBookmarkBtn(beachData);
+      addBookmarkBtn.addEventListener('click', function () {
+        showCircularProgress();
+        addBookmark(beachData);
+      });
     })
     .catch(error => {
       hideCircularProgress();
@@ -110,21 +114,6 @@ function autoCompleteSearchTerms(beachData) {
   });
 }
 
-function handleBookmarkBtn(beachData) {
-  try {
-    const addBookmarkBtn = document.getElementById('bookmark-btn');
-    addBookmarkBtn.addEventListener('click', function (event) {
-      if (event) {
-        showCircularProgress();
-        addBookmark(beachData);
-      } else return;
-    });
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error handleBookmarkBtn : ${errorCode}`);
-  }
-}
 
 function addBookmark(beachData) {
   checkUserStore()
