@@ -28,13 +28,16 @@ import {
 } from './beachInfoService.js';
 import { getBaechDataListArray } from './beachDataBase.js';
 import {
-  getDayWeek,
   weatherInfoThatDay,
   weatherIconSrc,
   todayDateRequest,
   midTermWeatherIconSrc,
   beachCategoryValueFilter,
-  getMidWeekDays
+  gatherTodayWeather,
+  gather3DaysWeatherData,
+  landDataSet,
+  tiaDataSet,
+  midWeekDaysWeatherRequest,
 } from './util.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
@@ -113,7 +116,6 @@ function autoCompleteSearchTerms(beachData) {
     }
   });
 }
-
 
 function addBookmark(beachData) {
   checkUserStore()
@@ -310,33 +312,6 @@ function getTodayWeather(fsctBeachToday) {
   }
 }
 
-// 오늘(12시간) 날씨 정보 모아주는 함수
-function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
-  try {
-    const timeArray = Array.from(timeArr);
-
-    const weatherCollection = [];
-    for (let i = 0; i < tmpArr.length; i++) {
-      weatherCollection[i] = {
-        time: timeArray[i],
-        tmp: tmpArr[i],
-        wav: wavArr[i],
-        pop: popArr[i],
-        sky: skyArr[i],
-        pty: ptyArr[i],
-      };
-    }
-
-    return weatherCollection;
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(
-      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${errorCode}`,
-    );
-  }
-}
-
 // 지금으로부터 3일 정보 얻어오는 기능
 async function getWeather3DaysData(beachCode) {
   const fcstBeachData = await getFcstBeach(beachCode).catch(error => {
@@ -403,38 +378,6 @@ function getWeather3days(WeatherDataArray) {
     hideCircularProgress();
     const errorCode = error.code;
     alert(`${ERROR.UNKNOWN_ERROR} main-error getWeather3days : ${errorCode}`);
-  }
-}
-
-// 3일 날씨 정보를 모아주는 함수
-function gather3DaysWeatherData(
-  weekeeTmn,
-  weekeeTmx,
-  weekeePop,
-  weekeeSky,
-  weekeePty,
-  dateData,
-) {
-  try {
-    const threeDayOfTheWeek = getDayWeek(dateData);
-    const threeWeatherCollection = [];
-    for (let i = 0; i < weekeeTmn.length; i++) {
-      threeWeatherCollection[i] = {
-        date: threeDayOfTheWeek[i],
-        tmn: weekeeTmn[i],
-        tmx: weekeeTmx[i],
-        pop: weekeePop[i],
-        sky: weekeeSky[i],
-        pty: weekeePty[i],
-      };
-    }
-    return threeWeatherCollection;
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(
-      `${ERROR.UNKNOWN_ERROR} main-error gather3DaysWeatherData : ${errorCode}`,
-    );
   }
 }
 
@@ -551,30 +494,7 @@ async function getAfter3DaysLandData(landCode) {
   const resultLandData = landDataSet(midLandFcstRequest);
   return resultLandData;
 }
-// 육상(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
-function landDataSet(midLandFcstData) {
-  try {
-    const midLandDataArray = [];
-    for (let data of Object.values(midLandFcstData)) {
-      midLandDataArray.push(data);
-    }
 
-    const midLandRequiredDataSet = [];
-    let contactNum = 0;
-    for (let i = 0; i < 4; i++) {
-      midLandRequiredDataSet[i] = {
-        rnSt: midLandDataArray[2 + contactNum],
-        wf: midLandDataArray[15 + contactNum],
-      };
-      contactNum = contactNum + 2;
-    }
-    return midLandRequiredDataSet;
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error landDataSet : ${errorCode}`);
-  }
-}
 // 3일 이후 기온 데이터 구하는 함수
 async function getAfter3DaysTiaData(cityCode) {
   const midTiaFcstRequest = await getMidTiaFcst(cityCode).catch(error => {
@@ -585,57 +505,6 @@ async function getAfter3DaysTiaData(cityCode) {
   });
   const resultTiaData = tiaDataSet(midTiaFcstRequest);
   return resultTiaData;
-}
-// 기온(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
-function tiaDataSet(tiaFcstData) {
-  try {
-    const midTempDataArray = [];
-    for (let data of Object.values(tiaFcstData)) {
-      midTempDataArray.push(data);
-    }
-
-    const midTempRequiredDataSet = [];
-    let contactNum = 0;
-    for (let i = 0; i < 4; i++) {
-      midTempRequiredDataSet[i] = {
-        taMin: midTempDataArray[7 + contactNum],
-        taMax: midTempDataArray[10 + contactNum],
-      };
-      contactNum = contactNum + 6;
-    }
-    return midTempRequiredDataSet;
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error tiaDataSet : ${errorCode}`);
-  }
-}
-
-
-
-// 4~7일 중기 육상, 기온, 날짜 데이터 배열로 모으는 함수
-function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
-  try {
-    const midWeekDateArray = getMidWeekDays();
-    const dayOfTheWeek = getDayWeek(midWeekDateArray);
-    const midWeekDaysWeatherData = [];
-    for (let i = 0; i < 4; i++) {
-      midWeekDaysWeatherData[i] = {
-        date: dayOfTheWeek[i],
-        pop: landFcst[i].rnSt,
-        weather: landFcst[i].wf,
-        tmn: tiaFcst[i].taMin,
-        tmx: tiaFcst[i].taMax,
-      };
-    }
-    return midWeekDaysWeatherData;
-  } catch (error) {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(
-      `${ERROR.UNKNOWN_ERROR} main-error midWeekDaysWeatherRequest : ${errorCode}`,
-    );
-  }
 }
 
 // 일몰 일출 화면에 나타내주는 함수
