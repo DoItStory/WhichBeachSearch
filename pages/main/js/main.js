@@ -33,7 +33,6 @@ import {
   addDataInField,
   checkUserStore,
   createUserDoc,
-  test,
 } from './services.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
