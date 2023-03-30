@@ -65,8 +65,7 @@ async function mainScreenload() {
     })
     .catch(error => {
       hideCircularProgress();
-      const errorCode = error.code;
-      alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+      alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${error.code}`);
     });
 }
 
@@ -124,16 +123,14 @@ function addBookmark(beachData) {
     })
     .catch(error => {
       hideCircularProgress();
-      const errorCode = error.code;
-      alert(`${ERROR.UNKNOWN_ERROR} main-error addBookmark : ${errorCode}`);
+      alert(`${ERROR.UNKNOWN_ERROR} main-error addBookmark : ${error.code}`);
     });
 }
 
 // 지금 시간으로부터 12시간 정보 얻어오는 기능
 async function getWeatherTodayData(beachCode) {
   const fcstToday = await getVilageFcstBeachToday(beachCode).catch(error => {
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${error.code}`);
   });
   return fcstToday;
 }
@@ -244,16 +241,14 @@ function getTodayWeather(fsctBeachToday) {
     );
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error getTodayWeather : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getTodayWeather : ${error.code}`);
   }
 }
 
 // 지금으로부터 3일 정보 얻어오는 기능
 async function getWeather3DaysData(beachCode) {
   const fcstBeachData = await getFcstBeach(beachCode).catch(error => {
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${error.code}`);
   });
   return fcstBeachData;
 }
@@ -313,8 +308,7 @@ function getWeather3days(WeatherDataArray) {
     );
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error getWeather3days : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getWeather3days : ${error.code}`);
   }
 }
 
@@ -379,8 +373,7 @@ function addWeekWeatherList(shorTermWeather) {
 // 어제, 오늘 데이터를 구하기 위한 api 요청
 async function getYesterdayTodayData(beachCode) {
   const fcstYesterday = await getTodayFcstBeach(beachCode).catch(error => {
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error mainScreenload : ${error.code}`);
   });
   return fcstYesterday;
 }
@@ -404,9 +397,8 @@ function getTodayTempHighLow(yesterdayTodayData) {
     return lowHighTempDate;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
     alert(
-      `${ERROR.UNKNOWN_ERROR} main-error getTodayTempHighLow : ${errorCode}`,
+      `${ERROR.UNKNOWN_ERROR} main-error getTodayTempHighLow : ${error.code}`,
     );
   }
 }
