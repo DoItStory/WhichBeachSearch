@@ -17,8 +17,8 @@ function logInWithEmailAndPassword(email, password) {
 
 function logIn(userEmail, userPassword) {
   showCircularProgress();
-  const result = logInWithEmailAndPassword(userEmail, userPassword)
-    .then(userCredential => {
+  logInWithEmailAndPassword(userEmail, userPassword)
+    .then(() => {
       hideCircularProgress();
       alert('환영합니다!');
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
@@ -36,7 +36,7 @@ function getPasswordUserInfo() {
 }
 
 function handlePasswordReset() {
-  const result = getPasswordUserInfo()
+  getPasswordUserInfo()
     .then(() => {
       alert('비밀번호를 재설정하는 메일이 전송되었습니다.');
     })

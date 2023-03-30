@@ -16,7 +16,7 @@ async function signUpWithEmailPassword(email, password) {
 
 function signUp(getUserEmail, getUserPassword) {
   showCircularProgress();
-  const result = signUpWithEmailPassword(getUserEmail, getUserPassword)
+  signUpWithEmailPassword(getUserEmail, getUserPassword)
     .then(userCredential => {
       hideCircularProgress();
       const user = userCredential.user;

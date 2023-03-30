@@ -20,7 +20,7 @@ function googleLogInResult() {
 function handleGoogleLogInBtn(event) {
   event.preventDefault();
   showCircularProgress();
-  const result = googleLogInResult()
+  googleLogInResult()
     .then(result => {
       hideCircularProgress();
       const credential = GoogleAuthProvider.credentialFromResult(result);
