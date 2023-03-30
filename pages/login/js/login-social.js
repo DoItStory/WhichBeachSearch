@@ -32,11 +32,10 @@ function handleGoogleLogInBtn(event) {
     })
     .catch(error => {
       hideCircularProgress();
-      const errorCode = error.code;
       const errorMessage = error.message;
       const email = error.customData.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
-      socialLogInErrorPrint(errorCode);
+      socialLogInErrorPrint(error.code);
     });
 }
 
@@ -60,11 +59,10 @@ function handleFacebookLogInBtn(event) {
     })
     .catch(error => {
       hideCircularProgress();
-      const errorCode = error.code;
       const errorMessage = error.message;
       const email = error.customData.email;
       const credential = FacebookAuthProvider.credentialFromError(error);
-      socialLogInErrorPrint(errorCode);
+      socialLogInErrorPrint(error.code);
     });
 }
 

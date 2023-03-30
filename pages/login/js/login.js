@@ -25,9 +25,8 @@ function logIn(userEmail, userPassword) {
     })
     .catch(error => {
       hideCircularProgress();
-      const errorCode = error.code;
       const errorMessage = error.message;
-      errorPrint(errorCode);
+      errorPrint(error.code);
     });
 }
 
@@ -43,9 +42,8 @@ function handlePasswordReset() {
       alert('비밀번호를 재설정하는 메일이 전송되었습니다.');
     })
     .catch(error => {
-      const errorCode = error.code;
       const errorMessage = error.message;
-      if (errorCode === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
+      if (error.code === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
     });
 }
 

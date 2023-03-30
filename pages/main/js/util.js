@@ -17,8 +17,7 @@ export function getDayWeek(dateArr) {
     return dayWeek;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error getDayWeek : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getDayWeek : ${error.code}`);
   }
 }
 
@@ -76,8 +75,7 @@ export function todayDateRequest() {
     return year + month + day;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error todayDateRequest : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error todayDateRequest : ${error.code}`);
   }
 }
 
@@ -142,9 +140,8 @@ export function beachCategoryValueFilter(
     return result;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
     alert(
-      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${errorCode}`,
+      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${error.code}`,
     );
   }
 }
@@ -165,8 +162,7 @@ export function getMidWeekDays() {
     return midWeekDays;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error getMidWeekDays : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getMidWeekDays : ${error.code}`);
   }
 }
 
@@ -191,9 +187,8 @@ export function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyA
     return weatherCollection;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
     alert(
-      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${errorCode}`,
+      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${error.code}`,
     );
   }
 }
@@ -223,9 +218,8 @@ export function gather3DaysWeatherData(
     return threeWeatherCollection;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
     alert(
-      `${ERROR.UNKNOWN_ERROR} main-error gather3DaysWeatherData : ${errorCode}`,
+      `${ERROR.UNKNOWN_ERROR} main-error gather3DaysWeatherData : ${error.code}`,
     );
   }
 }
@@ -250,8 +244,7 @@ export function landDataSet(midLandFcstData) {
     return midLandRequiredDataSet;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error landDataSet : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error landDataSet : ${error.code}`);
   }
 }
 
@@ -275,8 +268,7 @@ export function tiaDataSet(tiaFcstData) {
     return midTempRequiredDataSet;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error tiaDataSet : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error tiaDataSet : ${error.code}`);
   }
 }
 
@@ -298,9 +290,8 @@ export function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
     return midWeekDaysWeatherData;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
     alert(
-      `${ERROR.UNKNOWN_ERROR} main-error midWeekDaysWeatherRequest : ${errorCode}`,
+      `${ERROR.UNKNOWN_ERROR} main-error midWeekDaysWeatherRequest : ${error.code}`,
     );
   }
 }

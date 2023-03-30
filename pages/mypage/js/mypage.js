@@ -23,8 +23,7 @@ function logout() {
     })
     .catch(error => {
       hideCircularProgress();
-      const errorCode = error.code;
-      alert(`로그아웃에 실패 Error = ${errorCode}`);
+      alert(`로그아웃에 실패 Error = ${error.code}`);
       // An error happened.
     });
 }
@@ -60,8 +59,7 @@ async function changePassword() {
       );
     })
     .catch(error => {
-      const errorCode = error.code;
-      alert(`사용자 인증 실패 Error = ${errorCode}`);
+      alert(`사용자 인증 실패 Error = ${error.code}`);
     });
   const changeCancleBtn = document.getElementById('change-cancle__btn');
   changeCancleBtn.addEventListener('click', () => {
