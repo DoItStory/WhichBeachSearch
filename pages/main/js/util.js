@@ -17,8 +17,7 @@ export function getDayWeek(dateArr) {
     return dayWeek;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error getDayWeek : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getDayWeek : ${error.code}`);
   }
 }
 
@@ -76,8 +75,7 @@ export function todayDateRequest() {
     return year + month + day;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error todayDateRequest : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error todayDateRequest : ${error.code}`);
   }
 }
 
@@ -142,9 +140,8 @@ export function beachCategoryValueFilter(
     return result;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
     alert(
-      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${errorCode}`,
+      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${error.code}`,
     );
   }
 }
@@ -165,8 +162,137 @@ export function getMidWeekDays() {
     return midWeekDays;
   } catch (error) {
     hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error getMidWeekDays : ${errorCode}`);
+    alert(`${ERROR.UNKNOWN_ERROR} main-error getMidWeekDays : ${error.code}`);
+  }
+}
+
+
+// 오늘(12시간) 날씨 정보 모아주는 함수
+export function gatherTodayWeather(timeArr, tmpArr, wavArr, popArr, skyArr, ptyArr) {
+  try {
+    const timeArray = Array.from(timeArr);
+
+    const weatherCollection = [];
+    for (let i = 0; i < tmpArr.length; i++) {
+      weatherCollection[i] = {
+        time: timeArray[i],
+        tmp: tmpArr[i],
+        wav: wavArr[i],
+        pop: popArr[i],
+        sky: skyArr[i],
+        pty: ptyArr[i],
+      };
+    }
+
+    return weatherCollection;
+  } catch (error) {
+    hideCircularProgress();
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error beachCategoryValueFilter : ${error.code}`,
+    );
+  }
+}
+
+// 3일 날씨 정보를 모아주는 함수
+export function gather3DaysWeatherData(
+  weekeeTmn,
+  weekeeTmx,
+  weekeePop,
+  weekeeSky,
+  weekeePty,
+  dateData,
+) {
+  try {
+    const threeDayOfTheWeek = getDayWeek(dateData);
+    const threeWeatherCollection = [];
+    for (let i = 0; i < weekeeTmn.length; i++) {
+      threeWeatherCollection[i] = {
+        date: threeDayOfTheWeek[i],
+        tmn: weekeeTmn[i],
+        tmx: weekeeTmx[i],
+        pop: weekeePop[i],
+        sky: weekeeSky[i],
+        pty: weekeePty[i],
+      };
+    }
+    return threeWeatherCollection;
+  } catch (error) {
+    hideCircularProgress();
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error gather3DaysWeatherData : ${error.code}`,
+    );
+  }
+}
+
+// 육상(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
+export function landDataSet(midLandFcstData) {
+  try {
+    const midLandDataArray = [];
+    for (let data of Object.values(midLandFcstData)) {
+      midLandDataArray.push(data);
+    }
+
+    const midLandRequiredDataSet = [];
+    let contactNum = 0;
+    for (let i = 0; i < 4; i++) {
+      midLandRequiredDataSet[i] = {
+        rnSt: midLandDataArray[2 + contactNum],
+        wf: midLandDataArray[15 + contactNum],
+      };
+      contactNum = contactNum + 2;
+    }
+    return midLandRequiredDataSet;
+  } catch (error) {
+    hideCircularProgress();
+    alert(`${ERROR.UNKNOWN_ERROR} main-error landDataSet : ${error.code}`);
+  }
+}
+
+// 기온(4~7일) 데이터를 객체 형식으로 모아서 리턴해주는 함수
+export function tiaDataSet(tiaFcstData) {
+  try {
+    const midTempDataArray = [];
+    for (let data of Object.values(tiaFcstData)) {
+      midTempDataArray.push(data);
+    }
+
+    const midTempRequiredDataSet = [];
+    let contactNum = 0;
+    for (let i = 0; i < 4; i++) {
+      midTempRequiredDataSet[i] = {
+        taMin: midTempDataArray[7 + contactNum],
+        taMax: midTempDataArray[10 + contactNum],
+      };
+      contactNum = contactNum + 6;
+    }
+    return midTempRequiredDataSet;
+  } catch (error) {
+    hideCircularProgress();
+    alert(`${ERROR.UNKNOWN_ERROR} main-error tiaDataSet : ${error.code}`);
+  }
+}
+
+// 4~7일 중기 육상, 기온, 날짜 데이터 배열로 모으는 함수
+export function midWeekDaysWeatherRequest(landFcst, tiaFcst) {
+  try {
+    const midWeekDateArray = getMidWeekDays();
+    const dayOfTheWeek = getDayWeek(midWeekDateArray);
+    const midWeekDaysWeatherData = [];
+    for (let i = 0; i < 4; i++) {
+      midWeekDaysWeatherData[i] = {
+        date: dayOfTheWeek[i],
+        pop: landFcst[i].rnSt,
+        weather: landFcst[i].wf,
+        tmn: tiaFcst[i].taMin,
+        tmx: tiaFcst[i].taMax,
+      };
+    }
+    return midWeekDaysWeatherData;
+  } catch (error) {
+    hideCircularProgress();
+    alert(
+      `${ERROR.UNKNOWN_ERROR} main-error midWeekDaysWeatherRequest : ${error.code}`,
+    );
   }
 }
 

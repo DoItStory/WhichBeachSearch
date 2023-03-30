@@ -1,4 +1,3 @@
-import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -17,17 +16,15 @@ function logInWithEmailAndPassword(email, password) {
 
 function logIn(userEmail, userPassword) {
   showCircularProgress();
-  const result = logInWithEmailAndPassword(userEmail, userPassword)
-    .then(userCredential => {
+  logInWithEmailAndPassword(userEmail, userPassword)
+    .then(() => {
       hideCircularProgress();
       alert('환영합니다!');
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
       hideCircularProgress();
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      errorPrint(errorCode);
+      errorPrint(error.code);
     });
 }
 
@@ -38,14 +35,12 @@ function getPasswordUserInfo() {
 }
 
 function handlePasswordReset() {
-  const result = getPasswordUserInfo()
+  getPasswordUserInfo()
     .then(() => {
       alert('비밀번호를 재설정하는 메일이 전송되었습니다.');
     })
     .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      if (errorCode === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
+      if (error.code === 'auth/user-not-found') alert(ERROR.USER_NOT_FOUND);
     });
 }
 
