@@ -4,16 +4,6 @@ import {
   onAuthStateChanged,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  doc,
-  updateDoc,
-  arrayUnion,
-} from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
-import {
   showCircularProgress,
   hideCircularProgress,
 } from '../../../js/circular-progress.js';
@@ -39,6 +29,12 @@ import {
   tiaDataSet,
   midWeekDaysWeatherRequest,
 } from './util.js';
+import {
+  addDataInField,
+  checkUserStore,
+  createUserDoc,
+  test,
+} from './services.js';
 
 const bookmarkBtn = document.querySelector('.search__bookmark-btn');
 const beachName = document.querySelector('.beach-name > header');
@@ -118,14 +114,13 @@ function autoCompleteSearchTerms(beachData) {
 }
 
 function addBookmark(beachData) {
-  checkUserStore()
+  const userUID = auth.currentUser.uid;
+  checkUserStore(userUID, db)
     .then(docRefId => {
       if (!docRefId) {
-        createUserDoc(beachData);
+        createUserDoc(beachData, db, userUID);
       } else {
-        addDataInField(docRefId, beachData);
-        hideCircularProgress();
-        alert('북마크에 추가되었습니다.');
+        addDataInField(docRefId, beachData, db);
       }
     })
     .catch(error => {
@@ -133,63 +128,6 @@ function addBookmark(beachData) {
       const errorCode = error.code;
       alert(`${ERROR.UNKNOWN_ERROR} main-error addBookmark : ${errorCode}`);
     });
-}
-
-// 새로운 문서(doc) 생성 함수
-async function createUserDoc(beachData) {
-  const userUID = auth.currentUser.uid;
-  if (!userUID) {
-    throw ERROR(ERROR.UNDEFINED_UID);
-  }
-  const userBookmarkList = [
-    {
-      name: beachData[0].beachName,
-      address: beachData[0].address,
-      beachNum: beachData[0].beachCode,
-    },
-  ];
-  await addDoc(collection(db, 'Bookmark'), {
-    userBookmarkList,
-    uid: userUID,
-  }).catch(error => {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error createUserDoc : ${errorCode}`);
-  });
-}
-
-// 즐겨찾기 정보(map) 추가 함수
-function addDataInField(docRefId, beachData) {
-  const docRef = doc(db, 'Bookmark', docRefId);
-  updateDoc(docRef, {
-    userBookmarkList: arrayUnion({
-      name: beachData[0].beachName,
-      address: beachData[0].address,
-      beachNum: beachData[0].beachCode,
-    }),
-  }).catch(error => {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error addDataInField : ${errorCode}`);
-  });
-}
-// 유저의 uid가 포함된 문서가 있는지 찾는 함수
-async function checkUserStore() {
-  const userUID = auth.currentUser.uid;
-  if (!userUID) {
-    throw ERROR(ERROR.UNDEFINED_UID);
-  }
-  const q = query(collection(db, 'Bookmark'), where('uid', '==', userUID));
-  const querySnapshot = await getDocs(q).catch(error => {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error checkUserStore : ${errorCode}`);
-  });
-  let docRefId = '';
-  querySnapshot.forEach(doc => {
-    docRefId = doc.id;
-  });
-  return docRefId;
 }
 
 // 지금 시간으로부터 12시간 정보 얻어오는 기능
