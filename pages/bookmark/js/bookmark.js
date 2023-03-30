@@ -1,23 +1,14 @@
-import {
-  fireStoreInitialize,
-} from '../../../js/initialize.js';
+import { fireStoreInitialize } from '../../../js/initialize.js';
 import {
   getAuth,
   onAuthStateChanged,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  updateDoc,
-} from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
-import {
   showCircularProgress,
   hideCircularProgress,
 } from '../../../js/circular-progress.js';
 import { ERROR } from '../../../js/error.js';
+import { getUserDocument, upDataDocument } from './services.js';
 const bookmarkList = document.getElementById('bookmark-list');
 const BOOKMARK_ITEM_CLASSNAME = 'bookmark__item';
 const BOOKMARK_DIV_CLASS = 'bookmark__info';
@@ -43,7 +34,7 @@ onAuthStateChanged(auth, user => {
 
 function loadBookmarkScreen(uid) {
   showCircularProgress();
-  getUserDocument(uid)
+  getUserDocument(uid, db)
     .then(querySnapshot => {
       let bookmarkListData = [];
       querySnapshot.forEach(doc => {
@@ -147,7 +138,7 @@ function handleBookmarkDeleteButton(event) {
 }
 
 async function deleteBookmarkList(uid, beachName) {
-  const querySnapshot = await getUserDocument(uid).catch(error => {
+  const querySnapshot = await getUserDocument(uid, db).catch(error => {
     hideCircularProgress();
     const errorCode = error.code;
     alert(
@@ -164,15 +155,10 @@ async function deleteBookmarkList(uid, beachName) {
   });
 }
 
-function getUserDocument(uid) {
-  const q = query(collection(db, 'Bookmark'), where('uid', '==', uid));
-  return getDocs(q);
-}
-
 function deleteBookmark(docRefId, deleteBookmarkIndex, copiedBookmarkList) {
   try {
     copiedBookmarkList.splice(deleteBookmarkIndex, 1);
-    upDataDocument(docRefId, copiedBookmarkList);
+    upDataDocument(docRefId, copiedBookmarkList, db);
   } catch (error) {
     hideCircularProgress();
     const errorCode = error.code;
@@ -180,15 +166,4 @@ function deleteBookmark(docRefId, deleteBookmarkIndex, copiedBookmarkList) {
       `${ERROR.UNKNOWN_ERROR} bookmark-error handleBookmarkDeleteButton : ${errorCode}`,
     );
   }
-}
-
-function upDataDocument(docId, bookmarkList) {
-  const BookmarkRef = doc(db, 'Bookmark', docId);
-  updateDoc(BookmarkRef, {
-    userBookmarkList: bookmarkList,
-  }).catch(error => {
-    hideCircularProgress();
-    const errorCode = error.code;
-    alert(`${ERROR.UNKNOWN_ERROR} main-error upDataDocument : ${errorCode}`);
-  });
 }
