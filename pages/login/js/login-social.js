@@ -1,4 +1,3 @@
-import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   signInWithPopup,
@@ -27,13 +26,10 @@ function handleGoogleLogInBtn(event) {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       // The signed-in user info.
-      const user = result.user;
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
       hideCircularProgress();
-      const errorMessage = error.message;
-      const email = error.customData.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
       socialLogInErrorPrint(error.code);
     });
@@ -54,13 +50,10 @@ function handleFacebookLogInBtn(event) {
       hideCircularProgress();
       const credential = FacebookAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      const user = result.user;
       window.location.href = 'http://127.0.0.1:5500/pages/main/main.html';
     })
     .catch(error => {
       hideCircularProgress();
-      const errorMessage = error.message;
-      const email = error.customData.email;
       const credential = FacebookAuthProvider.credentialFromError(error);
       socialLogInErrorPrint(error.code);
     });

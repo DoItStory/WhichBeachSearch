@@ -26,7 +26,6 @@ function signUp(getUserEmail, getUserPassword) {
     })
     .catch(error => {
       hideCircularProgress();
-      const errorMessage = error.message;
       signUpErrorPrint(error.code);
     });
 }

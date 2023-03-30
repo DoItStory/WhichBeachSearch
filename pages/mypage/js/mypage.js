@@ -81,7 +81,6 @@ function passwordCheck(password, checkPassword) {
     passwordCheckWindow.style.display = 'none';
     return false;
   }
-  console.log('success');
   return true;
 }
 
