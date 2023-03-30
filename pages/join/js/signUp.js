@@ -1,4 +1,3 @@
-import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   createUserWithEmailAndPassword,

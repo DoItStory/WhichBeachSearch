@@ -1,5 +1,4 @@
 import {
-  initializeFirebase,
   fireStoreInitialize,
 } from '../../../js/initialize.js';
 import {

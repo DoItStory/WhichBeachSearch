@@ -1,7 +1,5 @@
-import { initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
-  onAuthStateChanged,
   signOut,
   updatePassword,
   reauthenticateWithCredential,
