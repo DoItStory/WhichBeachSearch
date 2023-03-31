@@ -1,4 +1,4 @@
-import { fireStoreInitialize } from '../../../js/initialize.js';
+import { fireStoreInitialize, initializeFirebase } from '../../../js/initialize.js';
 import {
   getAuth,
   onAuthStateChanged,
