@@ -18,7 +18,7 @@ export async function getBaechDataListArray() {
 }
 
 async function getSpreadSheetsDataList(query) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     query.send(response => {
       if (response.isError()) {
         console.error(
