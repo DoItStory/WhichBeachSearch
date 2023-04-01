@@ -484,30 +484,40 @@ function handleMoreInfoBtn(beachData) {
 }
 
 async function paintMainScreen(beachData) {
-  const yesterdayTodayFcstData = await getYesterdayTodayData(
-    beachData[0].beachCode,
-  );
-  const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
-  const fcstTodayData = await getWeatherTodayData(beachData[0].beachCode);
-  const todayWeather = getTodayWeather(fcstTodayData);
-  const fcstWeatherData = await getWeather3DaysData(beachData[0].beachCode);
-  const threeDaysWeather = getWeather3days(fcstWeatherData);
-  const midLandFcst = await getAfter3DaysLandData(beachData[0].landCode);
-  const midTiaFcst = await getAfter3DaysTiaData(beachData[0].cityCode);
-  const midWeekDaysWeather = midWeekDaysWeatherRequest(midLandFcst, midTiaFcst);
-  const riseSunsetDataRequest = await getRiseSunsetInfo(
-    beachData[0].lon,
-    beachData[0].lat,
-  );
+  try {
+    const yesterdayTodayFcstData = await getYesterdayTodayData(
+      beachData[0].beachCode,
+    );
+    const todayHighLowTemp = getTodayTempHighLow(yesterdayTodayFcstData);
+    const fcstTodayData = await getWeatherTodayData(beachData[0].beachCode);
+    const todayWeather = getTodayWeather(fcstTodayData);
+    const fcstWeatherData = await getWeather3DaysData(beachData[0].beachCode);
+    const threeDaysWeather = getWeather3days(fcstWeatherData);
+    const midLandFcst = await getAfter3DaysLandData(beachData[0].landCode);
+    const midTiaFcst = await getAfter3DaysTiaData(beachData[0].cityCode);
+    const midWeekDaysWeather = midWeekDaysWeatherRequest(
+      midLandFcst,
+      midTiaFcst,
+    );
+    const riseSunsetDataRequest = await getRiseSunsetInfo(
+      beachData[0].lon,
+      beachData[0].lat,
+    );
 
-  paintHighAndLowTemp(todayHighLowTemp);
-  paintCurrentWeatherData(todayWeather);
-  paintCureentWaveRainData(todayWeather);
-  addTodayWeatherList(todayWeather);
-  addWeekWeatherList(threeDaysWeather);
-  addWeekWeatherList(midWeekDaysWeather);
-  paintSunriseSunsetTime(riseSunsetDataRequest);
-  hideCircularProgress();
+    paintHighAndLowTemp(todayHighLowTemp);
+    paintCurrentWeatherData(todayWeather);
+    paintCureentWaveRainData(todayWeather);
+    addTodayWeatherList(todayWeather);
+    addWeekWeatherList(threeDaysWeather);
+    addWeekWeatherList(midWeekDaysWeather);
+    paintSunriseSunsetTime(riseSunsetDataRequest);
+    hideCircularProgress();
+  } catch (error) {
+    alert(
+      '데이터 요청 중에 에러가 발생하였습니다. 새로 고침을 해주시기 바랍니다.\n지속적인 문제가 발생한다면 관리자에게 문의 바랍니다.',
+    );
+    hideCircularProgress();
+  }
 }
 
 function getTheBeachData(beachCode, beachData) {
