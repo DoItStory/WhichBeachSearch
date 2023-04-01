@@ -532,7 +532,7 @@ function getTheBeachData(beachCode, beachData) {
   }
   if (!beachCode);
   {
-    const randomBeachCode = Math.floor(Math.random() * 218) + 1;
+    const randomBeachCode = Math.floor(Math.random() * 420) + 1;
     const findDataBeach = beachData.filter(
       data => data.beachCode == randomBeachCode,
     );
