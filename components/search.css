@@ -7,6 +7,7 @@
 .search-form {
   display: flex;
   height: 2.4rem;
+  max-width: 16rem;
   border-radius: 0.8rem;
   left: calc(50% - 150px / 2 - 2062px);
   top: calc(50% - 24px / 2 - 465px);
@@ -35,7 +36,7 @@
 }
 
 .list-box {
-  width: 100%;
+  min-width: 16rem;
   height: 10rem;
   margin-top: 2.7rem;
   display: flex;

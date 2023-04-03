@@ -184,3 +184,4 @@ Code Convention & Commit Convention 설정 및 정의
 ## 👨🏻‍💻 프로젝트 마무리
 
 ### [Blog - WhichBeachSarch 프로젝트 회고](https://velog.io/@goodjam92/Which-Beach-Search-회고)
+
