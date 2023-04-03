@@ -182,4 +182,6 @@ Code Convention & Commit Convention 설정 및 정의
 <br>
 
 ## 👨🏻‍💻 프로젝트 마무리
-<a href="https://velog.io/@goodjam92/Which-Beach-Search-%ED%9A%8C%EA%B3%A0#-%EB%82%98%EC%9D%98-%EC%B2%AB%EB%B2%88%EC%A7%B8-%EC%82%AC%EC%9D%B4%EB%93%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8"><h2>[Blog] WhichBeachSarch 프로젝트 회고</h2></a>
+
+### [Blog - WhichBeachSarch 프로젝트 회고](https://velog.io/@goodjam92/Which-Beach-Search-회고)
+
